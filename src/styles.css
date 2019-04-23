@@ -1,1 +1,276 @@
-/* You can add global styles to this file, and also import other style files */
+body {
+    background: #a4978E;
+    color: #333333;
+    /*margin-top: 5rem;*/
+    margin: 0 !important;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: #444444;
+}
+
+ul {
+    margin: 0;
+}
+
+main{
+    margin-top: 0px;
+}
+
+footer {
+    background-color: #CAD3C8!important;
+}
+
+.asteriskField {
+    display: none;
+}
+
+.nav-tabs {
+    font-size:  17px !important;
+}
+
+.ml-auto {
+    left: auto !important;
+}
+
+#top-nav {
+    background-color: #040C0E;
+    font-size: 14px;
+    height: 20;
+    padding: 3px;
+}
+
+.nav .nav-item .nav-link .active{
+    color: black !important;
+}
+
+.bg-steel {
+    background-color: #132226;
+}
+
+.navbar {
+    padding-left: 0px;
+}
+
+.site-header .navbar-nav .nav-link {
+    color: #cbd5db;
+}
+
+.site-header .navbar-nav .nav-link:hover {
+    color: #ffffff;
+}
+
+.site-header .navbar-nav .nav-link.active {
+    font-weight: 500;
+}
+
+.content-section {
+    margin-top: 20px;
+    background: #ffffff;
+    padding: 10px 20px;
+    border: 1px solid #dddddd;
+    border-radius: 3px;
+    margin-bottom: 20px;
+}
+
+.btn-toolbar{
+    text-align: center;
+}
+
+/*-----------dropdown animation------------*/
+
+/*.dropdown .dropdown-menu{
+    display: block;
+    opacity: 0;
+
+    -moz-transition:    all 1000ms ease;
+    -webkit-transition: all 1000ms ease;
+    -o-transition:      all 1000ms ease;
+    -ms-transition:     all 1000ms ease;
+    transition:         all 1000ms ease;
+}
+.dropdown:hover .dropdown-menu {
+    display: block;
+    opacity: 1;
+}*/
+
+.dropdown .dropdown-menu {
+    -webkit-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    -ms-transition: all 0.3s;
+    -o-transition: all 0.3s;
+    transition: all 0.3s;
+
+    max-height: 0;
+    display: block;
+    overflow: hidden;
+    opacity: 0;
+}
+
+.dropdown:hover .dropdown-menu {
+    max-height: 200px;
+    opacity: 1;
+}
+
+
+.bs-wizard {margin-top: 40px;}
+
+/*Form Wizard*/
+.bs-wizard {
+    border-bottom: solid 1px #e0e0e0; 
+    padding: 0 0 10px 0;
+}
+
+.bs-wizard > .bs-wizard-step {
+    padding: 0; 
+    position: relative;
+}
+
+.bs-wizard > .bs-wizard-step + .bs-wizard-step {
+
+}
+
+.bs-wizard > .bs-wizard-step .bs-wizard-stepnum {
+    color: #595959; 
+    font-size: 16px; 
+    margin-bottom: 8px;
+}
+.bs-wizard > .bs-wizard-step .bs-wizard-info {
+    color: #999; 
+    font-size: 14px;
+}
+
+.bs-wizard > .bs-wizard-step > .bs-wizard-dot {
+    position: absolute; 
+    width: 30px; 
+    height: 30px; 
+    display: block; 
+    background:#82ccdd; 
+    top: 45px; 
+    left: 50%; 
+    margin-top: -15px; 
+    margin-left: -15px; 
+    border-radius: 50%;
+} 
+
+.bs-wizard > .bs-wizard-step > .bs-wizard-dot:after {
+    content: ' '; 
+    width: 14px; 
+    height: 14px; 
+    background: #17a2b8; 
+    border-radius: 50px; 
+    position: absolute; 
+    top: 8px; 
+    left: 8px; 
+} 
+
+.bs-wizard > .bs-wizard-step > .progress {
+    position: relative; 
+    border-radius: 0px; 
+    height: 5px; 
+    box-shadow: none; 
+    margin: 20px 0;
+}
+
+.bs-wizard > .bs-wizard-step > .progress > .progress-bar {
+    width:0px; 
+    box-shadow: none; 
+    background: #82ccdd;
+}
+
+.bs-wizard > .bs-wizard-step.complete > .progress > .progress-bar {
+    width:100%;
+}
+
+.bs-wizard > .bs-wizard-step.active > .progress > .progress-bar {
+    width:50%;
+}
+
+.bs-wizard > .bs-wizard-step:first-child.active > .progress > .progress-bar {
+    width:0%;
+}
+
+.bs-wizard > .bs-wizard-step:last-child.active > .progress > .progress-bar {
+    width: 100%;
+}
+
+.bs-wizard > .bs-wizard-step.disabled > .bs-wizard-dot {
+    background-color: #f5f5f5;
+}
+
+.bs-wizard > .bs-wizard-step.disabled > .bs-wizard-dot:after {
+    opacity: 0;
+}
+
+.bs-wizard > .bs-wizard-step:first-child  > .progress {
+    left: 50%; 
+    width: 50%;
+}
+
+.bs-wizard > .bs-wizard-step:last-child  > .progress {
+    width: 50%;
+}
+
+.bs-wizard > .bs-wizard-step.disabled button.bs-wizard-dot{ 
+    pointer-events: none; 
+}
+
+.bs-wizard > .bs-wizard-step.active button.bs-wizard-dot{ 
+    pointer-events: none; 
+}
+
+.bs-wizard > .bs-wizard-step button.bs-wizard-dot{  
+    border: none; padding: 0; background: none; 
+}
+
+.bs-wizard > .bs-wizard-step.complete button.bs-wizard-dot{  
+    border: none; 
+    padding: 0; 
+    position: absolute; 
+    width: 30px; 
+    height: 30px; 
+    display: block; 
+    background:#82ccdd; 
+    top: 45px; 
+    left: 50%; 
+    margin-top: -15px; 
+    margin-left: -15px; 
+    border-radius: 50%;
+}
+
+.bs-wizard > .bs-wizard-step.complete button.bs-wizard-dot:after{  
+    border: none; 
+    padding: 0; 
+    content: ' '; 
+    width: 14px; 
+    height: 14px; 
+    background: #17a2b8; 
+    border-radius: 50px; 
+    position: absolute; 
+    top: 8px; 
+    left: 8px;
+}
+
+.bs-wizard > .bs-wizard-step.active button.bs-wizard-dot{  
+    border: none; 
+    padding: 0; 
+    position: absolute; 
+    width: 30px; 
+    height: 30px; 
+    display: block; 
+    background: #ffcc80; 
+    top: 45px; 
+    left: 50%; 
+    margin-top: -15px; 
+    margin-left: -15px; 
+    border-radius: 50%;
+}
+/*END Form Wizard*/
+
+.menubot{
+  transition: box-shadow .3s;
+}
+
+.menubot:hover {
+  box-shadow: 0 16px 28px 0 rgba(0, 0, 0, 0.22), 0 25px 55px 0 rgba(0, 0, 0, 0.21);
+}
