@@ -4,6 +4,8 @@ import { Router } from '@angular/router';
 import { first } from 'rxjs/operators';
 
 import { AlertService } from '../../services/alert.service';
+import { AuthenticationService } from '../../services/authentication.service';
+import { DataService } from '../../services/data.service';
 
 // export interface UserType {
 //     value: Number;
@@ -26,6 +28,7 @@ export class RegisterComponent implements OnInit {
 	constructor(
 		private formBuilder: FormBuilder,
         private router: Router,
+        // private dataService: DataService,
         private alertService: AlertService) { }
 
 	ngOnInit() {
@@ -52,6 +55,17 @@ export class RegisterComponent implements OnInit {
         if (this.registerForm.invalid) {
             return;
         }
-        // this.loading = true;
+        this.loading = true;
+        // this.dataService.register(this.registerForm.value)
+        //     .pipe(first())
+        //     .subscribe(
+        //         data => {
+        //             this.alertService.success('Registration successful', true);
+        //             this.router.navigate(['/login']);
+        //         },
+        //         error => {
+        //             this.alertService.error(error);
+        //             this.loading = false;
+        //         });
     }
 }

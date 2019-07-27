@@ -1,7 +1,7 @@
 //bring express and body-parser module from node_modules
 const express = require('express');
 const app = express();
-//const bodyParser = require('body-parser');
+const bodyParser = require('body-parser');
 //system module
 //const path = require('path');
 //const http = require('http');
@@ -13,12 +13,12 @@ const app = express();
 const port = 3000;
 
 //API file for interacting with mongoDB
-//const api = require('./server/routes/api');
+const api = require('./server/api');
 
 
 //Body Parsers middle ware
 //app.use(bodyParser.urlencoded({ extended: false }));
-//app.use(bodyParser.json());
+app.use(bodyParser.json());
 //app.use(cors());
 
 //app.use(jwt());

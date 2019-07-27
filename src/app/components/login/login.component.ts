@@ -4,6 +4,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { first } from 'rxjs/operators';
 
 import { AlertService } from '../../services/alert.service';
+import { AuthenticationService } from '../../services/authentication.service';
+import { DataService } from '../../services/data.service';
 
 @Component({
   selector: 'app-login',
@@ -21,7 +23,7 @@ export class LoginComponent implements OnInit {
 		private formBuilder: FormBuilder,
         private route: ActivatedRoute,
         private router: Router,
-        // private authenticationService: AuthenticationService,
+        //private authenticationService: AuthenticationService,
         private alertService: AlertService) {}
 
 	ngOnInit() {
@@ -31,7 +33,7 @@ export class LoginComponent implements OnInit {
         });
 
         // reset login status
-        // this.authenticationService.logout();
+        //this.authenticationService.logout();
 
         // get return url from route parameters or default to '/'
         // this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
@@ -47,5 +49,17 @@ export class LoginComponent implements OnInit {
         if (this.loginForm.invalid) {
             return;
         }
+
+        this.loading = true;
+        // this.authenticationService.login(this.f.username.value, this.f.password.value)
+        //     .pipe(first())
+        //     .subscribe(
+        //         data => {
+        //             this.router.navigate([this.returnUrl]);
+        //         },
+        //         error => {
+        //             this.alertService.error(error);
+        //             this.loading = false;
+        //         });
 	}
 }
