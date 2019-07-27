@@ -24,7 +24,7 @@ app.use(bodyParser.json());
 //app.use(jwt());
 
 //API location
-//app.use('/api', api.router);
+app.use('/api', api.router);
 
 app.listen(port, function(){
     console.log('Server started on port '+port);

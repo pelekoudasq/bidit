@@ -1,5 +1,5 @@
 body {
-    background: #a4978E!important;
+    background: rgb(231, 227, 217)!important;
     color: #333333!important;
     /*margin-top: 5rem;*/
     margin: 0 !important;
@@ -52,7 +52,7 @@ footer {
 }
 
 .bg-steel {
-    background-color: #132226;
+    background-color: #267174;
 }
 
 .navbar {
@@ -108,4 +108,9 @@ footer {
 
 .menubot:hover {
   box-shadow: 0 16px 28px 0 rgba(0, 0, 0, 0.22), 0 25px 55px 0 rgba(0, 0, 0, 0.21);
+}
+
+.btn-primary {
+    background-color: #267174 !important;
+    border-color: #267174 !important; 
 }

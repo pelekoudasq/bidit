@@ -1,28 +1,58 @@
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>jQuery UI Slider - Range slider</title>
+	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+	<link rel="stylesheet" href="/resources/demos/style.css">
+	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	<script>
+	$( function() {
+		$( "#slider-range" ).slider({
+		range: true,
+		min: 0,
+		max: 500,
+		values: [ 75, 300 ],
+		slide: function( event, ui ) {
+			$( "#amount" ).val( "$" + ui.values[ 0 ] + " - $" + ui.values[ 1 ] );
+		}
+		});
+		$( "#amount" ).val( "$" + $( "#slider-range" ).slider( "values", 0 ) +
+		" - $" + $( "#slider-range" ).slider( "values", 1 ) );
+	} );
+  	</script>
+</head>
 <div class="row">
 	<div class="col-sm-2">
-		<div class="content-section">
-			<h2>Side Bar!</h2>
-			<h6>Important stuff</h6>
-			<h5>Really Important</h5>
-			Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-			tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-			quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-			consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-			cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-			proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-			Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-			tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-			quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-			consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-			cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-			proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+		<div class="content-section bg-transparent">
+			<h3>Filters</h3>
+			<h5>Categories:</h5>
+			<div class="checkbox">
+				<label><input type="checkbox" value="">Option 1</label>
+			</div>
+			<div class="checkbox">
+				<label><input type="checkbox" value="">Option 2</label>
+			</div>
+			<h5>Price range:</h5>
+			<p>
+					<label for="amount">Price range:</label>
+					<input type="text" id="amount" readonly style="border:0; color:#f6931f; font-weight:bold;">
+				  </p>
+				   
+				  <div id="slider-range"></div>
+			<div class="checkbox">
+				<label><input type="checkbox" value="">Option 1</label>
+			</div>
+			<div class="checkbox">
+				<label><input type="checkbox" value="">Option 2</label>
+			</div>
 		</div>
 	</div>
 	<div class="col-sm-8">
 		<div class="content-section">
 			<form [formGroup]="" class="form-inline justify-content-center my-4">
 				<input class="form-control w-75 shadow-sm mb-0 bg-white rounded" type="search" placeholder="Search for anything" aria-label="Search" value="">
-				<button class="btn btn-primary mx-2 shadow mb-0" type="submit" value="Search">Search</button>
+				<button class="btn btn-primary mx-2 mb-0" type="submit" value="Search">Search</button>
 			</form>
 		</div>
 		<div class="content-section">
@@ -31,60 +61,25 @@
 			<h5>where all the auction is happening</h5>
 		</div>
 		<div class="content-section">
-			Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-			tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-			quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-			consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-			cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-			proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+			Lorem 
 		</div>
 		<div class="content-section">
-			Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-			tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-			quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-			consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-			cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-			proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+			Lore
 		</div>
 		<div class="content-section">
-			Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-			tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-			quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-			consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-			cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-			proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+			Lorem ip
 		</div>
 		<div class="content-section">
-			Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-			tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-			quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-			consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-			cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-			proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+			Lorem ipsum dolor
 		</div>
 		<div class="content-section">
-			Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-			tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-			quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-			consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-			cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-			proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+			Lorem ipsum dolor sit
 		</div>
 		<div class="content-section">
-			Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-			tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-			quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-			consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-			cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-			proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+			Lorem ipsum dolo
 		</div>
 		<div class="content-section">
-			Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-			tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-			quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-			consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-			cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-			proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+			Lorem ipsu
 		</div>
 	</div>
 	<div class="col-sm-2">
@@ -93,11 +88,18 @@
 			<h6>do not wait up</h6>
 			<h5>this could be your last day alive!</h5>
 			<br>
-			<a class="btn btn-primary shadow mb-0" href="/login">Login</a> or <a class="btn btn-primary shadow mb-0" href="/register">Register</a> now!
+			<div class="text-center">
+				<a class="btn btn-primary mb-0" href="/login">Login</a> 
+				<br> 
+				or 
+				<br> 
+				<a class="btn btn-primary mb-0" href="/register">Register</a>
+				<br> now!
+			</div>
+			
 			<br>
 		</div>
 		<!-- <app-login></app-login> -->
 	</div>
 </div>
-
 
