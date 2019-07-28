@@ -9,23 +9,24 @@ const mongoose = require('mongoose');
 
 const User = require('./user.model');
 
-router.get('/users', function(req, res, next) {
-    console.log('api: get users');
-    db.Users.find(function(err, users) {
-        if(err) {
-            res.send(err);
-        }
-        //console.log(users);
-        res.json(users);
-    });
-});
+async function getById(id) {
+	//console.log(id);
+	await db.Users.findOne({_id: id}, function(err, user){
+		if(user){
+			//console.log('getById: user found');
+			return user;
+		}
+		//console.log('getById: USER NOT FOUND ' + err);
+		return null;
+	});
+}
 
 async function compareStuff(user, password){
 	if(user){
-		console.log('User with this username found');
+		//console.log('User with this username found');
 		console.log(password + ' ' + user.password);
 		if (bcrypt.compareSync(password, user.password)){
-			console.log('Correct password ' );
+			//console.log('Correct password ' );
 			const token = jwt.sign({ sub: user.id }, config.secret); // <==== The all-important "jwt.sign" function
 			const userObj = new User(user);
 			const { password, ...userWithoutHash } = userObj.toObject();
@@ -37,20 +38,32 @@ async function compareStuff(user, password){
 				token
 			};
 		} else {
-			console.log('Wrong pswd');
+			//console.log('Wrong pswd');
 		}
 	}
 }
+
+router.get('/users', function(req, res, next) {
+	console.log('api: get users');
+	db.Users.find(function(err, users) {
+		if(err) {
+			res.send(err);
+		}
+		//console.log(users);
+		res.json(users);
+	});
+});
 
 router.post('/users/authenticate', function(req, res, next) {
 	console.log('api: authenticate');
 	db.Users.findOne({ username: req.body.username }, function(err, user) {
 		compareStuff(user, req.body.password)
-			.then(userRes => userRes ? res.json(userRes) : res.status(400).json({ message: 'Username or password is incorrect' }))
+			.then(userRes => userRes ? res.json(userRes) : res.status(400).json({ error: 'Username or password is incorrect' }))
 			.catch(err => next(err));
 	});
 });
 
 module.exports = {
-    router : router
+	router : router,
+	getById: getById
 }
