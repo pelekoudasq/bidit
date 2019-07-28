@@ -1,51 +1,81 @@
-<head>
+<!-- <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>jQuery UI Slider - Range slider</title>
-	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 	<link rel="stylesheet" href="/resources/demos/style.css">
 	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-	<script>
-	$( function() {
-		$( "#slider-range" ).slider({
-		range: true,
-		min: 0,
-		max: 500,
-		values: [ 75, 300 ],
-		slide: function( event, ui ) {
-			$( "#amount" ).val( "$" + ui.values[ 0 ] + " - $" + ui.values[ 1 ] );
-		}
-		});
-		$( "#amount" ).val( "$" + $( "#slider-range" ).slider( "values", 0 ) +
-		" - $" + $( "#slider-range" ).slider( "values", 1 ) );
-	} );
-  	</script>
-</head>
+	
+</head> -->
 <div class="row">
 	<div class="col-sm-2">
-		<div class="content-section bg-transparent">
-			<h3>Filters</h3>
-			<h5>Categories:</h5>
-			<div class="checkbox">
-				<label><input type="checkbox" value="">Option 1</label>
-			</div>
-			<div class="checkbox">
-				<label><input type="checkbox" value="">Option 2</label>
-			</div>
-			<h5>Price range:</h5>
-			<p>
-					<label for="amount">Price range:</label>
-					<input type="text" id="amount" readonly style="border:0; color:#f6931f; font-weight:bold;">
-				  </p>
-				   
-				  <div id="slider-range"></div>
-			<div class="checkbox">
-				<label><input type="checkbox" value="">Option 1</label>
-			</div>
-			<div class="checkbox">
-				<label><input type="checkbox" value="">Option 2</label>
-			</div>
+		<div class="content-section bg-transparent border-0">
+			<h4>Categories</h4>
+			<div id="accordion">
+				<div >
+					<div  id="headingOne">
+					<h5 class="mb-0">
+						<button class="btn btn-link pl-0" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+						<h6 class="mb-0">Clothing</h6>
+						</button>
+					</h5>
+					</div>
+				
+					<div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+						<div class="border-bottom">
+							<ul class="list-unstyled">
+								<li><a class="btn-link pl-3" href="">Men</a></li>
+								<li><a class="btn-link pl-3" href="">Women</a></li>
+								<li><a class="btn-link pl-3" href="">Kids</a></li>
+								<li><a class="btn-link pl-3" href="">Shoes</a></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+				<div>
+					<div id="headingTwo">
+					<h5 class="mb-0">
+						<button class="btn btn-link pl-0 collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+						<h6 class="mb-0">Toys</h6>
+						</button>
+					</h5>
+					</div>
+					<div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+						<div >
+							<ul class="list-unstyled">
+								<li><a class="btn-link pl-3" href="">Infants</a></li>
+								<li><a class="btn-link pl-3" href="">Toddlers</a></li>
+								<li><a class="btn-link pl-3" href="">3-6 Years old</a></li>
+								<li><a class="btn-link pl-3" href="">6-9 Years old</a></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+				<div>
+					<div id="headingThree">
+					<h5 class="mb-0">
+						<button class="btn btn-link pl-0 collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+						<h6 class="mb-0">Electronics</h6>
+						</button>
+					</h5>
+					</div>
+					<div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
+						<div >
+							<ul class="list-unstyled">
+								<li><a class="btn-link pl-3" href="">Phone</a></li>
+								<li><a class="btn-link pl-3" href="">Laptop</a></li>
+								<li><a class="btn-link pl-3" href="">Television</a></li>
+								<li><a class="btn-link pl-3" href="">PC</a></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+				</div>
+			<br>
+			<strong>Minimum Price:</strong>
+			<input class="w-50" type="text" placeholder="From €">
+			<br><br>
+			<strong>Maximum Price:</strong>
+			<input class="w-50" type="text" placeholder="To €">			
 		</div>
 	</div>
 	<div class="col-sm-8">
@@ -60,41 +90,46 @@
 			<h6>are you in for the ride?</h6>
 			<h5>where all the auction is happening</h5>
 		</div>
-		<div class="content-section">
-			Lorem 
-		</div>
-		<div class="content-section">
-			Lore
-		</div>
-		<div class="content-section">
-			Lorem ip
-		</div>
-		<div class="content-section">
-			Lorem ipsum dolor
-		</div>
-		<div class="content-section">
-			Lorem ipsum dolor sit
-		</div>
-		<div class="content-section">
-			Lorem ipsum dolo
-		</div>
-		<div class="content-section">
-			Lorem ipsu
+		<div class="my-grid">
+			<div class="my-row">
+				<div class="my-col">hi</div>
+				<div class="my-col">hi</div>
+				<div class="my-col">hi</div>
+				<div class="my-col">hi</div>
+			</div>
+			<div class="my-row">
+					<div class="my-col">hi</div>
+					<div class="my-col">hi</div>
+					<div class="my-col">hi</div>
+					<div class="my-col">hi</div>
+			</div>
 		</div>
 	</div>
 	<div class="col-sm-2">
 		<div class="content-section">
-			<h3>Join BidIt Now!</h3>
-			<h6>do not wait up</h6>
-			<h5>this could be your last day alive!</h5>
-			<br>
+			
 			<div class="text-center">
-				<a class="btn btn-primary mb-0" href="/login">Login</a> 
-				<br> 
+				<div *ngIf="loggedin; else login" >
+					<!-- Suggestions -->
+					<p>Welcome {{ currentUser.username }}</p>
+				</div>
+
+				<ng-template #login>
+					<h3>Join BidIt Now!</h3>
+					<h6>do not wait up</h6>
+					<h5>this could be your last day alive!</h5>
+					<br>
+					<a class="btn btn-primary mb-0" href="/login">Login</a>
+					<br>
+					or
+					<br>
+					<a class="btn btn-primary mb-0" href="/register">Sign up</a>
+				</ng-template>
+				<!-- <br> 
 				or 
 				<br> 
-				<a class="btn btn-primary mb-0" href="/register">Register</a>
-				<br> now!
+				<a  href="/register">Register</a>
+				<br> now! -->
 			</div>
 			
 			<br>
@@ -102,4 +137,3 @@
 		<!-- <app-login></app-login> -->
 	</div>
 </div>
-

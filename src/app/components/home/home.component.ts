@@ -16,9 +16,18 @@ export class HomeComponent implements OnInit {
 
 	users: User[] = [];
 	currentUser: User;
+	loggedin: boolean;
 
 	constructor(private dataService: DataService) {
 		this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
+		if (this.currentUser){
+			this.loggedin = true;
+			console.log("yep");
+		}
+		else{
+			this.loggedin = false;
+			console.log("nope");
+		}
 	}
 
 	ngOnInit() {

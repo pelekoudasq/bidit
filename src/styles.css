@@ -113,4 +113,18 @@ footer {
 .btn-primary {
     background-color: #267174 !important;
     border-color: #267174 !important; 
+    /* border: 2px solid #267174 !important; */
+    /* border: none !important; */
+}
+
+.btn-primary:hover {
+    box-shadow: 11px 11px 13px -4px rgba(38,113,116,0.22) !important;
+    /* box-shadow: 0 8px 12px 0 rgba(0, 0, 0, 0.22), 0 25px 55px 0 rgba(0, 0, 0, 0.21) !important; */
+    background-color: transparent !important;
+    /* background-color: #9cbdbe !important; */
+    color: #267174 !important;
+}
+
+.btn-link {
+    color: #267174 !important;
 }
