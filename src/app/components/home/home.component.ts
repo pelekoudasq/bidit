@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { first } from 'rxjs/operators';
-
+import { Router, ActivatedRoute } from '@angular/router';
 import { AlertService } from '../../services/alert.service';
 import { AuthenticationService } from '../../services/authentication.service';
 import { DataService } from '../../services/data.service';
@@ -18,7 +18,9 @@ export class HomeComponent implements OnInit {
 	currentUser: User;
 	loggedin: boolean;
 
-	constructor(private dataService: DataService) {
+	constructor(
+		private dataService: DataService,
+		private router: Router) {
 		this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
 		if (this.currentUser){
 			this.loggedin = true;
@@ -26,14 +28,14 @@ export class HomeComponent implements OnInit {
 		else{
 			this.loggedin = false;
 		}
+		// console.log("sure");
+		// this.router.navigate(['/']);
+	
 	}
 
 	ngOnInit() {
-
-		this.dataService.getAll().pipe(first()).subscribe(users => { 
-			this.users = users; 
-			console.log(this.users);
-		});
+		
 		console.log(this.currentUser);
+		// this.router.navigate(['/']);
 	}
 }

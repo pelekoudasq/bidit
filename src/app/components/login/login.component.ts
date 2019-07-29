@@ -62,6 +62,7 @@ export class LoginComponent implements OnInit {
             .subscribe(
                 data => {
                     this.router.navigate([this.returnUrl]);
+                    // this.router.navigate(['/']);
                 },
                 error => {
                     this.alertService.error("Username or password is incorrect");
