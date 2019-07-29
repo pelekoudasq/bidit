@@ -7,11 +7,6 @@ import { AlertService } from '../../services/alert.service';
 import { AuthenticationService } from '../../services/authentication.service';
 import { DataService } from '../../services/data.service';
 
-// export interface UserType {
-//     value: Number;
-//     display: String;
-// }
-
 @Component({
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css']
@@ -20,15 +15,11 @@ export class RegisterComponent implements OnInit {
 	registerForm: FormGroup;
     loading = false;
     submitted = false;
-    // useAs: UserType[] = [
-    //     { value:1, display:"Bidder" },
-    //     { value:2, display:"Seller" }
-    // ]
 
 	constructor(
 		private formBuilder: FormBuilder,
         private router: Router,
-        // private dataService: DataService,
+        private dataService: DataService,
         private alertService: AlertService) { }
 
 	ngOnInit() {
@@ -58,16 +49,16 @@ export class RegisterComponent implements OnInit {
             return;
         }
         this.loading = true;
-        // this.dataService.register(this.registerForm.value)
-        //     .pipe(first())
-        //     .subscribe(
-        //         data => {
-        //             this.alertService.success('Registration successful', true);
-        //             this.router.navigate(['/login']);
-        //         },
-        //         error => {
-        //             this.alertService.error(error);
-        //             this.loading = false;
-        //         });
+        this.dataService.register(this.registerForm.value)
+            .pipe(first())
+            .subscribe(
+                data => {
+                    this.alertService.success('Registration successful', true);
+                    this.router.navigate(['/login']);
+                },
+                error => {
+                    this.alertService.error(error);
+                    this.loading = false;
+                });
     }
 }

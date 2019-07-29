@@ -10,29 +10,20 @@ const mongoose = require('mongoose');
 const User = require('./user.model');
 
 async function getById(id) {
-	//console.log(id);
 	await db.Users.findOne({_id: id}, function(err, user){
 		if(user){
-			//console.log('getById: user found');
 			return user;
 		}
-		//console.log('getById: USER NOT FOUND ' + err);
 		return null;
 	});
 }
 
 async function compareStuff(user, password){
 	if(user){
-		//console.log('User with this username found');
-		console.log(password + ' ' + user.password);
 		if (bcrypt.compareSync(password, user.password)){
-			//console.log('Correct password ' );
 			const token = jwt.sign({ sub: user.id }, config.secret); // <==== The all-important "jwt.sign" function
 			const userObj = new User(user);
 			const { password, ...userWithoutHash } = userObj.toObject();
-			//console.log('TOKEN: '+token);
-			//console.log(userObj);
-			//console.log(userWithoutHash);
 			return {
 				...userWithoutHash,
 				token
@@ -44,12 +35,10 @@ async function compareStuff(user, password){
 }
 
 router.get('/users', function(req, res, next) {
-	console.log('api: get users');
 	db.Users.find(function(err, users) {
 		if(err) {
 			res.send(err);
 		}
-		//console.log(users);
 		res.json(users);
 	});
 });
@@ -60,6 +49,49 @@ router.post('/users/authenticate', function(req, res, next) {
 		compareStuff(user, req.body.password)
 			.then(userRes => userRes ? res.json(userRes) : res.status(400).json({ error: 'Username or password is incorrect' }))
 			.catch(err => next(err));
+	});
+});
+
+//Save a new user
+router.post('/users/register', function(req, res, next){
+	console.log('api: post register');
+	var userParam = req.body;
+	db.Users.findOne({ email: userParam.email }, function(err, user){
+		if (user){
+			res.send(user);
+			return;
+		} else {
+			db.Users.findOne({ username: userParam.username }, function(err, user){
+				if (user) {
+					res.send(user);
+					return;
+				} else {
+					// hash password
+					userParam.password = bcrypt.hashSync(userParam.password, 10);
+					// save user
+					user = db.Users.save({
+						username: userParam.username,
+						first_name: userParam.firstName,
+						last_name: userParam.lastName,
+						email: userParam.email,
+						password: userParam.password,
+						phone: userParam.phone,
+						address: {
+							street: userParam.address,
+							city: userParam.city,
+							country: userParam.country,
+							zipcode: userParam.zipcode
+						},
+						bidderRating: 0,
+						sellerRating: 0,
+						admin: false,
+						approved: false
+					});
+					res.send(user);
+					return;
+				}
+			});
+		}
 	});
 });
 
