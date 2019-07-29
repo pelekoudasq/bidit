@@ -18,14 +18,14 @@
 	                    </div>
 	                </li>
 	            </div>
-	            <div class="navbar-nav my-2 my-lg-0">
-	                <div *ngIf="currentUser; else login" >
+	            <div class="navbar-nav my-2 my-lg-0" id="bar">
+	                <div *ngIf="loggedin">
 						<a class="btn nav-item nav-link" (click)="logout()">Logout</a>
 					</div>
-					<ng-template #login>
-	                    <a class="nav-item nav-link" href="/login">Login</a>
-	                    <a class="nav-item nav-link" href="/register">Sign up</a>
-	                </ng-template>
+					<div *ngIf="!loggedin">
+	                    <a class="d-inline nav-item nav-link" href="/login">Login</a>
+	                    <a class="d-inline nav-item nav-link" href="/register">Sign up</a>
+                    </div>
 	            </div>
 	        </div>
 	    </div>
@@ -71,4 +71,3 @@
         <a style="color: #444444;" target="_blank" href="https://github.com/pelekoudasq/"><i class="fa fa-github"></i></a>
     </div>
 </footer>
-

@@ -14,12 +14,14 @@ import { User } from '../models/user';
 export class AppComponent implements OnInit {
 
 	currentUser: User;
-//	loggedin: boolean;
+	// loggedin: boolean;
 
 	constructor(
 		private authenticationService: AuthenticationService,
 		private router: Router) {
 		this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
+		this.router.navigateByUrl('/home', {skipLocationChange: true}).then(()=>
+		this.router.navigate([""])); 
 		// this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
 		// if (this.currentUser){
 		// 	this.loggedin = true;
