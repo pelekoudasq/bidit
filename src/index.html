@@ -16,77 +16,9 @@
     <!-- <link rel="icon" type="image/x-icon" href="favicon.ico"> -->
 </head>
 <body>
-    <header class="site-header sticky-top shadow mb-6">
-        <nav class="navbar navbar-expand-lg navbar-dark bg-steel">
-            <div class="container-fluid">
-                <a class="navbar-brand mr-4" href="#">BidIt</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarToggle">
-                    <div class="navbar-nav mr-auto">
-                        <a class="nav-item nav-link" href="#">Home</a>
-                        <li class="nav-item dropdown" id="drop1">
-                            <a class="nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">My Items</a>
-                            <div class="dropdown-menu" id="drop2">
-                                <a class="dropdown-item" href="#">Wishlist</a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#">My Retail Shop</a>
-                            </div>
-                        </li>
-                    </div>
-                    <div class="navbar-nav my-2 my-lg-0">
-                        <!-- <div *ngIf="loggedin; else login" class="d-inline"> -->
-                            <a class="nav-item nav-link" href="#">Logout</a>
-                        <!-- </div> -->
-
-                        <!-- <ng-template #login> -->
-                            <a class="nav-item nav-link" href="/login">Login</a>
-                            <a class="nav-item nav-link" href="/register">Sign up</a>
-                        <!-- </ng-template> -->
-                        
-                    </div>
-                </div>
-            </div>
-        </nav>
-    </header>
-    <alert></alert>
+    
     <app-root></app-root>
-    <footer class="page-footer font-small blue pt-4">
-        <div class="container-fluid text-center text-md-left">
-            <div class="row">
-                <div class="col-md-2 mt-md-0 mt-2">
-                    <h6 class="text-uppercase">BidIt</h6>
-                        <p>All the... Auction, in one Place!</p>
-                </div>
-                <hr class="clearfix w-100 d-md-none pb-3">
-                <div class="col-md-2 mb-md-0 mb-2">
-                    <h6 class="text-uppercase">Option 1</h6>
-                    <ul class="list-unstyled">
-                        <li><a href="#" class="btn-link">Item 1</a></li>
-                        <li><a href="#" class="btn-link">Item 2</a></li>
-                        <li><a href="#" class="btn-link">Item 3</a></li>
-                    </ul>
-                </div>
-                <div class="col-md-2 mb-md-0 mb-2">
-                    <h6 class="text-uppercase">Links</h6>
-                    <ul class="list-unstyled">
-                        <div class="dropdown-divider"></div>
-                        <!-- {% if user.is_authenticated %} -->
-                            <li><a href="#" class="btn-link">Profile</a></li>
-                            <li><a href="#" class="btn-link">Logout</a></li>
-                        <!-- {% else %} -->
-                            <li><a href="/login" class="btn-link">Login</a></li>
-                            <li><a href="/register" class="btn-link">Sign Up</a></li>
-                        <!-- {% endif %} -->
-                    </ul>
-                </div>
-            </div>
-        </div>
-        <div class="footer-copyright text-center py-3">
-            <a style="color: #444444;" target="_blank" href="https://github.com/pelekoudasq/"><i class="fa fa-github"></i></a>
-        </div>
-    </footer>
+    
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js""></script>

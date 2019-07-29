@@ -22,11 +22,9 @@ export class HomeComponent implements OnInit {
 		this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
 		if (this.currentUser){
 			this.loggedin = true;
-			console.log("yep");
 		}
 		else{
 			this.loggedin = false;
-			console.log("nope");
 		}
 	}
 
