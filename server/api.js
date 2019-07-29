@@ -95,6 +95,26 @@ router.post('/users/register', function(req, res, next){
 	});
 });
 
+router.get('/users/approve/:id', function(req, res, next) {
+	console.log('api: post approve');
+	db.Users.update({ _id: mongojs.ObjectID(req.params.id) }, { $set: { approved: true } }, function(err, user) {
+		if(err) {
+			res.send(err);
+		}
+		res.json(user);
+	});
+});
+
+router.get('/users/disapprove/:id', function(req, res, next) {
+	console.log('api: post disapprove');
+	db.Users.update({ _id: mongojs.ObjectID(req.params.id) }, { $set: { approved: false } }, function(err, user) {
+		if(err) {
+			res.send(err);
+		}
+		res.json(user);
+	});
+});
+
 module.exports = {
 	router : router,
 	getById: getById

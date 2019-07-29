@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
 import { first } from 'rxjs/operators';
 
 import { AlertService } from '../../services/alert.service';
@@ -18,7 +19,11 @@ export class AdminComponent implements OnInit {
 	currentUser: User;
 	loggedin: boolean;
 
-	constructor(private dataService: DataService) {
+	constructor(
+		private route: ActivatedRoute,
+        private router: Router,
+		private dataService: DataService,
+		private alertService: AlertService) {
 
 	}
 
@@ -30,11 +35,31 @@ export class AdminComponent implements OnInit {
 		console.log(this.currentUser);
 	}
 
-	approve() {
-		console.log("approve clicked");
+	approve(user: User) {
+		console.log("approve clicked" + user._id);
+		this.dataService.approveUser(user._id)
+            .pipe(first())
+            .subscribe(
+                data => {
+                    this.router.navigate(['/admin']);
+                    window.location.reload();
+                },
+                error => {
+                    this.alertService.error("Approval denied");
+                });
 	}
 
-	disapprove() {
+	disapprove(user: User) {
 		console.log("disapprove clicked");
+		this.dataService.disapproveUser(user._id)
+            .pipe(first())
+            .subscribe(
+                data => {
+                    this.router.navigate(['/admin']);
+                    window.location.reload();
+                },
+                error => {
+                    this.alertService.error("Disapproval denied");
+                });
 	}
 }

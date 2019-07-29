@@ -12,6 +12,14 @@ export class DataService {
         return this.http.get<User[]>(`http://localhost:3000/api/users`);
     }
 
+    approveUser(id: number) {
+        return this.http.get(`http://localhost:3000/api/users/approve/` + id);
+    }
+
+    disapproveUser(id: number) {
+        return this.http.get(`http://localhost:3000/api/users/disapprove/` + id);
+    }
+
     getById(id: number) {
         return this.http.get(`http://localhost:3000/api/users/` + id);
     }
