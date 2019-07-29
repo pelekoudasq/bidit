@@ -11,7 +11,7 @@ import { User } from '../models/user';
 	styleUrls: ['./app.component.css']
 })
 
-export class AppComponent implements OnInit {
+export class AppComponent {
 
 	currentUser: User;
 	// loggedin: boolean;
@@ -20,8 +20,6 @@ export class AppComponent implements OnInit {
 		private authenticationService: AuthenticationService,
 		private router: Router) {
 		this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
-		this.router.navigateByUrl('/home', {skipLocationChange: true}).then(()=>
-		this.router.navigate([""])); 
 		// this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
 		// if (this.currentUser){
 		// 	this.loggedin = true;
@@ -33,12 +31,12 @@ export class AppComponent implements OnInit {
 		// }
 	}
 
-	ngOnInit() {
-
+	get isAdmin() {
+		return this.currentUser && this.currentUser.admin;
 	}
 
 	logout() {
-        this.authenticationService.logout();
-        this.router.navigate(['/login']);
-    }
+		this.authenticationService.logout();
+		this.router.navigate(['/login']);
+	}
 }

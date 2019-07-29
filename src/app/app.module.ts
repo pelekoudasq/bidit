@@ -6,7 +6,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { JwtInterceptor } from './jwt-interceptor';
 
 import { AlertComponent } from './guards/alert.component';
-import { AuthGuard } from './guards/auth.guard';
+import { AuthGuard, AuthGuardAdmin } from './guards/auth.guard';
 import { AlertService } from './services/alert.service';
 import { DataService } from './services/data.service';
 import { AuthenticationService } from './services/authentication.service';
@@ -35,6 +35,7 @@ import { AdminComponent } from './components/admin/admin.component';
   ],
   providers: [
     AuthGuard,
+    AuthGuardAdmin,
     AlertService,
     DataService,
     AuthenticationService,
