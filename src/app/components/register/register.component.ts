@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { first } from 'rxjs/operators';
 
 import { AlertService } from '../../services/alert.service';
+import { ModalService } from '../../services/modal.service';
 import { AuthenticationService } from '../../services/authentication.service';
 import { DataService } from '../../services/data.service';
 
@@ -20,7 +21,8 @@ export class RegisterComponent implements OnInit {
 		private formBuilder: FormBuilder,
         private router: Router,
         private dataService: DataService,
-        private alertService: AlertService) { }
+        private alertService: AlertService,
+        private modalService: ModalService) { }
 
 	ngOnInit() {
 		this.registerForm = this.formBuilder.group({
@@ -53,12 +55,21 @@ export class RegisterComponent implements OnInit {
             .pipe(first())
             .subscribe(
                 data => {
-                    this.alertService.success('Registration successful', true);
-                    this.router.navigate(['/login']);
+                    this.modalService.open('approval');
+                    // this.alertService.success('Registration successful.', true);
+                    // this.router.navigate(['/']);
                 },
                 error => {
                     this.alertService.error(error);
                     this.loading = false;
                 });
+    }
+
+    openModal(id: string) {
+        this.modalService.open(id);
+    }
+
+    closeModal(id: string) {
+        this.modalService.close(id);
     }
 }
