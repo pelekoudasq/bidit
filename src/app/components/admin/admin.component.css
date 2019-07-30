@@ -1,0 +1,13 @@
+.notstrong {
+    font-weight: 500;
+}
+
+.apprbutton {
+    background-color: rgb(63, 151, 97);
+    color: white;
+}
+
+.disbutton {
+    background-color: rgb(194, 77, 73);
+    color: white;
+}
