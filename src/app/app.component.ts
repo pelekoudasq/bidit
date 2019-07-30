@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
 import { AuthenticationService } from './services/authentication.service';
-
 import { User } from '../models/user';
+// import { LoginComponent } from './components/login/login.component';
 
 @Component({
 	selector: 'app-root',
@@ -14,21 +14,15 @@ import { User } from '../models/user';
 export class AppComponent {
 
 	currentUser: User;
-	// loggedin: boolean;
 
 	constructor(
 		private authenticationService: AuthenticationService,
-		private router: Router) {
-		this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
-		// this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
-		// if (this.currentUser){
-		// 	this.loggedin = true;
-		// 	console.log("yep");
-		// }
-		// else{
-		// 	this.loggedin = false;
-		// 	console.log("nope");
-		// }
+		private router: Router,) {
+		
+	}
+	
+	ngOnInit() {
+		this.authenticationService.currentUser.subscribe(x => this.currentUser = x);		
 	}
 
 	get isAdmin() {

@@ -10,10 +10,22 @@ export class AuthenticationService {
 
     private currentUserSubject: BehaviorSubject<User>;
     public currentUser: Observable<User>;
+    private user: User;
+    public loggedin: boolean;
+    public isAdmin: boolean;
 
     constructor(private http: HttpClient) {
         this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('currentUser')));
         this.currentUser = this.currentUserSubject.asObservable();
+        this.loggedin = false;
+        this.isAdmin = false;
+        this.currentUser.subscribe(x => this.user = x);
+        
+        if (this.user){
+            this.loggedin = true;
+            this.isAdmin = this.user.admin;
+            console.log(this.user.admin);
+        }            
     }
 
     public get currentUserValue(): User {
@@ -28,6 +40,8 @@ export class AuthenticationService {
                     // store user details and jwt token in local storage to keep user logged in between page refreshes
                     localStorage.setItem('currentUser', JSON.stringify(user));
                 }
+                this.loggedin = true;
+                this.isAdmin = user.admin;
                 return user;
             }));
     }
@@ -36,5 +50,7 @@ export class AuthenticationService {
         // remove user from local storage to log user out
         localStorage.removeItem('currentUser');
         this.currentUserSubject.next(null);
+        this.loggedin = false;
+        this.isAdmin = false;
     }
 }

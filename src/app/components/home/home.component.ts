@@ -28,14 +28,10 @@ export class HomeComponent implements OnInit {
 		else{
 			this.loggedin = false;
 		}
-		// console.log("sure");
-		// this.router.navigate(['/']);
 	
 	}
 
 	ngOnInit() {
 		
-		console.log(this.currentUser);
-		// this.router.navigate(['/']);
 	}
 }

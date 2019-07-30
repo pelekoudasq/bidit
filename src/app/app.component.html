@@ -17,13 +17,13 @@
 	                        <a class="dropdown-item" href="#">My Retail Shop</a>
 	                    </div>
 	                </li>
-	                <a class="nav-item nav-link" routerLink="/admin" *ngIf="isAdmin">Admin</a>
+	                <a class="nav-item nav-link" routerLink="/admin" *ngIf="authenticationService.isAdmin">Admin</a>
 	            </div>
 	            <div class="navbar-nav my-2 my-lg-0" id="bar">
-	                <div *ngIf="currentUser">
+	                <div *ngIf="authenticationService.loggedin">
 						<a class="btn d-inline nav-item nav-link" (click)="logout()">Logout</a>
 					</div>
-					<div *ngIf="!currentUser">
+					<div *ngIf="!authenticationService.loggedin">
 	                    <a class="d-inline nav-item nav-link" href="/login">Login</a>
 	                    <a class="d-inline nav-item nav-link" href="/register">Sign up</a>
                     </div>
