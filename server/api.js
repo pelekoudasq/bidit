@@ -39,7 +39,7 @@ async function compareStuff(user, password){
 // get all users
 router.get('/users', function(req, res, next) {
 	db.Users.find(function(err, users) {
-		if(err) {
+		if (err) {
 			res.send(err);
 		}
 		res.json(users);
@@ -50,7 +50,7 @@ router.get('/users', function(req, res, next) {
 router.get('/auctions', function(req, res, next) {
 	console.log("api: auctions");
 	db.Auctions.find(function(err, auctions) {
-		if(err) {
+		if (err) {
 			res.send(err);
 		}
 		res.json(auctions);
@@ -61,7 +61,7 @@ router.get('/auctions', function(req, res, next) {
 router.get('/auctions/:id', function(req, res, next) {
 	console.log('api: auction of user');
 	db.Auctions.find({ "seller_id": req.params.id }, function(err, auctions) {
-		if(err) {
+		if (err) {
 			res.send(err);
 		}
 		res.json(auctions);
@@ -72,19 +72,29 @@ router.get('/auctions/:id', function(req, res, next) {
 router.get('/auction/:id', function(req, res, next) {
 	console.log('api: auction by Id');
 	db.Auctions.findOne({ _id: mongojs.ObjectID(req.params.id) }, function(err, auction) {
-		if(err) {
+		if (err) {
 			res.send(err);
 		}
-		console.log(auction.name);
 		res.json(auction);
 	});
 });
 
-// find bid by bidder_id
+// find bid by id
+router.get('/bid/:id', function(req, res, next) {
+	console.log('api: bid by Id '+req.params.id);
+	db.Bids.findOne({ _id: mongojs.ObjectID(req.params.id) }, function(err, bid) {
+		if (err) {
+			res.send(err);
+		}
+		res.json(bid);
+	});
+});
+
+// find bids by bidder_id
 router.get('/bids/:id', function(req, res, next) {
-	console.log('api: auction of user');
+	console.log('api: bid of bidder');
 	db.Bids.find({ "bidder_id": req.params.id }, function(err, bids) {
-		if(err) {
+		if (err) {
 			res.send(err);
 		}
 		res.json(bids);
@@ -146,7 +156,7 @@ router.post('/users/register', function(req, res, next){
 router.get('/users/approve/:id', function(req, res, next) {
 	console.log('api: post approve');
 	db.Users.update({ _id: mongojs.ObjectID(req.params.id) }, { $set: { approved: true } }, function(err, user) {
-		if(err) {
+		if (err) {
 			res.send(err);
 		}
 		res.json(user);
@@ -156,7 +166,7 @@ router.get('/users/approve/:id', function(req, res, next) {
 router.get('/users/disapprove/:id', function(req, res, next) {
 	console.log('api: post disapprove');
 	db.Users.update({ _id: mongojs.ObjectID(req.params.id) }, { $set: { approved: false } }, function(err, user) {
-		if(err) {
+		if (err) {
 			res.send(err);
 		}
 		res.json(user);

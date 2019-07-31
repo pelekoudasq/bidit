@@ -15,7 +15,7 @@ const routes: Routes = [
 	{ path: 'register', component: RegisterComponent },
 	{ path: 'admin', component: AdminComponent, canActivate: [AuthGuardAdmin] },
 	{ path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
-	{ path: 'auction', component: AuctionComponent },
+	{ path: 'auction/:id', component: AuctionComponent },
 	{ path: '**', redirectTo: '' }
 ];
 

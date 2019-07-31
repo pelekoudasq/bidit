@@ -13,7 +13,7 @@ export class DataService {
         return this.http.get<User[]>(`http://localhost:3000/api/users`);
     }
 
-    getUserAuctions(id: number) {
+    getUserAuctions(id: string) {
         return this.http.get<Auction[]>(`http://localhost:3000/api/auctions/` + id);
     }
 
@@ -21,19 +21,23 @@ export class DataService {
         return this.http.get<Auction[]>(`http://localhost:3000/api/auctions`);
     }
 
-    getAuction(id: number) {
+    getAuction(id: string) {
         return this.http.get<Auction>(`http://localhost:3000/api/auction/` + id);
     }
 
-    getUserBids(id:number) {
+    getBid(id: string) {
+        return this.http.get<Bid>(`http://localhost:3000/api/bid/` + id);
+    }
+
+    getUserBids(id: string) {
         return this.http.get<Bid[]>(`http://localhost:3000/api/bids/` + id);
     }
 
-    approveUser(id: number) {
+    approveUser(id: string) {
         return this.http.get(`http://localhost:3000/api/users/approve/` + id);
     }
 
-    disapproveUser(id: number) {
+    disapproveUser(id: string) {
         return this.http.get(`http://localhost:3000/api/users/disapprove/` + id);
     }
 

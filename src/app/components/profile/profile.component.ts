@@ -48,9 +48,13 @@ export class ProfileComponent implements OnInit {
 				this.loading = true;
 			});
 		});
+	}
 
-		
-		
-		
+	onNameClick(id: string) {
+		console.log("clicked");
+		if (id) {
+			console.log("with id " + id);
+			this.router.navigate(['/auction', id]);
+		}
 	}
 }

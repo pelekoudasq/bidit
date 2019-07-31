@@ -40,19 +40,19 @@
 						<button class="btn btn-link pl-0" type="button" data-toggle="collapse" [attr.data-target]=" '#collapseExample'+i" aria-expanded="false" aria-controls="collapseExample">
 						<i class="fa fa-angle-down"></i>
 						</button>
-						{{ bid.name }}
+						<button class="btn btn-link" (click)="onNameClick(bid.auction_id)">{{ bid.name }}</button>
 						<!-- <button class="btn apprbutton float-right" >Start auction</button> -->
 						<div class="collapse" id="collapseExample{{i}}">
 							<div class="card card-body mt-2 border-bottom-0 border-right-0 border-left-0 border-top rounded-0">
 								<div class="row">
 									<div class="col-sm">
-										<span class="font-italic">Your offer:</span>  <br>
+										<span class="font-italic">Your offer:</span><br>
 										<span class="notstrong">Price:</span> {{bid.amount}} <span>$</span><br>
 										<span class="notstrong">Time of offer:</span> {{bid.time}} <br>
 										<!-- <span class="notstrong">Starting Price:</span> {{bid.first_bid}} <span>$</span><br> -->
 									</div>
 									<div class="col-sm">
-										<span class="font-italic">Currently:</span> <br>
+										<span class="font-italic">Currently:</span><br>
 										<span class="notstrong">Current Price:</span> {{bid.current}} <span>$</span><br>
 										<!-- <span class="notstrong">Starting Time:</span> {{auct.started}} <br> -->
 										<span class="notstrong">Ending Time:</span> {{bid.ends}} <br>
@@ -62,7 +62,7 @@
 						</div>			
 					</li>
 				</ng-container>
-				<div *ngIf="bids == 0" class="font-weight-light font-italic">No auctions</div>
+				<div *ngIf="bids == 0" class="font-weight-light font-italic">No bids</div>
 			</ul>
 		<br><br>
 	</div>

@@ -1,7 +1,7 @@
 export class Bid {
-    _id: number;
-    auction_id: number;
-    bidder_id: number;
+    _id: string;
+    auction_id: string;
+    bidder_id: string;
     time: string;
     amount: number;
     // -------------------
@@ -11,18 +11,18 @@ export class Bid {
 }
 
 export class Auction {
-    _id: number;
+    _id: string;
     name: string;
     categories: any[];
     currently: number;
     first_bid: number;
     buy_price: number;
     number_of_bids: number;
-    bids: Bid[];
+    bids: string[];
     location: string;
     country: string;
     started: string;
     ends: string;
-    seller_id: number;
+    seller_id: string;
     description: string;
 }
