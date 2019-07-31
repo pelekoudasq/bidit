@@ -44,12 +44,12 @@
 <ul class="list-group">
 	<ng-container *ngFor="let user of approvedUsers; index as i">
 		<li class="list-group-item" *ngIf="user.approved">
-			<button class="btn btn-link pl-0" type="button" data-toggle="collapse" [attr.data-target]=" '#collapseExample'+i" aria-expanded="false" aria-controls="collapseExample">
+			<button class="btn btn-link pl-0" type="button" data-toggle="collapse" [attr.data-target]=" '#collapseExample2'+i" aria-expanded="false" aria-controls="collapseExample">
 			<i class="fa fa-angle-down"></i>
 			</button>
 			{{user.first_name}} {{user.last_name}}, <span class="notstrong">Admin:</span>  {{user.admin}}
 			<button class="btn disbutton float-right" (click)="disapprove(user)">Disapprove</button>
-			<div class="collapse" id="collapseExample{{i}}">
+			<div class="collapse" id="collapseExample2{{i}}">
 				<div class="card card-body mt-2 border-bottom-0 border-right-0 border-left-0 border-top rounded-0">
 					<div class="row">
 						<div class="col-sm">
