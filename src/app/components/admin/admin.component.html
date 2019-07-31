@@ -3,40 +3,39 @@
 <div class="container">
 <h5>Pending Users</h5>
 <ul class="list-group">
-	<ng-container  *ngFor="let user of users; index as i">
+	<ng-container *ngFor="let user of disapprovedUsers; index as i">
 		<li class="list-group-item" *ngIf="!user.approved">
-				<button class="btn btn-link pl-0" type="button" data-toggle="collapse" [attr.data-target]=" '#collapseExample'+i" aria-expanded="false" aria-controls="collapseExample">
-				<i class="fa fa-angle-down"></i>
-				</button>
-	
-				{{user.first_name}} {{user.last_name}}, <span class="notstrong">Admin:</span>  {{user.admin}}
-				<button class="btn apprbutton float-right" (click)="approve(user)">Approve</button>
-				<div class="collapse" id="collapseExample{{i}}">
-					<div class="card card-body mt-2 border-bottom-0 border-right-0 border-left-0 border-top rounded-0">
-						<div class="row">
-							<div class="col-sm">
-								<span class="notstrong">Username:</span> {{user.username}} <br>
-								<span class="notstrong">Email:</span> {{user.email}} <br>
-								<span class="notstrong">Rating as Seller:</span> {{user.sellerRating}} <br>
-								<span class="notstrong">Rating as Bidder:</span> {{user.bidderRating}} <br>
-							</div>
-							<div class="col-sm">
-								<span class="notstrong">Address:</span> {{user.address.street}}, {{user.address.city}} <br>
-								<span class="notstrong">Zipcode:</span> {{user.address.zipcode}} <br>
-								<span class="notstrong">Country:</span> {{user.address.country}} <br>
-								<span class="notstrong">Phone:</span> {{user.phone}} <br>
-							</div>
-						</div>				
-					</div>
-				</div>			
+			<button class="btn btn-link pl-0" type="button" data-toggle="collapse" [attr.data-target]=" '#collapseExample'+i" aria-expanded="false" aria-controls="collapseExample">
+			<i class="fa fa-angle-down"></i>
+			</button>
+			{{user.first_name}} {{user.last_name}}, <span class="notstrong">Admin:</span>  {{user.admin}}
+			<button class="btn apprbutton float-right" (click)="approve(user)">Approve</button>
+			<div class="collapse" id="collapseExample{{i}}">
+				<div class="card card-body mt-2 border-bottom-0 border-right-0 border-left-0 border-top rounded-0">
+					<div class="row">
+						<div class="col-sm">
+							<span class="notstrong">Username:</span> {{user.username}} <br>
+							<span class="notstrong">Email:</span> {{user.email}} <br>
+							<span class="notstrong">Rating as Seller:</span> {{user.sellerRating}} <br>
+							<span class="notstrong">Rating as Bidder:</span> {{user.bidderRating}} <br>
+						</div>
+						<div class="col-sm">
+							<span class="notstrong">Address:</span> {{user.address.street}}, {{user.address.city}} <br>
+							<span class="notstrong">Zipcode:</span> {{user.address.zipcode}} <br>
+							<span class="notstrong">Country:</span> {{user.address.country}} <br>
+							<span class="notstrong">Phone:</span> {{user.phone}} <br>
+						</div>
+					</div>				
+				</div>
+			</div>			
 		</li>
-	</ng-container>	
-	<!-- <div>No pending users.</div> -->
+	</ng-container>
+	<div *ngIf="disapprovedUsers == 0" class="font-weight-light font-italic">No pending users</div>
 </ul>
 <br>
 <h5>Approved Users</h5>
 <ul class="list-group">
-	<ng-container *ngFor="let user of users; index as i">
+	<ng-container *ngFor="let user of approvedUsers; index as i">
 		<li class="list-group-item" *ngIf="user.approved">
 			<button class="btn btn-link pl-0" type="button" data-toggle="collapse" [attr.data-target]=" '#collapseExample'+i" aria-expanded="false" aria-controls="collapseExample">
 			<i class="fa fa-angle-down"></i>
@@ -63,5 +62,13 @@
 			</div>
 		</li>
 	</ng-container>
-	</ul>
+	<div *ngIf="approvedUsers == 0" class="font-weight-light font-italic">No approved users</div>
+</ul>
+<br><br>
+<nav aria-label="breadcrumb">
+	<ol class="breadcrumb">
+		<li class="breadcrumb-item"><a class="btn-link" href="/">Home</a></li>
+		<li class="breadcrumb-item active" aria-current="page">Admin Page</li>
+	</ol>
+</nav>
 </div>

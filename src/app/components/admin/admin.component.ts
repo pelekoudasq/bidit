@@ -16,6 +16,8 @@ import { User } from '../../models/user';
 export class AdminComponent implements OnInit {
 
 	users: User[] = [];
+	approvedUsers: User[] = [];
+	disapprovedUsers: User[] = [];
 	currentUser: User;
 	loggedin: boolean;
 
@@ -30,10 +32,17 @@ export class AdminComponent implements OnInit {
 	ngOnInit() {
 		this.dataService.getAll().pipe(first()).subscribe(users => { 
 			this.users = users; 
-			console.log(this.users);
+			for (var i = 0; i < this.users.length; i++) {
+				if (this.users[i].approved)
+					this.approvedUsers.push(this.users[i]);
+				else
+					this.disapprovedUsers.push(this.users[i]);
+			}
+			console.log(this.approvedUsers.length);
+			console.log(this.disapprovedUsers.length);
 		});
 		console.log(this.currentUser);
-	}
+	}	
 
 	approve(user: User) {
 		console.log("approve clicked" + user._id);
