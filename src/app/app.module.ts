@@ -19,6 +19,7 @@ import { RegisterComponent } from './components/register/register.component';
 import { HomeComponent } from './components/home/home.component';
 import { AdminComponent } from './components/admin/admin.component';
 import { ProfileComponent } from './components/profile/profile.component';
+import { AuctionComponent } from './components/auction/auction.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { ProfileComponent } from './components/profile/profile.component';
     RegisterComponent,
     HomeComponent,
     AdminComponent,
-    ProfileComponent
+    ProfileComponent,
+    AuctionComponent
   ],
   imports: [
     BrowserModule,

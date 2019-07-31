@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 import { User } from '../../models/user';
+import { Auction, Bid } from '../models/auction';
 
 @Injectable()
 export class DataService {
@@ -10,6 +11,22 @@ export class DataService {
     getAll() {
     	console.log("get all users");
         return this.http.get<User[]>(`http://localhost:3000/api/users`);
+    }
+
+    getUserAuctions(id: number) {
+        return this.http.get<Auction[]>(`http://localhost:3000/api/auctions/` + id);
+    }
+
+    getAuctions() {
+        return this.http.get<Auction[]>(`http://localhost:3000/api/auctions`);
+    }
+
+    getAuction(id: number) {
+        return this.http.get<Auction>(`http://localhost:3000/api/auction/` + id);
+    }
+
+    getUserBids(id:number) {
+        return this.http.get<Bid[]>(`http://localhost:3000/api/bids/` + id);
     }
 
     approveUser(id: number) {

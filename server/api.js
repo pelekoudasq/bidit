@@ -8,6 +8,8 @@ const jwt = require('jsonwebtoken');
 const mongoose = require('mongoose');
 
 const User = require('./user.model');
+const Auction = require('./auction.model');
+const Bid = require('./bid.model');
 
 async function getById(id) {
 	await db.Users.findOne({_id: id}, function(err, user){
@@ -34,12 +36,58 @@ async function compareStuff(user, password){
 	}
 }
 
+// get all users
 router.get('/users', function(req, res, next) {
 	db.Users.find(function(err, users) {
 		if(err) {
 			res.send(err);
 		}
 		res.json(users);
+	});
+});
+
+// get all auctions
+router.get('/auctions', function(req, res, next) {
+	console.log("api: auctions");
+	db.Auctions.find(function(err, auctions) {
+		if(err) {
+			res.send(err);
+		}
+		res.json(auctions);
+	});
+});
+
+// find auctions by seller_id
+router.get('/auctions/:id', function(req, res, next) {
+	console.log('api: auction of user');
+	db.Auctions.find({ "seller_id": req.params.id }, function(err, auctions) {
+		if(err) {
+			res.send(err);
+		}
+		res.json(auctions);
+	});
+});
+
+// find auction by id
+router.get('/auction/:id', function(req, res, next) {
+	console.log('api: auction by Id');
+	db.Auctions.findOne({ _id: mongojs.ObjectID(req.params.id) }, function(err, auction) {
+		if(err) {
+			res.send(err);
+		}
+		console.log(auction.name);
+		res.json(auction);
+	});
+});
+
+// find bid by bidder_id
+router.get('/bids/:id', function(req, res, next) {
+	console.log('api: auction of user');
+	db.Bids.find({ "bidder_id": req.params.id }, function(err, bids) {
+		if(err) {
+			res.send(err);
+		}
+		res.json(bids);
 	});
 });
 

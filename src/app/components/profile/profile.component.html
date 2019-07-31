@@ -2,17 +2,75 @@
 <div class="container">
 <br>
 <h5>My Dashboard <br> <small>Auction Management Page</small></h5>
-	<div class="content-section">
+	<div class="content-section" *ngIf="loading">
 		<h6>My Auctions</h6>
+		<ul class="list-group">
+			<ng-container *ngFor="let auct of auctions; index as i">
+				<li class="list-group-item">
+					<button class="btn btn-link pl-0" type="button" data-toggle="collapse" [attr.data-target]=" '#collapseExample'+i" aria-expanded="false" aria-controls="collapseExample">
+					<i class="fa fa-angle-down"></i>
+					</button>
+					{{ auct.name }}
+					<button class="btn apprbutton float-right" >Start auction</button>
+					<div class="collapse" id="collapseExample{{i}}">
+						<div class="card card-body mt-2 border-bottom-0 border-right-0 border-left-0 border-top rounded-0">
+							<div class="row">
+								<div class="col-sm">
+									<span class="notstrong">Categories:</span> {{auct.categories}} <br>
+									<span class="notstrong">Currently at:</span> {{auct.currently}} <span>$</span><br>
+									<span class="notstrong">Starting Price:</span> {{auct.first_bid}} <span>$</span><br>
+								</div>
+								<div class="col-sm">
+									<span class="notstrong">Number of bids made so far:</span> {{auct.number_of_bids}} <br>
+									<span class="notstrong">Starting Time:</span> {{auct.started}} <br>
+									<span class="notstrong">Ending Time:</span> {{auct.ends}} <br>
+								</div>
+							</div>				
+						</div>
+					</div>			
+				</li>
+			</ng-container>
+			<div *ngIf="auctions == 0" class="font-weight-light font-italic">No auctions</div>
+		</ul>
 		<br><br>
 		<h6>My Bids</h6>
+		<ul class="list-group">
+				<ng-container *ngFor="let bid of bids; index as i">
+					<li class="list-group-item">
+						<button class="btn btn-link pl-0" type="button" data-toggle="collapse" [attr.data-target]=" '#collapseExample'+i" aria-expanded="false" aria-controls="collapseExample">
+						<i class="fa fa-angle-down"></i>
+						</button>
+						{{ bid.name }}
+						<!-- <button class="btn apprbutton float-right" >Start auction</button> -->
+						<div class="collapse" id="collapseExample{{i}}">
+							<div class="card card-body mt-2 border-bottom-0 border-right-0 border-left-0 border-top rounded-0">
+								<div class="row">
+									<div class="col-sm">
+										<span class="font-italic">Your offer:</span>  <br>
+										<span class="notstrong">Price:</span> {{bid.amount}} <span>$</span><br>
+										<span class="notstrong">Time of offer:</span> {{bid.time}} <br>
+										<!-- <span class="notstrong">Starting Price:</span> {{bid.first_bid}} <span>$</span><br> -->
+									</div>
+									<div class="col-sm">
+										<span class="font-italic">Currently:</span> <br>
+										<span class="notstrong">Current Price:</span> {{bid.current}} <span>$</span><br>
+										<!-- <span class="notstrong">Starting Time:</span> {{auct.started}} <br> -->
+										<span class="notstrong">Ending Time:</span> {{bid.ends}} <br>
+									</div>
+								</div>				
+							</div>
+						</div>			
+					</li>
+				</ng-container>
+				<div *ngIf="bids == 0" class="font-weight-light font-italic">No auctions</div>
+			</ul>
 		<br><br>
 	</div>
-	<nav aria-label="breadcrumb">
+	<!-- <nav aria-label="breadcrumb">
 		<ol class="breadcrumb">
 			<li class="breadcrumb-item"><a class="btn-link" href="/">Home</a></li>
 			<li class="breadcrumb-item active" aria-current="page">Profile</li>
 		</ol>
-	</nav>
+	</nav> -->
 </div>
 
