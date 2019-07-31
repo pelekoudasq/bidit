@@ -38,14 +38,10 @@ export class AdminComponent implements OnInit {
 				else
 					this.disapprovedUsers.push(this.users[i]);
 			}
-			console.log(this.approvedUsers.length);
-			console.log(this.disapprovedUsers.length);
 		});
-		console.log(this.currentUser);
 	}	
 
 	approve(user: User) {
-		console.log("approve clicked" + user._id);
 		this.dataService.approveUser(user._id)
             .pipe(first())
             .subscribe(
@@ -59,7 +55,6 @@ export class AdminComponent implements OnInit {
 	}
 
 	disapprove(user: User) {
-		console.log("disapprove clicked");
 		this.dataService.disapproveUser(user._id)
             .pipe(first())
             .subscribe(

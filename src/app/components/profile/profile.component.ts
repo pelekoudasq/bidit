@@ -39,7 +39,6 @@ export class ProfileComponent implements OnInit {
 				this.bids = bids;
 				for(let i = 0; i < this.bids.length; i++) {
 					this.dataService.getAuction(this.bids[i].auction_id).pipe(first()).subscribe(auction => {
-						console.log(auction);
 						this.bids[i].name = auction.name;
 						this.bids[i].current = auction.currently;
 						this.bids[i].ends = auction.ends;					
@@ -51,10 +50,7 @@ export class ProfileComponent implements OnInit {
 	}
 
 	onNameClick(id: string) {
-		console.log("clicked");
-		if (id) {
-			console.log("with id " + id);
+		if (id)
 			this.router.navigate(['/auction', id]);
-		}
 	}
 }

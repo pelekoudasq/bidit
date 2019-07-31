@@ -75,13 +75,13 @@
 		</div>
 	</div>
 	<div class="col-sm-8">
-
-		<form [formGroup]="" class="form-inline justify-content-center my-4">
-			<input class="form-control w-75 shadow-sm mb-0 bg-white rounded" type="search" placeholder="Search for anything" aria-label="Search" value="">
-			<button class="btn btn-primary mx-2 mb-0" type="submit" value="Search">Search</button>
+		<form [formGroup]="" class="input-group form-inline justify-content-center my-4">
+			<input class="form-control" type="text" placeholder="Search for anything" aria-label="Search" value="">
+			<span class="input-group-btn">
+				<button class="btn btn-default" type="submit" value="Search" style="background-color: white !important; border: 1px solid #ced4da !important; border-left-color: transparent!important;"><i class="fa fa-search" aria-hidden="true"></i></button>
+			</span>
 		</form>
-
-		<div class="container" ><h5>All Auctions</h5>
+		<div class="container" ><h5>All Auctions</h5><span class="glyphicon glyphicon-leaf" aria-hidden="false"></span>
 			<div class="row">
 				<div *ngFor="let auction of auctions" class="card col-sm-4 my-1 mx-0.5 content-section">
 					<img src="https://www.freeiconspng.com/uploads/no-image-icon-13.png" class="card-img-top img-fluid mx-auto w-75" alt="...">

@@ -24,7 +24,6 @@ export class AuthenticationService {
         if (this.user){
             this.loggedin = true;
             this.isAdmin = this.user.admin;
-            console.log(this.user.admin);
         }            
     }
 

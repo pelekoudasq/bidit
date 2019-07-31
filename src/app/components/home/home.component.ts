@@ -40,10 +40,7 @@ export class HomeComponent implements OnInit {
 	}
 
 	onNameClick(id: string) {
-		console.log("clicked");
-		if (id) {
-			console.log("with id " + id);
+		if (id)
 			this.router.navigate(['/auction', id]);
-		}
 	}
 }

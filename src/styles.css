@@ -28,6 +28,10 @@ footer {
     width: 100%;
 }
 
+div.container a.input-group-btn {
+    font-size: 14px;
+}
+
 .asteriskField {
     display: none;
 }
