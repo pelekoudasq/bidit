@@ -6,6 +6,7 @@ import { AuthenticationService } from '../../services/authentication.service';
 import { DataService } from '../../services/data.service';
 
 import { User } from '../../models/user';
+import { Auction } from '../../models/auction';
 
 @Component({
 	selector: 'app-home',
@@ -17,6 +18,7 @@ export class HomeComponent implements OnInit {
 	users: User[] = [];
 	currentUser: User;
 	loggedin: boolean;
+	auctions: Auction[] = [];
 
 	constructor(
 		private dataService: DataService,
@@ -32,6 +34,8 @@ export class HomeComponent implements OnInit {
 	}
 
 	ngOnInit() {
-		
+		this.dataService.getAuctions().pipe(first()).subscribe(auctions => {
+			this.auctions = auctions;
+		});
 	}
 }
