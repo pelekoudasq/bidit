@@ -46,6 +46,17 @@ router.get('/users', function(req, res, next) {
 	});
 });
 
+// find user by id
+router.get('/user/:id', function(req, res, next) {
+	console.log('api: user by Id');
+	db.Users.findOne({ _id: mongojs.ObjectID(req.params.id) }, function(err, user) {
+		if (err) {
+			res.send(err);
+		}
+		res.json(user);
+	});
+});
+
 // get all auctions
 router.get('/auctions', function(req, res, next) {
 	console.log("api: auctions");

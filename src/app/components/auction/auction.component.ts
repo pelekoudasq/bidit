@@ -20,11 +20,13 @@ export class AuctionComponent implements OnInit {
 	bids: Bid[] = [];
 	currentUser: User;
 	loading: boolean = false;
+	seller: User;
 
 	constructor(
 		private route: ActivatedRoute,
 		private router: Router,
-		private dataService: DataService) {
+		private dataService: DataService,
+		private authenticationService: AuthenticationService) {
 
 		this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
 	}
@@ -33,12 +35,16 @@ export class AuctionComponent implements OnInit {
 		this.requestedAuction = this.route.snapshot.params.id;
 		this.dataService.getAuction(this.requestedAuction).pipe(first()).subscribe(auction => {
 			this.auction = auction;
-			for (var i = 0; i < this.auction.bids.length; i++) {
-				this.dataService.getBid(this.auction.bids[i]).pipe(first()).subscribe(bid => {
-					this.bids.push(bid);
-				});
-			}
-			this.loading = true;
+
+			this.dataService.getById(auction.seller_id).pipe(first()).subscribe(user => {
+				this.seller = user;
+				for (var i = 0; i < this.auction.bids.length; i++) {
+					this.dataService.getBid(this.auction.bids[i]).pipe(first()).subscribe(bid => {
+						this.bids.push(bid);
+					});
+				}
+				this.loading = true;
+			});
 		});
 	}
 

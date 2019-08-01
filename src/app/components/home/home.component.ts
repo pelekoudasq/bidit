@@ -22,14 +22,9 @@ export class HomeComponent implements OnInit {
 
 	constructor(
 		private dataService: DataService,
-		private router: Router) {
+		private router: Router,
+		private authenticationService: AuthenticationService) {
 		this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
-		if (this.currentUser){
-			this.loggedin = true;
-		}
-		else{
-			this.loggedin = false;
-		}
 	
 	}
 

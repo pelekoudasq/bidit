@@ -13,7 +13,8 @@ function jwt() {
             '/api/users/register',
             '/api/auctions',
             { url: /^\/api\/auction\/.*/},
-            { url: /^\/api\/bid\/.*/}
+            { url: /^\/api\/bid\/.*/},
+            { url: /^\/api\/user\/.*/}
         ]
     });
 }

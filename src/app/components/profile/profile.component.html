@@ -1,16 +1,16 @@
 <br>
 <div class="container">
 <br>
-<h5>My Dashboard <br> <small>Auction Management Page</small></h5>
+<h5>My Dashboard</h5>
 	<div class="content-section" *ngIf="loading">
 		<h6>My Auctions</h6>
-		<ul class="list-group">
+		<ul class="list-group pt-1">
 			<ng-container *ngFor="let auct of auctions; index as i">
 				<li class="list-group-item">
 					<button class="btn btn-link pl-0" type="button" data-toggle="collapse" [attr.data-target]=" '#collapseExample'+i" aria-expanded="false" aria-controls="collapseExample">
 					<i class="fa fa-angle-down"></i>
 					</button>
-					{{ auct.name }}
+					<button class="btn btn-link" (click)="onNameClick(auct._id)">{{ auct.name }}</button>
 					<button class="btn apprbutton float-right" >Start auction</button>
 					<div class="collapse" id="collapseExample{{i}}">
 						<div class="card card-body mt-2 border-bottom-0 border-right-0 border-left-0 border-top rounded-0">
@@ -34,7 +34,7 @@
 		</ul>
 		<br><br>
 		<h6>My Bids</h6>
-		<ul class="list-group">
+		<ul class="list-group pt-1">
 				<ng-container *ngFor="let bid of bids; index as i">
 					<li class="list-group-item">
 						<button class="btn btn-link pl-0" type="button" data-toggle="collapse" [attr.data-target]=" '#collapseExample'+i" aria-expanded="false" aria-controls="collapseExample">
