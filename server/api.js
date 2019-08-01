@@ -164,6 +164,29 @@ router.post('/users/register', function(req, res, next){
 	});
 });
 
+//Save a new auction
+router.post('/newauction', function(req, res, next){
+	console.log('api: new auction register');
+	var auctionParams = req.body;	
+	// save auction
+	auction = new Auction();
+	auction = db.Auctions.save({
+		name: auctionParams.productName,
+		categories: [],
+		currently: auctionParams.startingPrice,
+		first_bid: auctionParams.startingPrice,
+		buy_price: auctionParams.buyPrice,
+		number_of_bids: 0,
+		bids: [],
+		location: auctionParams.location,
+		country: auctionParams.country,
+		seller_id: req.body.id,
+		description: auctionParams.description
+	});
+	res.send(auction);
+	return;
+});
+
 router.get('/users/approve/:id', function(req, res, next) {
 	console.log('api: post approve');
 	db.Users.update({ _id: mongojs.ObjectID(req.params.id) }, { $set: { approved: true } }, function(err, user) {

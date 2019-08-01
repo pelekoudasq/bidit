@@ -1,0 +1,62 @@
+<div class="row justify-content-center">
+    <div class="col-md-6 content-section shadow mb-6">
+        <form [formGroup]="auctionForm" (ngSubmit)="onSubmit()">
+            <legend class="border-bottom mb-4">New Auction</legend>
+            <div class="form-group">
+                <label for="productName">Product Name</label>
+                <input type="text" formControlName="productName" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.productName.errors }" />
+                <div *ngIf="submitted && f.productName.errors" class="invalid-feedback">
+                    <div *ngIf="f.productName.errors.required">Product Name is required</div>
+                </div>
+            </div>
+            <div class="form-row form-group">
+                <div class="col">
+                    <label for="startingPrice">Starting Price</label>
+                    <input type="number" formControlName="startingPrice" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.startingPrice.errors }" />
+                    <div *ngIf="submitted && f.startingPrice.errors" class="invalid-feedback">
+                        <div *ngIf="f.startingPrice.errors.required">Starting Price is required</div>
+                    </div>
+                </div>
+              <div class="col">
+                  <label for="buyPrice">Buy Out Price</label>
+                  <input type="number" formControlName="buyPrice" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.buyPrice.errors }" />
+                  <div *ngIf="submitted && f.buyPrice.errors" class="invalid-feedback">
+                      <div *ngIf="f.buyPrice.errors.required">Buy Out Price is required</div>
+                  </div>
+              </div>
+            </div>
+            <div class="form-group">
+                <label for="location">Location</label>
+                <input type="text" formControlName="location" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.location.errors }" />
+                <div *ngIf="submitted && f.location.errors" class="invalid-feedback">
+                    <div *ngIf="f.location.errors.required">Location is required</div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="location">Country</label>
+                <input type="text" formControlName="location" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.location.errors }" />
+                <div *ngIf="submitted && f.location.errors" class="invalid-feedback">
+                    <div *ngIf="f.location.errors.required">Country is required</div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="description">Description</label>
+                <input type="text" formControlName="description" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.description.errors }"/>
+                <div *ngIf="submitted && f.description.errors" class="invalid-feedback">
+                    <div *ngIf="f.description.errors.required">Description is required</div>
+                </div>
+            </div>
+            <div class="form-group">
+                <button [disabled]="loading" class="btn btn-primary w-75 shadow mb-0">Confirm</button>
+                <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" /> 
+                <a [routerLink]="['/profile']" class="btn btn-link w-25">Cancel</a>
+            </div>
+        </form>
+        <jw-modal id="approval" class="text-center">
+            <p>Your auction was successfully created!</p>
+            <h5 class="text-center">Enjoy browsing!</h5>
+            <br>
+            <a href="/profile" class="btn-link border rounded">Back to My Profile</a>
+        </jw-modal>
+    </div>
+</div>

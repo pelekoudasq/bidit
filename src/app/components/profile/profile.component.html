@@ -3,7 +3,10 @@
 <br>
 <h5>My Dashboard</h5>
 	<div class="content-section" *ngIf="loading">
-		<h6>My Auctions</h6>
+		<div>
+			<h6>My Auctions</h6>
+			<a class="btn btn-primary" routerLink="/newauction">New Auction</a>
+		</div>
 		<ul class="list-group pt-1">
 			<ng-container *ngFor="let auct of auctions; index as i">
 				<li class="list-group-item">

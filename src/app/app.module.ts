@@ -20,6 +20,7 @@ import { HomeComponent } from './components/home/home.component';
 import { AdminComponent } from './components/admin/admin.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { AuctionComponent } from './components/auction/auction.component';
+import { NewAuctionComponent } from './components/newauction/newauction.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { AuctionComponent } from './components/auction/auction.component';
     HomeComponent,
     AdminComponent,
     ProfileComponent,
-    AuctionComponent
+    AuctionComponent,
+    NewAuctionComponent
   ],
   imports: [
     BrowserModule,
