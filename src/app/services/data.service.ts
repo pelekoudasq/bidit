@@ -49,6 +49,6 @@ export class DataService {
     }
 
     addAuction(auction: Auction, userid: string) {
-        return this.http.post(`http://localhost:3000/api/newauction/` + userid, auction);
+        return this.http.post(`http://localhost:3000/api/newauction/`, { userid: userid, auction: auction});
     }
 }

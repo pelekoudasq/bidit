@@ -3,11 +3,11 @@
 <br>
 <h5>My Dashboard</h5>
 	<div class="content-section" *ngIf="loading">
-		<div>
-			<h6>My Auctions</h6>
-			<a class="btn btn-primary" routerLink="/newauction">New Auction</a>
+		<div class="row">
+			<div class="col-sm-6 my-auto"><h6>My Auctions</h6></div>
+			<div class="col-sm-6"><a class="btn btn-primary float-right" routerLink="/newauction">New Auction <i class="fa fa-plus fa-xs"></i></a></div>
 		</div>
-		<ul class="list-group pt-1">
+		<ul class="list-group pt-2">
 			<ng-container *ngFor="let auct of auctions; index as i">
 				<li class="list-group-item">
 					<button class="btn btn-link pl-0" type="button" data-toggle="collapse" [attr.data-target]=" '#collapseExample'+i" aria-expanded="false" aria-controls="collapseExample">

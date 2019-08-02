@@ -9,6 +9,13 @@
                     <div *ngIf="f.productName.errors.required">Product Name is required</div>
                 </div>
             </div>
+            <div class="form-group">
+                    <label for="description">Description</label>
+                    <textarea type="text" formControlName="description" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.description.errors }"></textarea>
+                    <div *ngIf="submitted && f.description.errors" class="invalid-feedback">
+                        <div *ngIf="f.description.errors.required">Description is required</div>
+                    </div>
+                </div>
             <div class="form-row form-group">
                 <div class="col">
                     <label for="startingPrice">Starting Price</label>
@@ -33,17 +40,10 @@
                 </div>
             </div>
             <div class="form-group">
-                <label for="location">Country</label>
-                <input type="text" formControlName="location" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.location.errors }" />
-                <div *ngIf="submitted && f.location.errors" class="invalid-feedback">
-                    <div *ngIf="f.location.errors.required">Country is required</div>
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="description">Description</label>
-                <input type="text" formControlName="description" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.description.errors }"/>
-                <div *ngIf="submitted && f.description.errors" class="invalid-feedback">
-                    <div *ngIf="f.description.errors.required">Description is required</div>
+                <label for="country">Country</label>
+                <input type="text" formControlName="country" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.country.errors }" />
+                <div *ngIf="submitted && f.country.errors" class="invalid-feedback">
+                    <div *ngIf="f.country.errors.required">Country is required</div>
                 </div>
             </div>
             <div class="form-group">

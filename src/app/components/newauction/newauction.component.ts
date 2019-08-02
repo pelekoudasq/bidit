@@ -50,7 +50,6 @@ export class NewAuctionComponent implements OnInit {
         console.log("!!Sivmit");
         // stop here if form is invalid
         if (this.auctionForm.invalid) {
-            console.log("!!shit");
             return;
         }
         this.loading = true;
@@ -64,6 +63,7 @@ export class NewAuctionComponent implements OnInit {
                 },
                 error => {
                     this.alertService.error(error);
+                    console.log(error);
                     this.loading = false;
                 });
     }

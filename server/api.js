@@ -167,7 +167,8 @@ router.post('/users/register', function(req, res, next){
 //Save a new auction
 router.post('/newauction', function(req, res, next){
 	console.log('api: new auction register');
-	var auctionParams = req.body;	
+	console.log(req.body.userid);
+	var auctionParams = req.body.auction;	
 	// save auction
 	auction = new Auction();
 	auction = db.Auctions.save({
@@ -180,7 +181,9 @@ router.post('/newauction', function(req, res, next){
 		bids: [],
 		location: auctionParams.location,
 		country: auctionParams.country,
-		seller_id: req.body.id,
+		seller_id: req.body.userid,
+		started: Date.now,
+		ends: Date.now,
 		description: auctionParams.description
 	});
 	res.send(auction);
