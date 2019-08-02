@@ -43,6 +43,8 @@ export class AuthenticationService {
                 }
                 this.loggedin = true;
                 this.isAdmin = user.admin;
+                this.approved = user.approved;
+                console.log(user);
                 return user;
             }));
     }
@@ -53,5 +55,6 @@ export class AuthenticationService {
         this.currentUserSubject.next(null);
         this.loggedin = false;
         this.isAdmin = false;
+        this.approved = false;
     }
 }

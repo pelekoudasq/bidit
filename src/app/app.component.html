@@ -9,11 +9,11 @@
 	        <div class="collapse navbar-collapse" id="navbarToggle">
 	            <div class="navbar-nav mr-auto">
                     <a class="nav-item nav-link" routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Home</a>
-                    <div *ngIf="authenticationService.loggedin">
-                        <ng-container *ngIf="authenticationService.approved">
+                    <ng-container *ngIf="authenticationService.loggedin">
+                        <div *ngIf="authenticationService.approved">
                             <a class="nav-item nav-link" routerLink="/profile" routerLinkActive="active">Profile</a>
-                        </ng-container>
-                    </div>
+                        </div>
+                    </ng-container>
 	                <!-- <li class="nav-item dropdown" id="drop1">
 	                    <a class="nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">My Items</a>
 	                    <div class="dropdown-menu" id="drop2">
