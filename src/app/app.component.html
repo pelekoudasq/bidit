@@ -10,7 +10,9 @@
 	            <div class="navbar-nav mr-auto">
                     <a class="nav-item nav-link" routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Home</a>
                     <div *ngIf="authenticationService.loggedin">
-	                   <a class="nav-item nav-link" routerLink="/profile" routerLinkActive="active">Profile</a>
+                        <ng-container *ngIf="authenticationService.approved">
+                            <a class="nav-item nav-link" routerLink="/profile" routerLinkActive="active">Profile</a>
+                        </ng-container>
                     </div>
 	                <!-- <li class="nav-item dropdown" id="drop1">
 	                    <a class="nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">My Items</a>

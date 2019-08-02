@@ -4,32 +4,60 @@
 		<div class="row">
 
 			<div class="col-sm-4">
-				<div class="content-section" >
-					<div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+				<div id="carousel" class="carousel slide" data-ride="carousel">
+					<div class="carousel-inner">
+						<div class="carousel-item active" data-thumb="0">
+							<img src="http://placehold.it/350x250/e8117f/fff&amp;text=Product+Main">
+						</div>
+						<div class="carousel-item" data-thumb="0">
+							<img src="http://placehold.it/350x250/00ffff/000&amp;text=Product+Image+2">
+						</div>
+						<div class="carousel-item" data-thumb="0">
+							<img src="http://placehold.it/350x250/ff00ff/fff&amp;text=Product+Image+3">
+						</div>
+						<div class="carousel-item" data-thumb="0">
+							<img src="http://placehold.it/350x250/ffff00/000&amp;text=Product+Image+4">
+						</div>
+						<div class="carousel-item" data-thumb="1">
+							<img src="http://placehold.it/350x250/7B1C8E/fff&amp;text=Product+Image+5">
+						</div>
+						<div class="carousel-item" data-thumb="1">
+							<img src="http://placehold.it/350x250/9EF383/000&amp;text=Product+Image+6">
+						</div>
+						<div class="carousel-item" data-thumb="1">
+							<img src="http://placehold.it/350x250/D64908/fff&amp;text=Product+Image+7">
+						</div>
+						<div class="carousel-item" data-thumb="1">
+							<img src="http://placehold.it/350x250/E3A3A1/000&amp;text=Product+Image+8">
+						</div>
+					</div>
+				</div> 
+				<div class="clearfix">
+					<div id="thumbcarousel" class="carousel slide" data-interval="false">
 						<div class="carousel-inner">
 							<div class="carousel-item active">
-							<img class="d-block w-100 img-fluid mx-auto" src="https://www.freeiconspng.com/uploads/no-image-icon-13.png" alt="First slide">
-							</div>
+								<div data-target="#carousel" data-slide-to="0" class="thumb"><img src="http://placehold.it/100/e8117f/fff&amp;text=Product+Main"></div>
+								<div data-target="#carousel" data-slide-to="1" class="thumb"><img src="http://placehold.it/100/00ffff/000&amp;text=Product+Image+2"></div>
+								<div data-target="#carousel" data-slide-to="2" class="thumb"><img src="http://placehold.it/100/ff00ff/fff&amp;text=Product+Image+3"></div>
+								<div data-target="#carousel" data-slide-to="3" class="thumb"><img src="http://placehold.it/100/ffff00/000&amp;text=Product+Image+4"></div>
+							</div><!-- /item -->
 							<div class="carousel-item">
-							<img class="d-block w-100 img-fluid mx-auto" src="https://www.freeiconspng.com/uploads/no-image-icon-13.png" alt="Second slide">
-							</div>
-							<div class="carousel-item">
-							<img class="d-block w-100 img-fluid mx-auto" src="https://www.freeiconspng.com/uploads/no-image-icon-13.png" alt="Third slide">
-							</div>
-						</div>
-						<a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+								<div data-target="#carousel" data-slide-to="4" class="thumb"><img src="http://placehold.it/100/612b65/fff&amp;text=Product+Image+5"></div>
+								<div data-target="#carousel" data-slide-to="5" class="thumb"><img src="http://placehold.it/100/00ffcc/000&amp;text=Product+Image+6"></div>
+								<div data-target="#carousel" data-slide-to="6" class="thumb"><img src="http://placehold.it/100/db371b/fff&amp;text=Product+Image+7"></div>
+								<div data-target="#carousel" data-slide-to="7" class="thumb"><img src="http://placehold.it/100/feb8aa/000&amp;text=Product+Image+8"></div>
+							</div><!-- /item -->
+						</div><!-- /carousel-inner -->
+						<a class="carousel-control-prev" href="#thumbcarousel" role="button" data-slide="prev">
 							<span class="carousel-control-prev-icon" aria-hidden="true"></span>
 							<span class="sr-only">Previous</span>
 						</a>
-						<a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+						<a class="carousel-control-next" href="#thumbcarousel" role="button" data-slide="next">
 							<span class="carousel-control-next-icon" aria-hidden="true"></span>
 							<span class="sr-only">Next</span>
 						</a>
-					</div>
-					<div>
-
-					</div>
-				</div>
+					</div> <!-- /thumbcarousel -->
+				</div><!-- /clearfix -->
 			</div>
 
 			<div class="col-sm-5">
@@ -82,8 +110,21 @@
 
 			<div class="col-sm-3">
 				<div class="content-section">
-					<h6 class="">Seller Information</h6>
-					{{seller.username}}
+					<h6>Seller Information</h6>
+					<div class="border-top">
+						<table class="table table-borderless table-sm">
+							<tbody>
+								<tr class="small">
+									<td class="font-weight-bold" style="color: #267174">{{seller.username}}</td>
+									<td>( {{seller.sellerRating}} <i class="fa fa-gavel" style="color: #267174"></i> )</td>
+								</tr>
+								<tr class="small">
+									<td> <a href="" class="btn-link">Contact Seller</a></td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				<!-- {{seller.username}} ({{seller.sellerRating}} <i class="fa fa-gavel"></i>) -->
 				</div>
 
 				<div class="content-section">
@@ -106,10 +147,8 @@
 					<br>
 				</div>
 			</div>
-			
 		</div>
 
-		
 		<!-- If user is the seller -->
 		<ng-container *ngIf="authenticationService.loggedin">
 		<!-- <div class="row"> -->
@@ -141,3 +180,28 @@
 
 	</div>
 </div>
+
+<script>
+	(function($){
+		$('#thumbcarousel').carousel(0);
+		var $thumbItems = $('#thumbcarousel .carousel-item');
+		$('#carousel').on('slide.bs.carousel', function (event) {
+		var $slide = $(event.relatedTarget);
+		var thumbIndex = $slide.data('thumb');
+		var curThumbIndex = $thumbItems.index($('#thumbcarousel .carousel-item.active').get(0));
+			if (curThumbIndex>thumbIndex) {
+				$('#thumbcarousel').one('slid.bs.carousel', function (event) {
+					$('#thumbcarousel').carousel(thumbIndex);
+				});
+				if (curThumbIndex === ($thumbItems.length-1)) {
+					$('#thumbcarousel').carousel('next');
+				} else {
+					$('#thumbcarousel').carousel(numThumbItems-1);
+				}
+			} else {
+				$('#thumbcarousel').carousel(thumbIndex);
+			}
+		});
+	})(jQuery);
+</script>
+	  

@@ -10,15 +10,16 @@
 .carousel {
     margin-top: 20px;
 }
-.item .thumb {
+.carousel-item .thumb {
 	width: 25%;
 	cursor: pointer;
 	float: left;
 }
-.item .thumb img {
+.carousel-item .thumb img {
 	width: 100%;
 	margin: 2px;
 }
-.item img {
+.carousel-item img {
 	width: 100%;	
 }
+

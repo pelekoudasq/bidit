@@ -13,6 +13,7 @@ export class AuthenticationService {
     private user: User;
     public loggedin: boolean;
     public isAdmin: boolean;
+    public approved: boolean;
 
     constructor(private http: HttpClient) {
         this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('currentUser')));
@@ -24,6 +25,7 @@ export class AuthenticationService {
         if (this.user){
             this.loggedin = true;
             this.isAdmin = this.user.admin;
+            this.approved = this.user.approved;
         }            
     }
 
