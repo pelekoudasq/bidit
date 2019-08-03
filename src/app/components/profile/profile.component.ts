@@ -5,6 +5,7 @@ import { first } from 'rxjs/operators';
 import { AlertService } from '../../services/alert.service';
 import { AuthenticationService } from '../../services/authentication.service';
 import { DataService } from '../../services/data.service';
+import { ModalService } from '../../services/modal.service';
 
 import { User } from '../../models/user';
 import { Auction, Bid } from '../../models/auction';
@@ -27,7 +28,8 @@ export class ProfileComponent implements OnInit {
 		private route: ActivatedRoute,
 		private dataService: DataService,
 		private router: Router,
-		private alertService: AlertService) {
+		private alertService: AlertService,
+		private modalService: ModalService) {
 
 		this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
 	}
@@ -53,4 +55,12 @@ export class ProfileComponent implements OnInit {
 		if (id)
 			this.router.navigate(['/auction', id]);
 	}
+
+	openModal(id: string) {
+        this.modalService.open(id);
+    }
+
+    closeModal(id: string) {
+        this.modalService.close(id);
+    }
 }

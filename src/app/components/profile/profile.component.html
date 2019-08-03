@@ -14,7 +14,23 @@
 					<i class="fa fa-angle-down"></i>
 					</button>
 					<button class="btn btn-link" (click)="onNameClick(auct._id)">{{ auct.name }}</button>
-					<button class="btn apprbutton float-right" >Start auction</button>
+					<button [id]="auct._id" class="btn btn-link float-right" (click)="openModal('dates')">Start auction <i class="fa fa-clock-o"></i></button>
+					
+					
+					<!--  -->
+					<jw-modal id="dates" class="text-center">
+						<p>Your registration was successful! Thank you for joining our community!</p>
+						<label for="end">Auction starting at:</label><br>
+						<!-- datepicker from bootstrap -->
+						<div id="end">
+							<input type="date" > 
+							<input type="time"><br>
+						</div>
+					<a href="/profile" class="btn-link border rounded">I completely understand. Thank you!</a>
+					</jw-modal>
+					<!--  -->
+
+
 					<div class="collapse" id="collapseExample{{i}}">
 						<div class="card card-body mt-2 border-bottom-0 border-right-0 border-left-0 border-top rounded-0">
 							<div class="row">
@@ -75,5 +91,5 @@
 			<li class="breadcrumb-item active" aria-current="page">Profile</li>
 		</ol>
 	</nav> -->
+	
 </div>
-
