@@ -25,4 +25,5 @@ export class Auction {
     ends: string;
     seller_id: string;
     description: string;
+    image: string;
 }

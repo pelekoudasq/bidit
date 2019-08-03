@@ -1,24 +1,45 @@
 <div class="row justify-content-center">
     <div class="col-md-6 content-section shadow mb-6">
-        <form [formGroup]="auctionForm" (ngSubmit)="onSubmit()">
+        <form [formGroup]="auctionForm" (ngSubmit)="onSubmit()" enctype='multipart/form-data'>
             <legend class="border-bottom mb-4">New Auction</legend>
             <div class="form-group">
                 <label for="productName">Product Name</label>
-                <input type="text" formControlName="productName" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.productName.errors }" />
-                <div *ngIf="submitted && f.productName.errors" class="invalid-feedback">
-                    <div *ngIf="f.productName.errors.required">Product Name is required</div>
+                <input type="text" formControlName="productName" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.productName?.errors }" />
+                <div *ngIf="submitted && f.productName?.errors" class="invalid-feedback">
+                    <div *ngIf="f.productName?.errors.required">Product Name is required</div>
                 </div>
             </div>
             <div class="form-group">
                 <label for="description">Description</label>
                 <textarea type="text" formControlName="description" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.description.errors }"></textarea>
-                <div *ngIf="submitted && f.description.errors" class="invalid-feedback">
-                    <div *ngIf="f.description.errors.required">Description is required</div>
+                <div *ngIf="submitted && f.description?.errors" class="invalid-feedback">
+                    <div *ngIf="f.description?.errors.required">Description is required</div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="image">Main Photo</label>
+                <div class="custom-file">
+                    <input type="file" class="custom-file-input" id="image" (change)="onFileSelected($event)" [ngClass]="{ 'is-invalid': submitted && f.image?.errors }" >
+                    <label class="custom-file-label" for="file">{{image ? image.name : 'Choose file' }}</label>
+                </div>
+                <div *ngIf="submitted && f.image?.errors" class="invalid-feedback">
+                    <div *ngIf="f.image?.errors.required">Image is required</div>
                 </div>
             </div>
             <div class="form-group">
                 <label for="categories">Categories</label><br>
-                <select class="mdb-select md-form form-control" [ngClass]="{ 'is-invalid': submitted && f.categories.errors }"> <!-- multiple -->
+                <!-- <mat-select placeholder="Choose" multiple>
+                    <option value="" disabled selected></option>
+                    <ng-container *ngFor="let cat of ctgrs; index as i">
+                        <optgroup [label]="cat.name">
+                            <ng-container *ngFor="let sub of cat.sub; index as j">
+                                <mat-option *ngFor="let cat of ctgrs; index as i" [value]="sub.value">{{sub.viewValue}}
+                            </mat-option>
+                            </ng-container>
+                        </optgroup>
+                    </ng-container>
+                </mat-select> -->
+                <select class="mdb-select md-form form-control" [ngClass]="{ 'is-invalid': submitted && f.categories?.errors }"> 
                     <option value="" disabled selected></option>
                     <ng-container *ngFor="let cat of ctgrs; index as i">
                         <optgroup [label]="cat.name">
@@ -28,38 +49,38 @@
                         </optgroup>
                     </ng-container>
                 </select>
-                <div *ngIf="submitted && f.categories.errors" class="invalid-feedback">
-                    <div *ngIf="f.categories.errors.required">Categories field is required</div>
+                <div *ngIf="submitted && f.categories?.errors" class="invalid-feedback">
+                    <div *ngIf="f.categories?.errors.required">Categories field is required</div>
                 </div>
             </div>
             <div class="form-row form-group">
                 <div class="col">
                     <label for="startingPrice">Starting Price</label>
-                    <input type="number" formControlName="startingPrice" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.startingPrice.errors }" />
-                    <div *ngIf="submitted && f.startingPrice.errors" class="invalid-feedback">
-                        <div *ngIf="f.startingPrice.errors.required">Starting Price is required</div>
+                    <input type="number" formControlName="startingPrice" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.startingPrice?.errors }" />
+                    <div *ngIf="submitted && f.startingPrice?.errors" class="invalid-feedback">
+                        <div *ngIf="f.startingPrice?.errors.required">Starting Price is required</div>
                     </div>
                 </div>
               <div class="col">
                   <label for="buyPrice">Buy Out Price</label>
-                  <input type="number" formControlName="buyPrice" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.buyPrice.errors }" />
-                  <div *ngIf="submitted && f.buyPrice.errors" class="invalid-feedback">
-                      <div *ngIf="f.buyPrice.errors.required">Buy Out Price is required</div>
+                  <input type="number" formControlName="buyPrice" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.buyPrice?.errors }" />
+                  <div *ngIf="submitted && f.buyPrice?.errors" class="invalid-feedback">
+                      <div *ngIf="f.buyPrice?.errors.required">Buy Out Price is required</div>
                   </div>
               </div>
             </div>
             <div class="form-group">
                 <label for="location">Location</label>
-                <input type="text" formControlName="location" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.location.errors }" />
-                <div *ngIf="submitted && f.location.errors" class="invalid-feedback">
-                    <div *ngIf="f.location.errors.required">Location is required</div>
+                <input type="text" formControlName="location" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.location?.errors }" />
+                <div *ngIf="submitted && f.location?.errors" class="invalid-feedback">
+                    <div *ngIf="f.location?.errors.required">Location is required</div>
                 </div>
             </div>
             <div class="form-group">
                 <label for="country">Country</label>
-                <input type="text" formControlName="country" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.country.errors }" />
-                <div *ngIf="submitted && f.country.errors" class="invalid-feedback">
-                    <div *ngIf="f.country.errors.required">Country is required</div>
+                <input type="text" formControlName="country" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.country?.errors }" />
+                <div *ngIf="submitted && f.country?.errors" class="invalid-feedback">
+                    <div *ngIf="f.country?.errors.required">Country is required</div>
                 </div>
             </div>
             <div class="form-group">
