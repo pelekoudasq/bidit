@@ -4,6 +4,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { AlertService } from '../../services/alert.service';
 import { AuthenticationService } from '../../services/authentication.service';
 import { DataService } from '../../services/data.service';
+import { DomSanitizer } from '@angular/platform-browser';
 
 import { User } from '../../models/user';
 import { Auction } from '../../models/auction';
@@ -23,9 +24,14 @@ export class HomeComponent implements OnInit {
 	constructor(
 		private dataService: DataService,
 		private router: Router,
-		private authenticationService: AuthenticationService) {
+		private authenticationService: AuthenticationService,
+		private sanitizer: DomSanitizer)
+	{
 		this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
-	
+	}
+
+	transform(i: number) {
+		return this.sanitizer.bypassSecurityTrustResourceUrl(this.auctions[i].image);
 	}
 
 	ngOnInit() {

@@ -83,13 +83,14 @@
 		</form>
 		<div class="container" ><h5>All Auctions</h5><span class="glyphicon glyphicon-leaf" aria-hidden="false"></span>
 			<div class="row">
-				<div *ngFor="let auction of auctions" class="card col-sm-4 my-1 mx-0.5 content-section">
-					<img src="https://www.freeiconspng.com/uploads/no-image-icon-13.png" class="card-img-top img-fluid pt-2 mx-auto w-75" alt="...">
+				<div *ngFor="let auction of auctions; index as i" class="card col-sm-4 my-1 mx-0.5 content-section">
+					<!-- <img src="https://www.freeiconspng.com/uploads/no-image-icon-13.png" class="card-img-top img-fluid pt-2 mx-auto w-75" alt="..."> -->
+					<img [src]="transform(i)" class="card-img-top img-fluid pt-2 mx-auto w-75" (click)="onNameClick(auction._id)">
 					<div class="card-body px-0 pb-0">
 						<button class="btn btn-link text-wrap text-left px-0" (click)="onNameClick(auction._id)">{{auction.name}}</button>
 						<p class="card-text small text-truncate">{{auction.description}}</p>
 						<p class="card-text">Current price: {{auction.currently}} $</p>
-						<a href="#" class="btn btn-primary small mx-auto">Take a look</a>
+						<a class="btn btn-primary small mx-auto" (click)="onNameClick(auction._id)" style="color: white;">Take a look</a>
 					</div>
 				</div>
 			</div>

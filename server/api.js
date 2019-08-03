@@ -1,15 +1,47 @@
+const config = require('./config.json');
 const express = require('express');
 const router = express.Router();
 const mongojs = require('mongojs');
-const db = mongojs('mongodb://admin:okokokok@83.212.99.101:27017/biditdb');
+const db = mongojs(config.dburi);
 const bcrypt = require('bcryptjs');
-const config = require('./config.json');
 const jwt = require('jsonwebtoken');
 const mongoose = require('mongoose');
+// const multer = require('multer');
+// const Grid = require('gridfs-stream');
+// const mongo = require('mongodb');
+// const crypto = require('crypto');
+// const path = require('path');
+// const GridFsStorage = require('multer-gridfs-storage');
+var fs = require("fs");
 
 const User = require('./user.model');
 const Auction = require('./auction.model');
 const Bid = require('./bid.model');
+
+// // stream
+// var gfs = Grid(db, mongo);
+// gfs.collection('Uploads');
+
+// // storage engine
+// const storage = new GridFsStorage({
+// 	url: config.dburi,
+// 	file: (req, file) => {
+// 		return new Promise((resolve, reject) => {
+// 			crypto.randomBytes(16, (err, buf) => {
+// 				if (err) {
+// 					return reject(err);
+// 				}
+// 				const filename = buf.toString('hex') + path.extname(file.originalname);
+// 				const fileInfo = {
+// 					filename: filename,
+// 					bucketName: 'Uploads'
+// 				};
+// 				resolve(fileInfo);
+// 			});
+// 		});
+// 	}
+// });
+// const upload = multer({ storage });
 
 async function getById(id) {
 	await db.Users.findOne({_id: id}, function(err, user){
@@ -168,9 +200,12 @@ router.post('/users/register', function(req, res, next){
 router.post('/newauction', function(req, res, next){
 	console.log('api: new auction register');
 	console.log(req.body.userid);
-	var auctionParams = req.body.auction;	
+	var auctionParams = req.body.auction;
+	console.log(auctionParams);
+	const base64Data = auctionParams.image.replace(/^data:([A-Za-z-+/]+);base64,/, '');
+	fs.writeFile("arghhhh.jpg", Buffer.from(base64Data, "base64"), function(err) {});
 	// save auction
-	auction = new Auction();
+	// auction = new Auction();
 	auction = db.Auctions.save({
 		name: auctionParams.productName,
 		categories: [],
@@ -184,7 +219,8 @@ router.post('/newauction', function(req, res, next){
 		seller_id: req.body.userid,
 		started: Date.now,
 		ends: Date.now,
-		description: auctionParams.description
+		description: auctionParams.description,
+		image: auctionParams.image
 	});
 	res.send(auction);
 	return;
@@ -209,6 +245,10 @@ router.get('/users/disapprove/:id', function(req, res, next) {
 		res.json(user);
 	});
 });
+
+// router.post('/upload', upload.single('file'), (req, res) => {
+// 	res.json({ file: req.file });
+// })
 
 module.exports = {
 	router : router,

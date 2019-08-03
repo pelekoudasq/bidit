@@ -1,3 +1,4 @@
 {
-	"secret": "At CERN, the European Organization for Nuclear Research"
+	"secret": "At CERN, the European Organization for Nuclear Research",
+	"dburi": "mongodb://admin:okokokok@83.212.99.101:27017/biditdb"
 }

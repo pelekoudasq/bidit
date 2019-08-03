@@ -4,6 +4,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { AlertService } from '../../services/alert.service';
 import { AuthenticationService } from '../../services/authentication.service';
 import { DataService } from '../../services/data.service';
+import { DomSanitizer } from '@angular/platform-browser';
 
 import { User } from '../../models/user';
 import { Auction, Bid } from '../../models/auction';
@@ -26,16 +27,20 @@ export class AuctionComponent implements OnInit {
 		private route: ActivatedRoute,
 		private router: Router,
 		private dataService: DataService,
-		private authenticationService: AuthenticationService) {
-
+		private authenticationService: AuthenticationService,
+		private sanitizer: DomSanitizer)
+	{
 		this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
+	}
+
+	transform() {
+		return this.sanitizer.bypassSecurityTrustResourceUrl(this.auction.image);
 	}
 
 	ngOnInit() {
 		this.requestedAuction = this.route.snapshot.params.id;
 		this.dataService.getAuction(this.requestedAuction).pipe(first()).subscribe(auction => {
 			this.auction = auction;
-
 			this.dataService.getById(auction.seller_id).pipe(first()).subscribe(user => {
 				this.seller = user;
 				for (var i = 0; i < this.auction.bids.length; i++) {
