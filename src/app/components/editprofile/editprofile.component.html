@@ -1,0 +1,108 @@
+<form [formGroup]="editForm" (ngSubmit)="onSubmit()">
+    <div class="form-row form-group">
+        <div class="col">
+            <label for="firstName">First Name</label>
+            <input type="text" formControlName="firstName" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.firstName.errors }" />
+            <div *ngIf="submitted && f.firstName.errors" class="invalid-feedback">
+                <div *ngIf="f.firstName.errors.required">First Name is required</div>
+            </div>
+        </div>
+        <div class="col">
+            <label for="lastName">Last Name</label>
+            <input type="text" formControlName="lastName" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.lastName.errors }" />
+            <div *ngIf="submitted && f.lastName.errors" class="invalid-feedback">
+                <div *ngIf="f.lastName.errors.required">Last Name is required</div>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="username">Username</label>
+        <input type="text" formControlName="username" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.username.errors }" />
+        <div *ngIf="submitted && f.username.errors" class="invalid-feedback">
+            <div *ngIf="f.username.errors.required">Username is required</div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" formControlName="email" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.email.errors }" />
+        <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+            <div *ngIf="f.email.errors.required">Email is required</div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" formControlName="password" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" />
+        <small id="passwordHelp" class="form-text text-muted">Enter your password.</small>
+        <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+            <div *ngIf="f.password.errors.required">Password is required</div>
+            <div *ngIf="f.password.errors.minlength">Password must be at least 6 characters</div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="password">Password Verification</label>
+        <input type="password" formControlName="password1" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" />
+        <small id="passwordHelp2" class="form-text text-muted">Repeat your password for verification.</small>
+        <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+            <div *ngIf="f.password.errors.required">Password is required</div>
+            <div *ngIf="f.password.errors.minlength">Password must be at least 6 characters</div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="phone">Phone</label>
+        <input type="number" formControlName="phone" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.phone.errors }" />
+        <div *ngIf="submitted && f.phone.errors" class="invalid-feedback">
+            <div *ngIf="f.phone.errors.required">Phone is required</div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="address">Address</label>
+        <input type="text" formControlName="address" class="form-control" id="address" placeholder="75 Harvard St" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" >
+        <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+            <div *ngIf="f.password.errors.required">Password is required</div>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <label for="city">City</label>
+            <input type="text" formControlName="city" class="form-control" id="city" placeholder="Dedham, MA" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" >
+            <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+                <div *ngIf="f.password.errors.required">Password is required</div>
+            </div>
+        </div>
+        <div class="form-group col-md-4">
+            <label for="country">Country</label>
+            <input type="text" formControlName="country" class="form-control" id="country" placeholder="USA" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" >
+            <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+                <div *ngIf="f.password.errors.required">Password is required</div>
+            </div>
+        </div>
+        <div class="form-group col-md-2">
+            <label for="zipcode">Zip</label>
+            <input type="text" formControlName="zipcode" class="form-control" id="zipcode" placeholder="02026" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" >
+            <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+                <div *ngIf="f.password.errors.required">Password is required</div>
+            </div>
+        </div>
+    </div>
+    <!-- <div class="form-group">
+        <mat-select placeholder="Use bidIt as:">
+            [(ngModel)] = "selectedValue" name = "usess">
+            <mat-option *ngFor = "let usess of useAs" 
+                [value] = "usess.value">
+                {{usess.display}}
+            </mat-option>
+        </mat-select>
+    </div> -->
+    <br>
+    <div class="form-group">
+        <button [disabled]="loading" class="btn btn-primary w-75 shadow mb-0">Edit Personal Info</button>
+        <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="/> 
+        <a (click)="onCancel()" class="btn btn-link w-25">Cancel</a>
+    </div>
+</form>
+<jw-modal id="approval" class="text-center">
+    <p>Your personal data has been successfully updated!</p>
+    <p>For your own safety, you will be asked now to login again.</p>
+    <br>
+    <a (click)="logout()" class="btn-link border rounded">I completely understand. Let's go!</a>
+</jw-modal>

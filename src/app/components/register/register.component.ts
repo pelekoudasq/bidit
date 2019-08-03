@@ -13,7 +13,8 @@ import { DataService } from '../../services/data.service';
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent implements OnInit {
-	registerForm: FormGroup;
+
+    registerForm: FormGroup;
     loading = false;
     submitted = false;
 

@@ -16,7 +16,7 @@ const schema = new Schema({
 		street: { type: String, required: true },
 		city: { type: String, required: true },
 		country: { type: String, required: true },
-		zip: { type: Number, required: true },
+		zipcode: { type: Number, required: true },
 	}
 //    createdDate: { type: Date, default: Date.now }
 });

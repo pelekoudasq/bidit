@@ -6,13 +6,13 @@ const db = mongojs(config.dburi);
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const mongoose = require('mongoose');
+const fs = require("fs");
 // const multer = require('multer');
 // const Grid = require('gridfs-stream');
 // const mongo = require('mongodb');
 // const crypto = require('crypto');
 // const path = require('path');
 // const GridFsStorage = require('multer-gridfs-storage');
-var fs = require("fs");
 
 const User = require('./user.model');
 const Auction = require('./auction.model');
@@ -42,6 +42,10 @@ const Bid = require('./bid.model');
 // 	}
 // });
 // const upload = multer({ storage });
+
+// router.post('/upload', upload.single('file'), (req, res) => {
+// 	res.json({ file: req.file });
+// })
 
 async function getById(id) {
 	await db.Users.findOne({_id: id}, function(err, user){
@@ -153,10 +157,38 @@ router.post('/users/authenticate', function(req, res, next) {
 	});
 });
 
+//Update user
+router.post('/userupdate', function(req, res, next) {
+	console.log('api: update user');
+	const updUser = req.body.user;
+	updUser.password = bcrypt.hashSync(updUser.password, 10);
+	db.Users.update({ _id: mongojs.ObjectID(req.body.userid) }, { 
+			$set: {
+				username: updUser.username,
+				email: updUser.email,
+				password: updUser.password,
+				first_name: updUser.firstName,
+				last_name: updUser.lastName,
+				phone: updUser.phone,
+				address: {
+					street: updUser.address,
+					city: updUser.city,
+					country: updUser.country,
+					zipcode: updUser.zipcode
+				}
+			} 
+		}, function(err, user) {
+		if (user) {
+			res.send(user);
+			return;
+		}
+	});
+});
+
 //Save a new user
 router.post('/users/register', function(req, res, next){
 	console.log('api: post register');
-	var userParam = req.body;
+	const userParam = req.body;
 	db.Users.findOne({ email: userParam.email }, function(err, user){
 		if (user){
 			res.send(user);
@@ -245,10 +277,6 @@ router.get('/users/disapprove/:id', function(req, res, next) {
 		res.json(user);
 	});
 });
-
-// router.post('/upload', upload.single('file'), (req, res) => {
-// 	res.json({ file: req.file });
-// })
 
 module.exports = {
 	router : router,

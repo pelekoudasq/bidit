@@ -22,15 +22,16 @@ export class ProfileComponent implements OnInit {
 	// allAuctions: Auction[] = [];
 	auctions: Auction[] = [];
 	bids: Bid[] = [];
-	loading:boolean = false;
+	loading: boolean = false;
+	edit: boolean = false;
 
 	constructor(
 		private route: ActivatedRoute,
 		private dataService: DataService,
 		private router: Router,
 		private alertService: AlertService,
-		private modalService: ModalService) {
-
+		private modalService: ModalService)
+	{
 		this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
 	}
 
@@ -62,5 +63,9 @@ export class ProfileComponent implements OnInit {
 
     closeModal(id: string) {
         this.modalService.close(id);
+    }
+
+    onEditClick() {
+    	this.edit = !this.edit;
     }
 }

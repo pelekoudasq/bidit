@@ -10,7 +10,7 @@ export class User {
 		street: string;
 		city: string;
 		country: string;
-		zip: number;
+		zipcode: number;
 	};
 	bidderRating: number;
 	sellerRating: number;

@@ -20,7 +20,6 @@ const port = 3000;
 //API file for interacting with mongoDB
 const api = require('./server/api');
 
-
 //Body Parsers middle ware
 app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
 app.use(bodyParser.json({limit: '50mb', extended: true}));

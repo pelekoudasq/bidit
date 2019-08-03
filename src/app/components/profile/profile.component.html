@@ -2,94 +2,136 @@
 <div class="container">
 <br>
 <h5>My Dashboard</h5>
-	<div class="content-section" *ngIf="loading">
-		<div class="row">
-			<div class="col-sm-6 my-auto"><h6>My Auctions</h6></div>
-			<div class="col-sm-6"><a class="btn btn-primary float-right" routerLink="/newauction">New Auction <i class="fa fa-plus fa-xs"></i></a></div>
-		</div>
-		<ul class="list-group pt-2">
-			<ng-container *ngFor="let auct of auctions; index as i">
+<div class="content-section" *ngIf="loading">
+	<div class="row">
+		<div class="col-sm-6 my-auto"><h6>My Auctions</h6></div>
+		<div class="col-sm-6"><a class="btn btn-primary float-right" routerLink="/newauction">New Auction <i class="fa fa-plus fa-xs"></i></a></div>
+	</div>
+	<ul class="list-group pt-2">
+		<ng-container *ngFor="let auct of auctions; index as i">
+			<li class="list-group-item">
+				<button class="btn btn-link pl-0" type="button" data-toggle="collapse" [attr.data-target]=" '#collapseExample'+i" aria-expanded="false" aria-controls="collapseExample">
+				<i class="fa fa-angle-down"></i>
+				</button>
+				<button class="btn btn-link" (click)="onNameClick(auct._id)">{{ auct.name }}</button>
+				<button [id]="auct._id" class="btn btn-link float-right" (click)="openModal('dates')">Start auction <i class="fa fa-clock-o"></i></button>
+				
+				
+				<!--  -->
+				<jw-modal id="dates" class="text-center">
+					<p>Your registration was successful! Thank you for joining our community!</p>
+					<label for="end">Auction starting at:</label><br>
+					<!-- datepicker from bootstrap -->
+					<div id="end">
+						<input type="date" > 
+						<input type="time"><br>
+					</div>
+				<a href="/profile" class="btn-link border rounded">I completely understand. Thank you!</a>
+				</jw-modal>
+				<!--  -->
+
+
+				<div class="collapse" id="collapseExample{{i}}">
+					<div class="card card-body mt-2 border-bottom-0 border-right-0 border-left-0 border-top rounded-0">
+						<div class="row">
+							<div class="col-sm">
+								<span class="notstrong">Categories:</span> {{auct.categories}} <br>
+								<span class="notstrong">Currently at:</span> {{auct.currently}} <span>$</span><br>
+								<span class="notstrong">Starting Price:</span> {{auct.first_bid}} <span>$</span><br>
+							</div>
+							<div class="col-sm">
+								<span class="notstrong">Number of bids made so far:</span> {{auct.number_of_bids}} <br>
+								<span class="notstrong">Starting Time:</span> {{auct.started}} <br>
+								<span class="notstrong">Ending Time:</span> {{auct.ends}} <br>
+							</div>
+						</div>				
+					</div>
+				</div>			
+			</li>
+		</ng-container>
+		<div *ngIf="auctions == 0" class="font-weight-light font-italic">No auctions</div>
+	</ul>
+	<br><br>
+	<h6>My Bids</h6>
+	<ul class="list-group pt-1">
+			<ng-container *ngFor="let bid of bids; index as i">
 				<li class="list-group-item">
 					<button class="btn btn-link pl-0" type="button" data-toggle="collapse" [attr.data-target]=" '#collapseExample'+i" aria-expanded="false" aria-controls="collapseExample">
 					<i class="fa fa-angle-down"></i>
 					</button>
-					<button class="btn btn-link" (click)="onNameClick(auct._id)">{{ auct.name }}</button>
-					<button [id]="auct._id" class="btn btn-link float-right" (click)="openModal('dates')">Start auction <i class="fa fa-clock-o"></i></button>
-					
-					
-					<!--  -->
-					<jw-modal id="dates" class="text-center">
-						<p>Your registration was successful! Thank you for joining our community!</p>
-						<label for="end">Auction starting at:</label><br>
-						<!-- datepicker from bootstrap -->
-						<div id="end">
-							<input type="date" > 
-							<input type="time"><br>
-						</div>
-					<a href="/profile" class="btn-link border rounded">I completely understand. Thank you!</a>
-					</jw-modal>
-					<!--  -->
-
-
+					<button class="btn btn-link" (click)="onNameClick(bid.auction_id)">{{ bid.name }}</button>
+					<!-- <button class="btn apprbutton float-right" >Start auction</button> -->
 					<div class="collapse" id="collapseExample{{i}}">
 						<div class="card card-body mt-2 border-bottom-0 border-right-0 border-left-0 border-top rounded-0">
 							<div class="row">
 								<div class="col-sm">
-									<span class="notstrong">Categories:</span> {{auct.categories}} <br>
-									<span class="notstrong">Currently at:</span> {{auct.currently}} <span>$</span><br>
-									<span class="notstrong">Starting Price:</span> {{auct.first_bid}} <span>$</span><br>
+									<span class="font-italic">Your offer:</span><br>
+									<span class="notstrong">Price:</span> {{bid.amount}} <span>$</span><br>
+									<span class="notstrong">Time of offer:</span> {{bid.time}} <br>
+									<!-- <span class="notstrong">Starting Price:</span> {{bid.first_bid}} <span>$</span><br> -->
 								</div>
 								<div class="col-sm">
-									<span class="notstrong">Number of bids made so far:</span> {{auct.number_of_bids}} <br>
-									<span class="notstrong">Starting Time:</span> {{auct.started}} <br>
-									<span class="notstrong">Ending Time:</span> {{auct.ends}} <br>
+									<span class="font-italic">Currently:</span><br>
+									<span class="notstrong">Current Price:</span> {{bid.current}} <span>$</span><br>
+									<!-- <span class="notstrong">Starting Time:</span> {{auct.started}} <br> -->
+									<span class="notstrong">Ending Time:</span> {{bid.ends}} <br>
 								</div>
 							</div>				
 						</div>
 					</div>			
 				</li>
 			</ng-container>
-			<div *ngIf="auctions == 0" class="font-weight-light font-italic">No auctions</div>
+			<div *ngIf="bids == 0" class="font-weight-light font-italic">No bids</div>
 		</ul>
-		<br><br>
-		<h6>My Bids</h6>
-		<ul class="list-group pt-1">
-				<ng-container *ngFor="let bid of bids; index as i">
-					<li class="list-group-item">
-						<button class="btn btn-link pl-0" type="button" data-toggle="collapse" [attr.data-target]=" '#collapseExample'+i" aria-expanded="false" aria-controls="collapseExample">
-						<i class="fa fa-angle-down"></i>
-						</button>
-						<button class="btn btn-link" (click)="onNameClick(bid.auction_id)">{{ bid.name }}</button>
-						<!-- <button class="btn apprbutton float-right" >Start auction</button> -->
-						<div class="collapse" id="collapseExample{{i}}">
-							<div class="card card-body mt-2 border-bottom-0 border-right-0 border-left-0 border-top rounded-0">
-								<div class="row">
-									<div class="col-sm">
-										<span class="font-italic">Your offer:</span><br>
-										<span class="notstrong">Price:</span> {{bid.amount}} <span>$</span><br>
-										<span class="notstrong">Time of offer:</span> {{bid.time}} <br>
-										<!-- <span class="notstrong">Starting Price:</span> {{bid.first_bid}} <span>$</span><br> -->
-									</div>
-									<div class="col-sm">
-										<span class="font-italic">Currently:</span><br>
-										<span class="notstrong">Current Price:</span> {{bid.current}} <span>$</span><br>
-										<!-- <span class="notstrong">Starting Time:</span> {{auct.started}} <br> -->
-										<span class="notstrong">Ending Time:</span> {{bid.ends}} <br>
-									</div>
-								</div>				
-							</div>
-						</div>			
-					</li>
-				</ng-container>
-				<div *ngIf="bids == 0" class="font-weight-light font-italic">No bids</div>
-			</ul>
-		<br><br>
+	<br><br>
+</div>
+<h5>My Profile</h5>
+<div class="content-section" *ngIf="loading">
+	<div class="row">
+		<div class="col-sm-6 my-auto"><h6>Personal Info</h6></div>
+		<div class="col-sm-6" *ngIf="!edit"><a class="btn btn-primary float-right" (click)="onEditClick()" style="color: white;">Edit <i class="fa fa-edit fa-xs"></i></a></div>
+		<div class="col-sm-6" *ngIf="edit"><a class="btn cancelbutton float-right" (click)="onEditClick()" style="color: white;">Cancel</a></div>
 	</div>
-	<!-- <nav aria-label="breadcrumb">
-		<ol class="breadcrumb">
-			<li class="breadcrumb-item"><a class="btn-link" href="/">Home</a></li>
-			<li class="breadcrumb-item active" aria-current="page">Profile</li>
-		</ol>
-	</nav> -->
-	
+	<table *ngIf="!edit">
+		<tr>
+			<td class="pr-4" style="font-weight: normal;">Username: </td>
+			<td class="h6" style="color: #444444;">{{ currentUser.username }}</td>
+		</tr>
+		<tr>
+			<td class="pr-4" style="font-weight: normal;">Ratings: </td>
+			<td class="h6" style="color: #444444;">{{ currentUser.sellerRating }}/{{ currentUser.bidderRating }}</td>
+		</tr>
+		<tr>
+			<td class="pr-4" style="font-weight: normal;">First Name: </td>
+			<td class="h6" style="color: #444444;">{{ currentUser.first_name }}</td>
+		</tr>
+		<tr>
+			<td class="pr-4" style="font-weight: normal;">Last Name: </td>
+			<td class="h6" style="color: #444444;">{{ currentUser.last_name }}</td>
+		</tr>
+		<tr>
+			<td class="pr-4" style="font-weight: normal;">Email: </td>
+			<td class="h6" style="color: #444444;">{{ currentUser.email }}</td>
+		</tr>
+		<tr>
+			<td class="pr-4" style="font-weight: normal;">Phone: </td>
+			<td class="h6" style="color: #444444;">{{ currentUser.phone }}</td>
+		</tr>
+		<tr>
+			<td class="pr-4" style="font-weight: normal;">Address: </td>
+			<td class="h6" style="color: #444444;">{{ currentUser.address.street }}, {{ currentUser.address.city }}, {{ currentUser.address.country }}</td>
+		</tr>
+		<tr>
+			<td class="pr-4" style="font-weight: normal;">Zip: </td>
+			<td class="h6" style="color: #444444;">{{ currentUser.address.zipcode }}</td>
+		</tr>
+	</table>
+	<app-editprofile *ngIf="edit"></app-editprofile>
+</div>
+<!-- <nav aria-label="breadcrumb">
+	<ol class="breadcrumb">
+		<li class="breadcrumb-item"><a class="btn-link" href="/">Home</a></li>
+		<li class="breadcrumb-item active" aria-current="page">Profile</li>
+	</ol>
+</nav> -->
 </div>
