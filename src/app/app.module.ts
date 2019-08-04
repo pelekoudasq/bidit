@@ -4,6 +4,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatSelectModule } from '@angular/material/select';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { JwtInterceptor } from './jwt-interceptor';
+import { DatePipe } from '@angular/common';
 
 import { AlertComponent } from './guards/alert.component';
 import { ModalComponent } from './guards/modal.component';
@@ -45,6 +46,7 @@ import { EditProfileComponent } from './components/editprofile/editprofile.compo
     HttpClientModule
   ],
   providers: [
+    DatePipe,
     AuthGuard,
     AuthGuardAdmin,
     AlertService,

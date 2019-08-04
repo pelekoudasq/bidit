@@ -19,7 +19,7 @@ const Auction = require('./auction.model');
 const Bid = require('./bid.model');
 
 // // stream
-// var gfs = Grid(db, mongo);
+// const gfs = Grid(db, mongo);
 // gfs.collection('Uploads');
 
 // // storage engine
@@ -228,12 +228,23 @@ router.post('/users/register', function(req, res, next){
 	});
 });
 
+router.get('/startauction/:id', function(req, res, next) {
+	console.log('api: start auction');
+	const today = new Date();
+	db.Auctions.update({ _id: mongojs.ObjectID(req.params.id) }, { $set: { started: true, startingDate: today } }, function(err, auction) {
+		if (err) {
+			res.send(err);
+		}
+		res.json(auction);
+	});
+})
+
 //Save a new auction
-router.post('/newauction', function(req, res, next){
+router.post('/newauction', function(req, res, next) {
 	console.log('api: new auction register');
-	console.log(req.body.userid);
-	var auctionParams = req.body.auction;
-	console.log(auctionParams);
+	// console.log(req.body.userid);
+	const auctionParams = req.body.auction;
+	// console.log(auctionParams);
 	const base64Data = auctionParams.image.replace(/^data:([A-Za-z-+/]+);base64,/, '');
 	fs.writeFile("arghhhh.jpg", Buffer.from(base64Data, "base64"), function(err) {});
 	// save auction
@@ -249,10 +260,9 @@ router.post('/newauction', function(req, res, next){
 		location: auctionParams.location,
 		country: auctionParams.country,
 		seller_id: req.body.userid,
-		started: Date.now,
-		ends: Date.now,
 		description: auctionParams.description,
-		image: auctionParams.image
+		image: auctionParams.image,
+		started: false
 	});
 	res.send(auction);
 	return;

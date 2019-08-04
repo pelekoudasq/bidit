@@ -7,7 +7,7 @@ export class Bid {
     // -------------------
     name: string;
     current: number;
-    ends: string;
+    ends: Date;
 }
 
 export class Auction {
@@ -21,9 +21,12 @@ export class Auction {
     bids: string[];
     location: string;
     country: string;
-    started: string;
-    ends: string;
+    started: boolean;
     seller_id: string;
     description: string;
     image: string;
+    startingDate: Date;
+    endingDate: Date;
+    // startingDateString: string;
+    // endingDateString: string;
 }

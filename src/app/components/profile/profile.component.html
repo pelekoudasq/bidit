@@ -10,39 +10,66 @@
 	<ul class="list-group pt-2">
 		<ng-container *ngFor="let auct of auctions; index as i">
 			<li class="list-group-item">
-				<button class="btn btn-link pl-0" type="button" data-toggle="collapse" [attr.data-target]=" '#collapseExample'+i" aria-expanded="false" aria-controls="collapseExample">
+				<button class="btn btn-link pl-0" type="button" data-toggle="collapse" [attr.data-target]=" '#collapse_auctions'+i" aria-expanded="false" aria-controls="collapse_auctions">
 				<i class="fa fa-angle-down"></i>
 				</button>
 				<button class="btn btn-link" (click)="onNameClick(auct._id)">{{ auct.name }}</button>
-				<button [id]="auct._id" class="btn btn-link float-right" (click)="openModal('dates')">Start auction <i class="fa fa-clock-o"></i></button>
-				
+				<button *ngIf="!auct.started" [id]="auct._id" class="btn startbutton	 float-right" (click)="openModal('dates', auct._id)">Start auction <i class="fa fa-clock-o"></i></button>
 				
 				<!--  -->
 				<jw-modal id="dates" class="text-center">
-					<p>Your registration was successful! Thank you for joining our community!</p>
-					<label for="end">Auction starting at:</label><br>
+					<h6>Please set the ending date for the auction {{curAuctForModal}}</h6>
 					<!-- datepicker from bootstrap -->
-					<div id="end">
-						<input type="date" > 
-						<input type="time"><br>
+					<div class="form-inline float-center justify-content-center" id="end">
+						<label for="end">Auction ends at: </label>
+						<br>
+						<input class="form-control mb-2 mr-sm-2 mb-sm-0" type="datetime-local" value="2019-10-20T13:45:00">
 					</div>
-				<a href="/profile" class="btn-link border rounded">I completely understand. Thank you!</a>
+					<br>
+					<a (click)="startAuction(curAuctForModal)" class="btn btn-primary border rounded" style="color: white;">Start Auction</a>
 				</jw-modal>
 				<!--  -->
 
-
-				<div class="collapse" id="collapseExample{{i}}">
+				<div class="collapse" id="collapse_auctions{{i}}">
 					<div class="card card-body mt-2 border-bottom-0 border-right-0 border-left-0 border-top rounded-0">
 						<div class="row">
 							<div class="col-sm">
-								<span class="notstrong">Categories:</span> {{auct.categories}} <br>
-								<span class="notstrong">Currently at:</span> {{auct.currently}} <span>$</span><br>
-								<span class="notstrong">Starting Price:</span> {{auct.first_bid}} <span>$</span><br>
+								<table>
+									<tr>
+										<td class="pr-4 h6" style="color: #444444;">Categories: </td>
+										<td class="text-truncate" style="font-weight: normal;"><i>{{auct.categories}}</i></td>
+									</tr>
+									<tr *ngIf="auct.started">
+										<td class="pr-4 h6" style="color: #444444;">Currently at: </td>
+										<td class="" style="font-weight: normal;"><i>{{auct.currently}} $</i></td>
+									</tr>
+									<tr>
+										<td class="pr-4 h6" style="color: #444444;">Starting Price: </td>
+										<td class="" style="font-weight: normal;"><i>{{auct.first_bid}} $</i></td>
+									</tr>
+								</table>
+								<!-- <span class="notstrong">Categories: </span><span>{{auct.categories}}</span><br>
+								<span *ngIf="auct.started" class="notstrong">Currently at: </span><span *ngIf="auct.started">{{auct.currently}} $<br></span>
+								<span class="notstrong">Starting Price: </span>{{auct.first_bid}} <span>$</span><br> -->
 							</div>
 							<div class="col-sm">
-								<span class="notstrong">Number of bids made so far:</span> {{auct.number_of_bids}} <br>
-								<span class="notstrong">Starting Time:</span> {{auct.started}} <br>
-								<span class="notstrong">Ending Time:</span> {{auct.ends}} <br>
+								<table *ngIf="auct.started">
+									<tr>
+										<td class="pr-4 h6" style="color: #444444;">Number of bids: </td>
+										<td class="" style="font-weight: normal;"><i>{{auct.number_of_bids}}</i></td>
+									</tr>
+									<tr *ngIf="auct.started">
+										<td class="pr-4 h6" style="color: #444444;">Starting Time: </td>
+										<td class="" style="font-weight: normal;"><i>{{auct.startingDate | date:'fullDate' }}</i></td>
+									</tr>
+									<tr>
+										<td class="pr-4 h6" style="color: #444444;">Ending Time: </td>
+										<td class="" style="font-weight: normal;"><i>{{auct.endingDate | date:'fullDate' }}</i></td>
+									</tr>
+								</table>
+								<!-- <span *ngIf="auct.started" class="notstrong">Number of bids made so far: </span><span *ngIf="auct.started">{{auct.number_of_bids}}<br></span>
+								<span *ngIf="auct.started" class="notstrong">Starting Time: </span><span *ngIf="auct.started">{{auct.startingDate | date:'fullDate' }}<br></span>
+								<span *ngIf="auct.started" class="notstrong">Ending Time: </span><span *ngIf="auct.started">{{auct.endingDateString}}<br></span> -->
 							</div>
 						</div>				
 					</div>
@@ -56,12 +83,12 @@
 	<ul class="list-group pt-1">
 			<ng-container *ngFor="let bid of bids; index as i">
 				<li class="list-group-item">
-					<button class="btn btn-link pl-0" type="button" data-toggle="collapse" [attr.data-target]=" '#collapseExample'+i" aria-expanded="false" aria-controls="collapseExample">
+					<button class="btn btn-link pl-0" type="button" data-toggle="collapse" [attr.data-target]=" '#collapse_bids'+i" aria-expanded="false" aria-controls="collapse_bids">
 					<i class="fa fa-angle-down"></i>
 					</button>
 					<button class="btn btn-link" (click)="onNameClick(bid.auction_id)">{{ bid.name }}</button>
 					<!-- <button class="btn apprbutton float-right" >Start auction</button> -->
-					<div class="collapse" id="collapseExample{{i}}">
+					<div class="collapse" id="collapse_bids{{i}}">
 						<div class="card card-body mt-2 border-bottom-0 border-right-0 border-left-0 border-top rounded-0">
 							<div class="row">
 								<div class="col-sm">
