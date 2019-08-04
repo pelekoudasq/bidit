@@ -85,9 +85,37 @@
 			<div class="row">
 				<div *ngFor="let auction of auctions; index as i" class="card col-sm-4 my-1 mx-0.5 content-section">
 					<!-- <img src="https://www.freeiconspng.com/uploads/no-image-icon-13.png" class="card-img-top img-fluid pt-2 mx-auto w-75" alt="..."> -->
-					<img [src]="transform(i)" class="card-img-top img-fluid pt-2 mx-auto w-75" (click)="onNameClick(auction._id)">
+					<div class="text-center" style="height: 60%;">
+						<div style="height: 100%;">
+							<img [src]="transform(i)" class="card-img-top img-fluid" style="max-height: 100%;" (click)="onNameClick(auction._id)">
+						</div>
+					</div>
 					<div class="card-body px-0 pb-0">
-						<button class="btn btn-link text-wrap text-left px-0" (click)="onNameClick(auction._id)">{{auction.name}}</button>
+						<button class="btn btn-link text-wrap text-left px-0" (click)="onNameClick(auction._id)">{{auction.name}}</button>						
+						<!-- <table>
+							<tr>
+								<td>
+									<button class="btn btn-link text-wrap text-left px-0" (click)="onNameClick(auction._id)">{{auction.name}}</button>	
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<span class="card-text small text-truncate">{{auction.description}}</span>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<span class="card-text">Current price: {{auction.currently}} $</span>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<a class="btn btn-primary small mx-auto" (click)="onNameClick(auction._id)" style="color: white;">Take a look</a>
+								</td>
+							</tr>
+							
+						</table> -->
+						<!-- <button class="btn btn-link text-wrap text-left px-0" (click)="onNameClick(auction._id)">{{auction.name}}</button> -->
 						<p class="card-text small text-truncate">{{auction.description}}</p>
 						<p class="card-text">Current price: {{auction.currently}} $</p>
 						<a class="btn btn-primary small mx-auto" (click)="onNameClick(auction._id)" style="color: white;">Take a look</a>

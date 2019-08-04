@@ -63,6 +63,11 @@ export class ProfileComponent implements OnInit {
 	}
 
 	startAuction(id: string) {
+		var val = document.getElementById("date").value;
+		console.log(val);
+		if(!isNaN(val)){
+			console.log("ook")
+		}
 		this.dataService.startAuction(id).pipe(first()).subscribe(auction => {
 			//if (auction.started)
 				console.log("hereee");
