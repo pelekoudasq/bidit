@@ -19,7 +19,7 @@
 		<label for="image">Main Photo</label>
 		<div class="custom-file">
 			<input type="file" class="custom-file-input" id="image" (change)="onFileSelected($event)" [ngClass]="{ 'is-invalid': submitted && f.image?.errors }" >
-			<label class="custom-file-label" for="file">{{image ? image.name : 'Choose file' }}</label>
+			<label class="custom-file-label" for="file">{{image ? image : 'Replace file' }}</label>
 		</div>
 		<div *ngIf="submitted && f.image?.errors" class="invalid-feedback">
 			<div *ngIf="f.image?.errors.required">Image is required</div>

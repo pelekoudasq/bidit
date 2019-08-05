@@ -22,6 +22,7 @@ export class AuctionComponent implements OnInit {
 	currentUser: User;
 	loading: boolean = false;
 	seller: User;
+	editA: boolean = false;
 
 	constructor(
 		private route: ActivatedRoute,
@@ -55,6 +56,14 @@ export class AuctionComponent implements OnInit {
 				}
 			});
 		});
+	}
+
+	onEditAClick(id: string) {
+		this.editA = !this.editA;
+		if (this.authenticationService.auctionE != "")
+			this.authenticationService.auctionE = "";
+		else
+			this.authenticationService.auctionE = id;
 	}
 
 }

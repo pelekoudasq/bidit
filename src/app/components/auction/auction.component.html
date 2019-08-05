@@ -66,12 +66,10 @@
 			</div>
 
 			<div class="col-sm-5">
-				<div class="content-section" >
+				<div class="content-section" *ngIf="!editA">
 					<h6>{{auction.name}}<br><small style="font-size: 70%; color: #6c757d;">{{auction.categories}}</small></h6>
-					
-					
-						<!-- <span class="notstrong small">Categories: </span> <span class="small">{{auction.categories}}</span> -->
-						<!-- <br> -->
+					<!-- <span class="notstrong small">Categories: </span> <span class="small">{{auction.categories}}</span> -->
+					<!-- <br> -->
 					<!-- <br> -->
 					<div class="border-top ">
 						<br>
@@ -111,6 +109,9 @@
 						</table>						
 					</div>					
 				</div>
+				<div class="content-section" *ngIf="editA">
+					<app-editauction></app-editauction>
+				</div>
 			</div>
 
 			<div class="col-sm-3">
@@ -131,7 +132,15 @@
 					</div>
 				<!-- {{seller.username}} ({{seller.sellerRating}} <i class="fa fa-gavel"></i>) -->
 				</div>
-				<button *ngIf="auction.started" type="button" class="btn btn-primary btn-lg btn-block">Bid Now!</button>
+				<ng-container *ngIf="currentUser">
+					<ng-container *ngIf="currentUser._id != auction.seller_id">
+						<button *ngIf="auction.started" type="button" class="btn btn-primary btn-lg btn-block">Bid Now!</button>
+					</ng-container>
+					<ng-container *ngIf="currentUser._id == auction.seller_id">
+						<button [disabled]="auction.started" *ngIf="!editA" type="button" class="btn btn-primary btn-lg btn-block" (click)="onEditAClick(auction._id)">Edit Auction</button>
+						<button *ngIf="!auction.started && editA" type="button" class="btn cancelbutton btn-lg btn-block" (click)="onEditAClick(auction._id)">Cancel Edit</button>
+					</ng-container>
+				</ng-container>
 				<div class="content-section">
 					<div class="text-center">
 						<div *ngIf="authenticationService.loggedin; else login" >
