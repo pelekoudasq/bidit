@@ -20,6 +20,7 @@ export class HomeComponent implements OnInit {
 	currentUser: User;
 	loggedin: boolean;
 	auctions: Auction[] = [];
+	loading: boolean = false;
 
 	constructor(
 		private dataService: DataService,
@@ -37,6 +38,7 @@ export class HomeComponent implements OnInit {
 	ngOnInit() {
 		this.dataService.getAuctions().pipe(first()).subscribe(auctions => {
 			this.auctions = auctions;
+			this.loading = true;
 		});
 	}
 

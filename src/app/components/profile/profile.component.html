@@ -2,6 +2,9 @@
 <div class="container">
 <br>
 <h5>My Profile</h5>
+<div class="text-center"  *ngIf="!loading">
+	<img src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" /> 
+</div>
 <div class="content-section" *ngIf="loading">
 	<div class="row">
 		<div class="col-sm-6 my-auto"><h6>Personal Info</h6></div>
@@ -45,6 +48,9 @@
 	<app-editprofile *ngIf="edit"></app-editprofile>
 </div>
 <h5>My Dashboard</h5>
+<div class="text-center"  *ngIf="!loading">
+	<img src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" /> 
+</div>
 <div class="content-section" *ngIf="loading">
 	<div class="row">
 		<div class="col-sm-6 my-auto"><h6>My Auctions</h6></div>
@@ -64,7 +70,7 @@
 						<ng-container *ngIf="!auct.started" class="float-right">
 							<div class="row">
 								<div class="col-sm-6 my-auto"><button [id]="auct._id" class="btn startbutton float-right" (click)="openModal('dates', auct._id)">Start auction <i class="fa fa-clock-o"></i></button></div>
-								<div class="col-sm-6" *ngIf="!editA" ><a class="btn btn-primary float-right" (click)="onEditAClick(auct._id)" style="color: white;" data-toggle="collapse" [attr.data-target]=" '#collapse_auctions'+i" aria-expanded="false" aria-controls="collapse_auctions">Edit<i class="fa fa-edit fa-xs"></i></a></div>
+								<div class="col-sm-6" *ngIf="!editA" ><a class="btn btn-primary float-right" (click)="onEditAClick(auct._id)" style="color: white;" data-toggle="collapse" [attr.data-target]=" '#collapse_auctions'+i" aria-expanded="false" aria-controls="collapse_auctions">Edit <i class="fa fa-edit fa-xs"></i></a></div>
 								<div class="col-sm-6" *ngIf="editA"><a class="btn cancelbutton float-right" (click)="onEditAClick(auct._id)" style="color: white;" data-toggle="collapse" [attr.data-target]=" '#collapse_auctions'+i" aria-expanded="false" aria-controls="collapse_auctions">Cancel</a></div>
 							</div>
 					</ng-container>
