@@ -1,0 +1,97 @@
+
+<img *ngIf="!auction" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" /> 
+
+<form *ngIf="auction" [formGroup]="editForm" (ngSubmit)="onSubmit()" enctype='multipart/form-data'>
+	<div class="form-group">
+		<label for="productName">Product Name</label>
+		<input type="text" formControlName="productName" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.productName?.errors }" />
+		<div *ngIf="submitted && f.productName?.errors" class="invalid-feedback">
+			<div *ngIf="f.productName?.errors.required">Product Name is required</div>
+		</div>
+	</div>
+	<div class="form-group">
+		<label for="description">Description</label>
+		<textarea type="text" formControlName="description" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.description.errors }"></textarea>
+		<div *ngIf="submitted && f.description?.errors" class="invalid-feedback">
+			<div *ngIf="f.description?.errors.required">Description is required</div>
+		</div>
+	</div>
+	<div class="form-group">
+		<label for="image">Main Photo</label>
+		<div class="custom-file">
+			<input type="file" class="custom-file-input" id="image" (change)="onFileSelected($event)" [ngClass]="{ 'is-invalid': submitted && f.image?.errors }" >
+			<label class="custom-file-label" for="file">{{image ? image.name : 'Choose file' }}</label>
+		</div>
+		<div *ngIf="submitted && f.image?.errors" class="invalid-feedback">
+			<div *ngIf="f.image?.errors.required">Image is required</div>
+		</div>
+	</div>
+	<div class="form-group">
+		<label for="categories">Categories</label><br>
+		<!-- <mat-select placeholder="Choose" multiple>
+			<option value="" disabled selected></option>
+			<ng-container *ngFor="let cat of ctgrs; index as i">
+				<optgroup [label]="cat.name">
+					<ng-container *ngFor="let sub of cat.sub; index as j">
+						<mat-option *ngFor="let cat of ctgrs; index as i" [value]="sub.value">{{sub.viewValue}}
+					</mat-option>
+					</ng-container>
+				</optgroup>
+			</ng-container>
+		</mat-select> -->
+		<select class="mdb-select md-form form-control" [ngClass]="{ 'is-invalid': submitted && f.categories?.errors }"> 
+			<option value="" disabled selected></option>
+			<ng-container *ngFor="let cat of ctgrs; index as i">
+				<optgroup [label]="cat.name">
+					<ng-container *ngFor="let sub of cat.sub; index as j">
+						<option [value]="sub.value">{{sub.viewValue}}</option>
+					</ng-container>
+				</optgroup>
+			</ng-container>
+		</select>
+		<div *ngIf="submitted && f.categories?.errors" class="invalid-feedback">
+			<div *ngIf="f.categories?.errors.required">Categories field is required</div>
+		</div>
+	</div>
+	<div class="form-row form-group">
+		<div class="col">
+			<label for="startingPrice">Starting Price</label>
+			<input type="number" formControlName="startingPrice" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.startingPrice?.errors }" />
+			<div *ngIf="submitted && f.startingPrice?.errors" class="invalid-feedback">
+				<div *ngIf="f.startingPrice?.errors.required">Starting Price is required</div>
+			</div>
+		</div>
+		<div class="col">
+			<label for="buyPrice">Buy Out Price</label>
+			<input type="number" formControlName="buyPrice" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.buyPrice?.errors }" />
+			<div *ngIf="submitted && f.buyPrice?.errors" class="invalid-feedback">
+				<div *ngIf="f.buyPrice?.errors.required">Buy Out Price is required</div>
+			</div>
+		</div>
+	</div>
+	<div class="form-group">
+		<label for="location">Location</label>
+		<input type="text" formControlName="location" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.location?.errors }" />
+		<div *ngIf="submitted && f.location?.errors" class="invalid-feedback">
+			<div *ngIf="f.location?.errors.required">Location is required</div>
+		</div>
+	</div>
+	<div class="form-group">
+		<label for="country">Country</label>
+		<input type="text" formControlName="country" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.country?.errors }" />
+		<div *ngIf="submitted && f.country?.errors" class="invalid-feedback">
+			<div *ngIf="f.country?.errors.required">Country is required</div>
+		</div>
+	</div>
+	<div class="form-group">
+		<button [disabled]="loading" class="btn btn-primary w-75 shadow mb-0">Confirm</button>
+		<img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" /> 
+		<a (click)="onCancel()" class="btn btn-link w-25">Cancel</a>
+	</div>
+</form>
+<jw-modal id="approval" class="text-center">
+    <p>Your auction was successfully edited!</p>
+    <h5 class="text-center">You can start the auction from your Dashboard</h5>
+    <br>
+    <a href="/profile" class="btn btn-link border rounded">Back to My Profile</a>
+</jw-modal>

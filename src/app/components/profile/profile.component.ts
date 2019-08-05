@@ -25,6 +25,7 @@ export class ProfileComponent implements OnInit {
 	bids: Bid[] = [];
 	loading: boolean = false;
 	edit: boolean = false;
+	editA: boolean = false;
 	curAuctForModal: string;
 
 	constructor(
@@ -33,6 +34,7 @@ export class ProfileComponent implements OnInit {
 		private router: Router,
 		private alertService: AlertService,
 		private modalService: ModalService,
+		private authenticationService: AuthenticationService,
 		private datePipe: DatePipe)
 	{
 		this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
@@ -63,11 +65,10 @@ export class ProfileComponent implements OnInit {
 	}
 
 	startAuction(id: string) {
-		var val = document.getElementById("date").value;
-		console.log(val);
-		if(!isNaN(val)){
-			console.log("ook")
-		}
+		
+		// if(!isNaN(val)){
+		// 	console.log("ook")
+		// }
 		this.dataService.startAuction(id).pipe(first()).subscribe(auction => {
 			//if (auction.started)
 				console.log("hereee");
@@ -91,5 +92,14 @@ export class ProfileComponent implements OnInit {
 
     onEditClick() {
     	this.edit = !this.edit;
-    }
+	}
+	
+	onEditAClick(id: string) {
+		this.editA = !this.editA;
+		if (this.authenticationService.auctionE != "")
+			this.authenticationService.auctionE = "";
+		else
+			this.authenticationService.auctionE = id;
+		console.log(this.authenticationService.auctionE);	
+	}
 }

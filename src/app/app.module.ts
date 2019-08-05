@@ -23,6 +23,7 @@ import { ProfileComponent } from './components/profile/profile.component';
 import { AuctionComponent } from './components/auction/auction.component';
 import { NewAuctionComponent } from './components/newauction/newauction.component';
 import { EditProfileComponent } from './components/editprofile/editprofile.component';
+import { EditAuctionComponent } from './components/editauction/editauction.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { EditProfileComponent } from './components/editprofile/editprofile.compo
     ProfileComponent,
     AuctionComponent,
     NewAuctionComponent,
-    EditProfileComponent
+    EditProfileComponent,
+    EditAuctionComponent
   ],
   imports: [
     BrowserModule,

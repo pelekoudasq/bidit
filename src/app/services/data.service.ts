@@ -59,4 +59,9 @@ export class DataService {
     updateUser(user: User, userid: string) {
         return this.http.post(`http://localhost:3000/api/userupdate/`, { userid: userid, user: user});
     }
+
+    updateAuction(auction: Auction, auctionid: string) {
+        return this.http.post(`http://localhost:3000/api/auctionupdate/`, { auction: auction, auctionid: auctionid});
+        
+    }
 }

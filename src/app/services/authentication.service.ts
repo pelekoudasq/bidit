@@ -4,6 +4,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { User } from '../models/user';
+import { Auction } from '../models/auction';
 
 @Injectable({ providedIn: 'root' })
 export class AuthenticationService {
@@ -14,6 +15,7 @@ export class AuthenticationService {
     public loggedin: boolean;
     public isAdmin: boolean;
     public approved: boolean;
+    public auctionE: string = "";
 
     constructor(private http: HttpClient) {
         this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('currentUser')));

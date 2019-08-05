@@ -239,6 +239,29 @@ router.get('/startauction/:id', function(req, res, next) {
 	});
 })
 
+//Update auction
+router.post('/auctionupdate', function(req, res, next) {
+	console.log('api: update auction');
+	const updAuct = req.body.auction;
+	db.Auctions.update({ _id: mongojs.ObjectID(req.body.auctionid) }, { 
+			$set: {
+				name: updAuct.productName,
+				categories: updAuct.categories,
+				first_bid: updAuct.startingPrice,
+				buy_price: updAuct.buyPrice,
+				location: updAuct.location,
+				country: updAuct.country,
+				description: updAuct.description,
+				image: updAuct.image
+			} 
+		}, function(err, auction) {
+		if (auction) {
+			res.send(auction);
+			return;
+		}
+	});
+});
+
 //Save a new auction
 router.post('/newauction', function(req, res, next) {
 	console.log('api: new auction register');
@@ -251,7 +274,7 @@ router.post('/newauction', function(req, res, next) {
 	// auction = new Auction();
 	auction = db.Auctions.save({
 		name: auctionParams.productName,
-		categories: [],
+		categories: auctionParams.categories,
 		currently: auctionParams.startingPrice,
 		first_bid: auctionParams.startingPrice,
 		buy_price: auctionParams.buyPrice,

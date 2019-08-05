@@ -64,8 +64,8 @@
 						<ng-container *ngIf="!auct.started" class="float-right">
 							<div class="row">
 								<div class="col-sm-6 my-auto"><button [id]="auct._id" class="btn startbutton float-right" (click)="openModal('dates', auct._id)">Start auction <i class="fa fa-clock-o"></i></button></div>
-								<div class="col-sm-6" *ngIf="!editA" ><a class="btn btn-primary float-right" (click)="onEditAClick()" style="color: white;">Edit<i class="fa fa-edit fa-xs"></i></a></div>
-								<div class="col-sm-6" *ngIf="editA"><a class="btn cancelbutton float-right" (click)="onEditAClick()" style="color: white;">Cancel</a></div>
+								<div class="col-sm-6" *ngIf="!editA" ><a class="btn btn-primary float-right" (click)="onEditAClick(auct._id)" style="color: white;" data-toggle="collapse" [attr.data-target]=" '#collapse_auctions'+i" aria-expanded="false" aria-controls="collapse_auctions">Edit<i class="fa fa-edit fa-xs"></i></a></div>
+								<div class="col-sm-6" *ngIf="editA"><a class="btn cancelbutton float-right" (click)="onEditAClick(auct._id)" style="color: white;" data-toggle="collapse" [attr.data-target]=" '#collapse_auctions'+i" aria-expanded="false" aria-controls="collapse_auctions">Cancel</a></div>
 							</div>
 					</ng-container>
 					</div>
@@ -87,7 +87,7 @@
 
 				<div class="collapse" id="collapse_auctions{{i}}">
 					<div class="card card-body mt-2 border-bottom-0 border-right-0 border-left-0 border-top rounded-0">
-						<div class="row">
+						<div class="row" *ngIf="!editA">
 							<div class="col-sm">
 								<table>
 									<tr>
@@ -103,9 +103,6 @@
 										<td class="" style="font-weight: normal;"><i>{{auct.first_bid}} $</i></td>
 									</tr>
 								</table>
-								<!-- <span class="notstrong">Categories: </span><span>{{auct.categories}}</span><br>
-								<span *ngIf="auct.started" class="notstrong">Currently at: </span><span *ngIf="auct.started">{{auct.currently}} $<br></span>
-								<span class="notstrong">Starting Price: </span>{{auct.first_bid}} <span>$</span><br> -->
 							</div>
 							<div class="col-sm">
 								<table *ngIf="auct.started">
@@ -122,11 +119,9 @@
 										<td class="" style="font-weight: normal;"><i>{{auct.endingDate | date:'fullDate' }}</i></td>
 									</tr>
 								</table>
-								<!-- <span *ngIf="auct.started" class="notstrong">Number of bids made so far: </span><span *ngIf="auct.started">{{auct.number_of_bids}}<br></span>
-								<span *ngIf="auct.started" class="notstrong">Starting Time: </span><span *ngIf="auct.started">{{auct.startingDate | date:'fullDate' }}<br></span>
-								<span *ngIf="auct.started" class="notstrong">Ending Time: </span><span *ngIf="auct.started">{{auct.endingDateString}}<br></span> -->
 							</div>
-						</div>				
+						</div>
+						<app-editauction *ngIf="editA"></app-editauction>				
 					</div>
 				</div>			
 			</li>
