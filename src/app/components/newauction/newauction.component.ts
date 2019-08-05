@@ -73,7 +73,7 @@ export class NewAuctionComponent implements OnInit {
             country: ['', Validators.required],
             description: ['', Validators.required],
             image: ['', [Validators.required, this.requiredFileType('png')]],
-            categories: ['', Validators.required]
+            // categories: ['', Validators.required]
         });
     }
 
@@ -114,6 +114,7 @@ export class NewAuctionComponent implements OnInit {
         this.submitted = true;
         // stop here if form is invalid
         if (this.auctionForm.invalid) {
+            console.log(this.auctionForm);
             return;
         }
         this.loading = true;

@@ -62,6 +62,7 @@ export class ProfileComponent implements OnInit {
 				this.loading = true;
 			});
 		});
+		// console.log(this.currentUser);
 	}
 
 	startAuction(id: string) {

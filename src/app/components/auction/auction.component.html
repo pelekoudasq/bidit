@@ -83,11 +83,11 @@
 									<td class="w-50 text-muted">Starting price:</td>
 									<td class="text-left">{{auction.first_bid}} $</td>
 								</tr>
-								<tr class="small">
+								<tr class="small" *ngIf="auction.started">
 									<td class="w-50 text-muted">Current bid:</td>
 									<td>{{auction.currently}} $</td>
 								</tr>
-								<tr class="small">
+								<tr class="small" *ngIf="auction.started">
 									<td class="w-50 text-muted">Total bids:</td>
 									<td>{{auction.number_of_bids}}</td>
 								</tr>
@@ -95,13 +95,13 @@
 									<td class="w-50 text-muted">Buy out price: </td>
 									<td>{{auction.buy_price}} $</td>
 								</tr>
-								<tr class="small">
+								<tr class="small" *ngIf="auction.started">
 									<td class="w-50 text-muted">This auction started at:</td>
-									<td>{{auction.started}}</td>
+									<td>{{auction.startingDate}}</td>
 								</tr>
-								<tr class="small">
+								<tr class="small" *ngIf="auction.started">
 									<td class="w-50 text-muted">This auction ends at:</td>
-									<td>{{auction.ends}}</td>
+									<td>{{auction.endingDate}}</td>
 								</tr>
 								<tr class="small">
 									<td class="w-50 text-muted">Item location:</td>

@@ -49,6 +49,10 @@ export class AuctionComponent implements OnInit {
 					});
 				}
 				this.loading = true;
+				if (!this.auction.started) {
+					if (!this.currentUser || this.auction.seller_id != this.currentUser._id)
+						this.router.navigate(['/']);
+				}
 			});
 		});
 	}

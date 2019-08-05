@@ -79,7 +79,8 @@
 				
 				<!--  -->
 				<jw-modal id="dates" class="text-center">
-					<h6>Please set the ending date for the auction {{curAuctForModal}}</h6>
+					<a (click)="closeModal('dates')" class="btn-link float-right" style="cursor: pointer!important;"><i class="fa fa-times"></i></a>
+					<h6>Please set the ending date for the auction</h6>
 					<!-- datepicker from bootstrap -->
 					<div class="form-inline float-center justify-content-center" id="end">
 						<label for="end">Auction ends at: </label>
@@ -87,7 +88,8 @@
 						<input id="date" class="form-control mb-2 mr-sm-2 mb-sm-0" type="datetime-local" value="2019-10-20T13:45:00">
 					</div>
 					<br>
-					<a (click)="startAuction(curAuctForModal)" class="btn btn-primary border rounded" style="color: white;">Start Auction</a>
+					<a class="btn btn-link my-auto" (click)="closeModal('dates')" style="color: rgb(194, 77, 73)!important;">Cancel</a>
+					<a (click)="startAuction(curAuctForModal)" class="btn btn-primary border rounded" style="color: white;">Start Auction <i class="fa fa-hourglass-start" aria-hidden="true"></i></a>
 				</jw-modal>
 				<!--  -->
 

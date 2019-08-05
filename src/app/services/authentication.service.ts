@@ -46,7 +46,7 @@ export class AuthenticationService {
                 this.loggedin = true;
                 this.isAdmin = user.admin;
                 this.approved = user.approved;
-                console.log(user);
+                // console.log(user);
                 return user;
             }));
     }
