@@ -68,7 +68,7 @@ export class NewAuctionComponent implements OnInit {
         this.auctionForm = this.formBuilder.group({
             productName: ['', Validators.required],
             startingPrice: ['', Validators.required],
-            buyPrice: ['', Validators.required],
+            buyPrice: ['', /*Validators.required*/],
             location: ['', Validators.required],
             country: ['', Validators.required],
             description: ['', Validators.required],

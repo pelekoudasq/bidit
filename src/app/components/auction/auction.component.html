@@ -131,7 +131,7 @@
 					</div>
 				<!-- {{seller.username}} ({{seller.sellerRating}} <i class="fa fa-gavel"></i>) -->
 				</div>
-
+				<button *ngIf="auction.started" type="button" class="btn btn-primary btn-lg btn-block">Bid Now!</button>
 				<div class="content-section">
 					<div class="text-center">
 						<div *ngIf="authenticationService.loggedin; else login" >

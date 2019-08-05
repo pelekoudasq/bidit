@@ -29,6 +29,7 @@ export class ProfileComponent implements OnInit {
 	editA: boolean = false;
 	curAuctForModal: string;
 	endForm: FormGroup;
+	dateError: boolean = false;
 
 	constructor(
 		private formBuilder: FormBuilder,
@@ -65,7 +66,7 @@ export class ProfileComponent implements OnInit {
 	}
 
 	// convenience getter for easy access to form fields
-    get f() { return this.endForm.controls; }
+	get f() { return this.endForm.controls; }
 
 	onNameClick(id: string) {
 		if (id)
@@ -74,24 +75,29 @@ export class ProfileComponent implements OnInit {
 
 	openModal(id: string, auct_id: string) {
 		this.curAuctForModal = auct_id;
-        this.modalService.open(id);
-        
-    }
+		this.modalService.open(id);
+	}
 
-    closeModal(id: string) {
-        this.modalService.close(id);
-    }
+	closeModal(id: string) {
+		this.modalService.close(id);
+	}
 
 	startAuction(id: string) {
 		if (this.endForm.invalid)
 			return;
-		this.dataService.startAuction(id, this.endForm.controls.enddate.value).pipe(first()).subscribe(auction => {
-			window.location.reload();
-		});
+		this.dataService.startAuction(id, this.endForm.controls.enddate.value).pipe(first()).subscribe(
+			auction => {
+				window.location.reload();
+			},
+			error => {
+				console.log(error.error.error);
+				this.dateError = true;
+				this.alertService.error(error.error.error);
+			});
 	}
 
-    onEditClick() {
-    	this.edit = !this.edit;
+	onEditClick() {
+		this.edit = !this.edit;
 	}
 	
 	onEditAClick(id: string) {

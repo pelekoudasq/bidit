@@ -1,3 +1,4 @@
+
 <br>
 <div class="container">
 <br>
@@ -88,6 +89,9 @@
 								<label for="end">Auction ends at: </label>
 								<input id="date" class="form-control mb-2 mr-sm-2 mb-sm-0" type="datetime-local" value="2019-10-20T13:45:00">
 							</div> -->
+							<div *ngIf="dateError" class="alert alert-danger" role="alert">
+								End date must be later of today
+							</div>
 							<label for="enddate">Auction ends at:</label>
 							<input id="enddate" formControlName="enddate" class="form-control" type="datetime-local" value="2019-10-20T13:45:00" [ngClass]="{ 'is-invalid': submitted && f.enddate?.errors }">
 							<div *ngIf="submitted && f.enddate?.errors" class="invalid-feedback">

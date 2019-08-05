@@ -191,12 +191,12 @@ router.post('/users/register', function(req, res, next){
 	const userParam = req.body;
 	db.Users.findOne({ email: userParam.email }, function(err, user){
 		if (user){
-			res.send(user);
+			res.status(400).json({ error: 'This email is already in use' });
 			return;
 		} else {
 			db.Users.findOne({ username: userParam.username }, function(err, user){
 				if (user) {
-					res.send(user);
+					res.status(400).json({ error: 'This username is already in use' });
 					return;
 				} else {
 					// hash password
@@ -231,12 +231,19 @@ router.post('/users/register', function(req, res, next){
 router.post('/startauction', function(req, res, next) {
 	console.log('api: start auction');
 	const today = new Date();
-	db.Auctions.update({ _id: mongojs.ObjectID(req.body.auctionid) }, { $set: { started: true, startingDate: today, endingDate: req.body.enddate } }, function(err, auction) {
-		if (err) {
-			res.send(err);
-		}
-		res.json(auction);
-	});
+	const enddate = new Date(req.body.enddate);
+	console.log("today: "+today+" enddate: "+enddate+","+req.body.enddate);
+	if (today>enddate){
+		res.status(400).json({ error: 'End date must be later of today' });
+		return;
+	} else {
+		db.Auctions.update({ _id: mongojs.ObjectID(req.body.auctionid) }, { $set: { started: true, startingDate: today, endingDate: enddate } }, function(err, auction) {
+			if (err) {
+				res.send(err);
+			}
+			res.json(auction);
+		});
+	}
 })
 
 //Update auction
