@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
+import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
 import { first } from 'rxjs/operators';
 import { DatePipe } from '@angular/common';
 
@@ -27,8 +28,10 @@ export class ProfileComponent implements OnInit {
 	edit: boolean = false;
 	editA: boolean = false;
 	curAuctForModal: string;
+	endForm: FormGroup;
 
 	constructor(
+		private formBuilder: FormBuilder,
 		private route: ActivatedRoute,
 		private dataService: DataService,
 		private router: Router,
@@ -43,13 +46,6 @@ export class ProfileComponent implements OnInit {
 	ngOnInit() {
 		this.dataService.getUserAuctions(this.currentUser._id).pipe(first()).subscribe(auctions => {
 			this.auctions = auctions;
-			// for(let i = 0; i < this.auctions.length; i++) {
-			// 	if (this.auctions[i].started) {
-			// 		this.auctions[i].startingDateString = this.auctions[i].startingDate.toString();
-			// 		if (this.auctions[i].endingDate)
-			// 			this.auctions[i].endingDateString = this.auctions[i].endingDate.toString();
-			// 	}
-			// }
 			this.dataService.getUserBids(this.currentUser._id).pipe(first()).subscribe(bids => {
 				this.bids = bids;
 				for(let i = 0; i < this.bids.length; i++) {
@@ -62,20 +58,14 @@ export class ProfileComponent implements OnInit {
 				this.loading = true;
 			});
 		});
+		this.endForm = this.formBuilder.group({
+			enddate: ['', Validators.required],
+		});
 		// console.log(this.currentUser);
 	}
 
-	startAuction(id: string) {
-		
-		// if(!isNaN(val)){
-		// 	console.log("ook")
-		// }
-		this.dataService.startAuction(id).pipe(first()).subscribe(auction => {
-			//if (auction.started)
-				console.log("hereee");
-				this.router.navigate(['/profile']);
-		});
-	}
+	// convenience getter for easy access to form fields
+    get f() { return this.endForm.controls; }
 
 	onNameClick(id: string) {
 		if (id)
@@ -85,11 +75,20 @@ export class ProfileComponent implements OnInit {
 	openModal(id: string, auct_id: string) {
 		this.curAuctForModal = auct_id;
         this.modalService.open(id);
+        
     }
 
     closeModal(id: string) {
         this.modalService.close(id);
     }
+
+	startAuction(id: string) {
+		if (this.endForm.invalid)
+			return;
+		this.dataService.startAuction(id, this.endForm.controls.enddate.value).pipe(first()).subscribe(auction => {
+			window.location.reload();
+		});
+	}
 
     onEditClick() {
     	this.edit = !this.edit;

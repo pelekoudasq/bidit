@@ -52,8 +52,8 @@ export class DataService {
         return this.http.post(`http://localhost:3000/api/newauction/`, { userid: userid, auction: auction});
     }
 
-    startAuction(id: string) {
-        return this.http.get<Auction>(`http://localhost:3000/api/startauction/` + id);
+    startAuction(id: string, enddate: Date) {
+        return this.http.post(`http://localhost:3000/api/startauction/`, { auctionid: id, enddate: enddate});
     }
 
     updateUser(user: User, userid: string) {

@@ -75,37 +75,37 @@
 					<!-- <br> -->
 					<div class="border-top ">
 						<br>
-						<p class="">{{auction.description}}</p>
+						<p class="">{{ auction.description }}</p>
 						
 						<table class="table table-borderless table-sm">
 							<tbody>
 								<tr class="small">
 									<td class="w-50 text-muted">Starting price:</td>
-									<td class="text-left">{{auction.first_bid}} $</td>
+									<td class="text-left">{{ auction.first_bid }} $</td>
 								</tr>
 								<tr class="small" *ngIf="auction.started">
 									<td class="w-50 text-muted">Current bid:</td>
-									<td>{{auction.currently}} $</td>
+									<td>{{ auction.currently }} $</td>
 								</tr>
 								<tr class="small" *ngIf="auction.started">
 									<td class="w-50 text-muted">Total bids:</td>
-									<td>{{auction.number_of_bids}}</td>
+									<td>{{ auction.number_of_bids }}</td>
 								</tr>
 								<tr *ngIf="auction.buy_price" class="small">
 									<td class="w-50 text-muted">Buy out price: </td>
-									<td>{{auction.buy_price}} $</td>
+									<td>{{ auction.buy_price }} $</td>
 								</tr>
 								<tr class="small" *ngIf="auction.started">
 									<td class="w-50 text-muted">This auction started at:</td>
-									<td>{{auction.startingDate}}</td>
+									<td>{{ auction.startingDate| date:'fullDate' }}</td>
 								</tr>
 								<tr class="small" *ngIf="auction.started">
 									<td class="w-50 text-muted">This auction ends at:</td>
-									<td>{{auction.endingDate}}</td>
+									<td>{{ auction.endingDate | date:'fullDate' }}</td>
 								</tr>
 								<tr class="small">
 									<td class="w-50 text-muted">Item location:</td>
-									<td>{{auction.location}}, {{auction.country}}</td>
+									<td>{{ auction.location }}, {{ auction.country }}</td>
 								</tr>
 							</tbody>
 						</table>						

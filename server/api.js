@@ -228,10 +228,10 @@ router.post('/users/register', function(req, res, next){
 	});
 });
 
-router.get('/startauction/:id', function(req, res, next) {
+router.post('/startauction', function(req, res, next) {
 	console.log('api: start auction');
 	const today = new Date();
-	db.Auctions.update({ _id: mongojs.ObjectID(req.params.id) }, { $set: { started: true, startingDate: today } }, function(err, auction) {
+	db.Auctions.update({ _id: mongojs.ObjectID(req.body.auctionid) }, { $set: { started: true, startingDate: today, endingDate: req.body.enddate } }, function(err, auction) {
 		if (err) {
 			res.send(err);
 		}
