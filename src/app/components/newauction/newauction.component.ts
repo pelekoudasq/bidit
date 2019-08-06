@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/fo
 import { Router } from '@angular/router';
 import { first } from 'rxjs/operators';
 import { MatSelectModule } from '@angular/material/select';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AlertService } from '../../services/alert.service';
 import { ModalService } from '../../services/modal.service';
@@ -19,6 +20,7 @@ import { Auction } from '../../models/auction';
 })
 export class NewAuctionComponent implements OnInit {
     auctionForm: FormGroup;
+    category: string[] = [];
     loading = false;
     submitted = false;
     image: File | null = null;
@@ -73,7 +75,7 @@ export class NewAuctionComponent implements OnInit {
             country: ['', Validators.required],
             description: ['', Validators.required],
             image: ['', [Validators.required, this.requiredFileType('png')]],
-            // categories: ['', Validators.required]
+            categories: ['']
         });
     }
 
@@ -112,6 +114,7 @@ export class NewAuctionComponent implements OnInit {
 
     onSubmit() {
         this.submitted = true;
+        console.log(this.auctionForm);
         // stop here if form is invalid
         if (this.auctionForm.invalid) {
             console.log(this.auctionForm);
@@ -141,4 +144,13 @@ export class NewAuctionComponent implements OnInit {
         this.modalService.close(id);
     }
 
+    selectchange(args){ 
+        for( var i = 0; i < args.target.selectedOptions.length; i++){
+            this.category.push(args.target.selectedOptions[i].text);
+        }
+        this.auctionForm.patchValue({
+            categories: this.category
+        });
+        this.category = [];
+    } 
 }

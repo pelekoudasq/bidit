@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { first } from 'rxjs/operators';
+import { MatSelectModule } from '@angular/material/select';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AlertService } from '../../services/alert.service';
 import { ModalService } from '../../services/modal.service';
@@ -20,7 +22,8 @@ export class EditAuctionComponent implements OnInit {
 
 	auction_id: string;
 	auction: Auction;
-	editForm: FormGroup;
+    editForm: FormGroup;
+    category: string[] = [];
 	loading = false;
 	submitted = false;
     currentUser: User;
@@ -79,8 +82,8 @@ export class EditAuctionComponent implements OnInit {
 					location: [this.auction.location, Validators.required],
 					country: [this.auction.country, Validators.required],
 					description: [this.auction.description, Validators.required],
-					image: [this.auction.image, [Validators.required, this.requiredFileType('png')]]
-					// categories: [this.auction.categories, Validators.required]
+					image: [this.auction.image, [Validators.required, this.requiredFileType('png')]],
+					categories: [this.auction.categories]
 				});
 		});
 		
@@ -145,5 +148,15 @@ export class EditAuctionComponent implements OnInit {
 					this.loading = false;
 				});
     }
+
+    selectchange(args){ 
+        for( var i = 0; i < args.target.selectedOptions.length; i++){
+            this.category.push(args.target.selectedOptions[i].text);
+        }
+        this.editForm.patchValue({
+            categories: this.category
+        });
+        this.category = [];
+    } 
 
 }
