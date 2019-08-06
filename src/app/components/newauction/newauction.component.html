@@ -28,32 +28,6 @@
             </div>
             <div class="form-group">
                 <label for="categories">Categories</label><br>
-                <!-- <mat-select placeholder="Choose" multiple>
-                    <option value="" disabled selected></option>
-                    <ng-container *ngFor="let cat of ctgrs; index as i">
-                        <optgroup [label]="cat.name">
-                            <ng-container *ngFor="let sub of cat.sub; index as j">
-                                <mat-option *ngFor="let cat of ctgrs; index as i" [value]="sub.value">{{sub.viewValue}}
-                            </mat-option>
-                            </ng-container>
-                        </optgroup>
-                    </ng-container>
-                </mat-select> -->
-                <!-- <mat-form-field>
-                    <mat-label>Categories</mat-label>
-                    <mat-select [formControl]="categories" class="form-control" placeholder="Choose">
-                        <mat-option disabled selected>-- None --</mat-option>
-                        <ng-container *ngFor="let cat of ctgrs">
-                            <mat-optgroup [label]="cat.name">
-                                <ng-container *ngFor="let sub of cat.sub">
-                                    <mat-option [value]="sub.value">
-                                        {{sub.viewValue}}
-                                    </mat-option>
-                                </ng-container>
-                            </mat-optgroup>
-                        </ng-container>
-                    </mat-select>
-                </mat-form-field> -->
                 <select class="mdb-select md-form form-control" (change)="selectchange($event)"> 
                     <option value="" disabled selected></option>
                     <ng-container *ngFor="let cat of ctgrs; index as i">

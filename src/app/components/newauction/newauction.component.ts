@@ -75,7 +75,7 @@ export class NewAuctionComponent implements OnInit {
             country: ['', Validators.required],
             description: ['', Validators.required],
             image: ['', [Validators.required, this.requiredFileType('png')]],
-            categories: ['']
+            categories: ['', Validators.required]
         });
     }
 
@@ -102,6 +102,7 @@ export class NewAuctionComponent implements OnInit {
         const reader = new FileReader();
         if(event.target.files && event.target.files.length) {
             const [file] = event.target.files;
+            console.log(event.target.files);
             reader.readAsDataURL(file);
             reader.onload = () => {
                 this.auctionForm.patchValue({
@@ -145,7 +146,7 @@ export class NewAuctionComponent implements OnInit {
     }
 
     selectchange(args){ 
-        for( var i = 0; i < args.target.selectedOptions.length; i++){
+        for (var i = 0; i < args.target.selectedOptions.length; i++) {
             this.category.push(args.target.selectedOptions[i].text);
         }
         this.auctionForm.patchValue({

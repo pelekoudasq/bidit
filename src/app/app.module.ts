@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatSelectModule } from '@angular/material/select';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { JwtInterceptor } from './jwt-interceptor';
 import { DatePipe } from '@angular/common';
@@ -45,6 +46,7 @@ import { EditAuctionComponent } from './components/editauction/editauction.compo
     AppRoutingModule,
     ReactiveFormsModule,
     MatSelectModule,
+    BrowserAnimationsModule,
     HttpClientModule
   ],
   providers: [

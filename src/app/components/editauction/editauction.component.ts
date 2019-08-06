@@ -20,6 +20,8 @@ import { Auction } from '../../models/auction';
 })
 export class EditAuctionComponent implements OnInit {
 
+    selectedValue: string;
+    selectedFruit: string;
 	auction_id: string;
 	auction: Auction;
     editForm: FormGroup;
@@ -83,7 +85,7 @@ export class EditAuctionComponent implements OnInit {
 					country: [this.auction.country, Validators.required],
 					description: [this.auction.description, Validators.required],
 					image: [this.auction.image, [Validators.required, this.requiredFileType('png')]],
-					categories: [this.auction.categories]
+					categories: [this.auction.categories, Validators.required]
 				});
 		});
 		
