@@ -135,7 +135,14 @@
 								<table>
 									<tr>
 										<td class="pr-4 h6" style="color: #444444;">Categories: </td>
-										<td class="text-truncate" style="font-weight: normal;"><i>{{auct.categories}}</i></td>
+										<td class="text-truncate" style="font-weight: normal;">
+												<ng-container *ngFor="let cat of auct.categories; index as k">
+													<i>{{cat}}</i>
+													<ng-container *ngIf="auct.categories.length != k+1">
+													<i>, </i>
+													</ng-container>
+												</ng-container>
+										</td>
 									</tr>
 									<tr *ngIf="auct.started">
 										<td class="pr-4 h6" style="color: #444444;">Currently at: </td>
