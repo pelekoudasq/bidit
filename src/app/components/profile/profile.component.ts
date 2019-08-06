@@ -26,7 +26,7 @@ export class ProfileComponent implements OnInit {
 	bids: Bid[] = [];
 	loading: boolean = false;
 	edit: boolean = false;
-	editA: boolean = false;
+	editA: boolean[] = [];
 	curAuctForModal: string;
 	endForm: FormGroup;
 	dateError: boolean = false;
@@ -47,6 +47,8 @@ export class ProfileComponent implements OnInit {
 	ngOnInit() {
 		this.dataService.getUserAuctions(this.currentUser._id).pipe(first()).subscribe(auctions => {
 			this.auctions = auctions;
+			for (let i = 0; i < this.auctions.length; i++) 
+				this.editA.push(false);
 			this.dataService.getUserBids(this.currentUser._id).pipe(first()).subscribe(bids => {
 				this.bids = bids;
 				for(let i = 0; i < this.bids.length; i++) {
@@ -100,12 +102,23 @@ export class ProfileComponent implements OnInit {
 		this.edit = !this.edit;
 	}
 	
-	onEditAClick(id: string) {
-		this.editA = !this.editA;
+	onEditAClick(id: string, i: number) {
+		this.editA[i] = !this.editA[i];
 		if (this.authenticationService.auctionE != "")
 			this.authenticationService.auctionE = "";
 		else
 			this.authenticationService.auctionE = id;
 		console.log(this.authenticationService.auctionE);	
 	}
-}
+
+	onDelete(id: string) {
+		this.dataService.deleteAuction(id).pipe(first()).subscribe(
+			auction => {
+				window.location.reload();
+			},
+			error => {
+				console.log(error.error.error);
+				this.alertService.error(error.error.error);
+			});
+	}
+}	

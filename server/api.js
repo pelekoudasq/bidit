@@ -269,6 +269,17 @@ router.post('/auctionupdate', function(req, res, next) {
 	});
 });
 
+//delete auction
+router.delete('/auctiondelete/:id', function(req, res, next) {
+	console.log('api: delete auction');
+	db.Auctions.remove({ _id: mongojs.ObjectID(req.params.id) }, function(err, auction) {
+		if (auction) {
+			res.send(auction);
+			return;
+		}
+	});
+});
+
 //Save a new auction
 router.post('/newauction', function(req, res, next) {
 	console.log('api: new auction register');
