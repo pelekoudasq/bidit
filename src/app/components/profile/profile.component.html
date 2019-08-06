@@ -50,7 +50,7 @@
 </div>
 <h5>My Dashboard</h5>
 <div class="text-center"  *ngIf="!loading">
-	<img src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" /> 
+	<img src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="/> 
 </div>
 <div class="content-section" *ngIf="loading">
 	<div class="row">
@@ -68,13 +68,35 @@
 						<button class="btn btn-link" (click)="onNameClick(auct._id)">{{ auct.name }}</button>
 					</div>
 					<div class="col-sm-2">
-						<ng-container *ngIf="!auct.started" class="float-right">
+						<ng-container *ngIf="!auct.started || (auct.number_of_bids == 0)" class="float-right">
 							<div class="row">
-								<div class="col-sm-6 my-auto"><button [id]="auct._id" class="btn startbutton float-right" (click)="openModal('dates', auct._id)">Start auction <i class="fa fa-clock-o"></i></button></div>
-								<div class="col-sm-6" *ngIf="!editA" ><a class="btn btn-primary float-right" (click)="onEditAClick(auct._id)" style="color: white;" data-toggle="collapse" [attr.data-target]=" '#collapse_auctions'+i" aria-expanded="false" aria-controls="collapse_auctions">Edit <i class="fa fa-edit fa-xs"></i></a></div>
-								<div class="col-sm-6" *ngIf="editA"><a class="btn cancelbutton float-right" (click)="onEditAClick(auct._id)" style="color: white;" data-toggle="collapse" [attr.data-target]=" '#collapse_auctions'+i" aria-expanded="false" aria-controls="collapse_auctions">Cancel</a></div>
+								<ng-container *ngIf="auct.number_of_bids == 0 && !editA[i] && auct.started">
+									<div class="col-sm-12 my-auto">
+										<a class="btn btn-primary float-right" (click)="onEditAClick(auct._id, i)" style="color: white;" data-toggle="collapse" [attr.data-target]=" '#collapse_auctions'+i" aria-expanded="false" aria-controls="collapse_auctions">Edit <i class="fa fa-edit fa-xs"></i>
+										</a>
+									</div>
+								</ng-container>
+								<ng-container *ngIf="!editA[i] && !auct.started">
+									<div class="col-sm-6 my-auto">
+										<button [id]="auct._id" class="btn startbutton float-right" (click)="openModal('dates', auct._id)">Start auction 
+											<i class="fa fa-clock-o"></i>
+										</button>
+									</div>
+									<div class="col-sm-6 my-auto">
+										<a class="btn btn-primary float-right" (click)="onEditAClick(auct._id, i)" style="color: white;" data-toggle="collapse" [attr.data-target]=" '#collapse_auctions'+i" aria-expanded="false" aria-controls="collapse_auctions">Edit <i class="fa fa-edit fa-xs"></i>
+										</a>
+									</div>
+								</ng-container>
+								<ng-container *ngIf="editA[i]">
+									<div class="col-sm-6">
+										<a class="btn cancelbutton float-right" (click)="onDelete(auct._id)" style="color: white;">Delete Auction <i class="fa fa-trash-o" aria-hidden="true"></i></a>
+									</div>
+									<div class="col-sm-6">
+										<a class="btn btn-outline-danger float-right" (click)="onEditAClick(auct._id, i)" style="color: white;" data-toggle="collapse" [attr.data-target]=" '#collapse_auctions'+i" aria-expanded="false" aria-controls="collapse_auctions">Cancel</a>
+									</div>
+								</ng-container>
 							</div>
-					</ng-container>
+						</ng-container>
 					</div>
 				</div>
 				
@@ -108,7 +130,7 @@
 
 				<div class="collapse" id="collapse_auctions{{i}}">
 					<div class="card card-body mt-2 border-bottom-0 border-right-0 border-left-0 border-top rounded-0">
-						<div class="row" *ngIf="!editA">
+						<div class="row" *ngIf="!editA[i]">
 							<div class="col-sm">
 								<table>
 									<tr>
@@ -142,9 +164,9 @@
 								</table>
 							</div>
 						</div>
-						<app-editauction *ngIf="editA"></app-editauction>				
-					</div>
-				</div>			
+						<app-editauction *ngIf="editA[i]"></app-editauction>
+						</div>
+				</div>
 			</li>
 		</ng-container>
 		<div *ngIf="auctions == 0" class="font-weight-light font-italic">No auctions</div>
@@ -174,16 +196,15 @@
 									<!-- <span class="notstrong">Starting Time:</span> {{auct.started}} <br> -->
 									<span class="notstrong">Ending Time:</span> {{bid.ends}} <br>
 								</div>
-							</div>				
+							</div>
 						</div>
-					</div>			
+					</div>
 				</li>
 			</ng-container>
 			<div *ngIf="bids == 0" class="font-weight-light font-italic">No bids</div>
 		</ul>
 	<br><br>
 </div>
-
 <!-- <nav aria-label="breadcrumb">
 	<ol class="breadcrumb">
 		<li class="breadcrumb-item"><a class="btn-link" href="/">Home</a></li>

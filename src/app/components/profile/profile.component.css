@@ -7,3 +7,14 @@
 	background-color: rgb(63, 151, 97);
 	color: white;
 }
+
+.btn-outline-danger {
+	color: rgb(194, 77, 73)!important;
+	border-color: rgb(194, 77, 73)!important;
+}
+
+.btn-outline-danger:hover {
+	color: white!important;
+	background-color: rgb(194, 77, 73)!important;
+	border-color: rgb(194, 77, 73)!important;
+}

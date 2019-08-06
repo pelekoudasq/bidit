@@ -49,19 +49,23 @@ export class DataService {
     }
 
     addAuction(auction: Auction, userid: string) {
-        return this.http.post(`http://localhost:3000/api/newauction/`, { userid: userid, auction: auction});
+        return this.http.post(`http://localhost:3000/api/newauction/`, { userid: userid, auction: auction });
     }
 
     startAuction(id: string, enddate: Date) {
-        return this.http.post(`http://localhost:3000/api/startauction/`, { auctionid: id, enddate: enddate});
+        return this.http.post(`http://localhost:3000/api/startauction/`, { auctionid: id, enddate: enddate });
     }
 
     updateUser(user: User, userid: string) {
-        return this.http.post(`http://localhost:3000/api/userupdate/`, { userid: userid, user: user});
+        return this.http.post(`http://localhost:3000/api/userupdate/`, { userid: userid, user: user });
     }
 
     updateAuction(auction: Auction, auctionid: string) {
-        return this.http.post(`http://localhost:3000/api/auctionupdate/`, { auction: auction, auctionid: auctionid});
-        
+        return this.http.post(`http://localhost:3000/api/auctionupdate/`, { auction: auction, auctionid: auctionid });   
+    }
+
+    deleteAuction(id: string) {
+    	console.log("HIAR");
+    	return this.http.delete(`http://localhost:3000/api/auctiondelete/`+ id);
     }
 }
