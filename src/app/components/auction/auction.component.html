@@ -145,7 +145,7 @@
 						<button *ngIf="auction.started" type="button" class="btn btn-primary btn-lg btn-block">Bid Now!</button>
 					</ng-container>
 					<ng-container *ngIf="currentUser._id == auction.seller_id">
-						<button [disabled]="auction.started" *ngIf="!editA" type="button" class="btn btn-primary btn-lg btn-block" (click)="onEditAClick(auction._id)">Edit Auction</button>
+						<button [disabled]="auction.started && auction.number_of_bids>0" *ngIf="!editA" type="button" class="btn btn-primary btn-lg btn-block" (click)="onEditAClick(auction._id)">Edit Auction</button>
 						<button *ngIf="!auction.started && editA" type="button" class="btn cancelbutton btn-lg btn-block" (click)="onEditAClick(auction._id)">Cancel Edit</button>
 					</ng-container>
 				</ng-container>
@@ -172,7 +172,7 @@
 		</div>
 
 		<!-- If user is the seller -->
-		<ng-container *ngIf="authenticationService.loggedin">
+		<ng-container *ngIf="authenticationService.loggedin && auction.number_of_bids>0">
 		<!-- <div class="row"> -->
 			<div class="content-section">
 				<h6>All offers</h6>
