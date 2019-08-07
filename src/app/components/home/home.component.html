@@ -86,43 +86,20 @@
 				<img src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" /> 
 			</div>
 			<div class="row" *ngIf="loading">
-				
 				<div *ngFor="let auction of auctions; index as i" class="card col-sm-4 my-1 mx-0.5 content-section">
 					<!-- <img src="https://www.freeiconspng.com/uploads/no-image-icon-13.png" class="card-img-top img-fluid pt-2 mx-auto w-75" alt="..."> -->
-					<div class="text-center" style="height: 60%;">
-						<div style="height: 100%;">
-							<img [src]="transform(i)" class="card-img-top img-fluid" style="max-height: 100%;" (click)="onNameClick(auction._id)">
-						</div>
+					<div class="d-flex align-content-center border" style="height: 100%;">
+						<img [src]="transform(i)" class="card-img-top my-auto"  (click)="onNameClick(auction._id)">
 					</div>
-					<div class="card-body px-0 pb-0">
-						<button class="btn btn-link text-wrap text-left px-0" (click)="onNameClick(auction._id)">{{auction.name}}</button>						
-						<!-- <table>
-							<tr>
-								<td>
-									<button class="btn btn-link text-wrap text-left px-0" (click)="onNameClick(auction._id)">{{auction.name}}</button>	
-								</td>
-							</tr>
-							<tr>
-								<td>
-									<span class="card-text small text-truncate">{{auction.description}}</span>
-								</td>
-							</tr>
-							<tr>
-								<td>
-									<span class="card-text">Current price: {{auction.currently}} $</span>
-								</td>
-							</tr>
-							<tr>
-								<td>
-									<a class="btn btn-primary small mx-auto" (click)="onNameClick(auction._id)" style="color: white;">Take a look</a>
-								</td>
-							</tr>
-							
-						</table> -->
-						<!-- <button class="btn btn-link text-wrap text-left px-0" (click)="onNameClick(auction._id)">{{auction.name}}</button> -->
+					<div class="card-title text-truncate">
+						<a class="btn btn-link text-left px-0" [title]="auction.name" (click)="onNameClick(auction._id)">{{auction.name}}</a>												
+					</div>
+					<div class="card-body px-0 pt-0">
 						<p class="card-text small text-truncate">{{auction.description}}</p>
-						<p class="card-text">Current price: {{auction.currently}} $</p>
-						<a class="btn btn-primary small mx-auto" (click)="onNameClick(auction._id)" style="color: white;">Take a look</a>
+						<!-- <a class="btn btn-primary small mx-auto" (click)="onNameClick(auction._id)" style="color: white;">Take a look</a> -->
+					</div>
+					<div class="card-footer">
+						<p>Current price: {{auction.currently}} $</p>
 					</div>
 				</div>
 			</div>
