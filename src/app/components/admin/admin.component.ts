@@ -47,7 +47,11 @@ export class AdminComponent implements OnInit {
             .subscribe(
                 data => {
                     this.router.navigate(['/admin']);
-                    window.location.reload();
+                    this.users = [];
+                    this.approvedUsers = [];
+                    this.disapprovedUsers = [];
+                    this.ngOnInit();
+                    // window.location.reload();
                 },
                 error => {
                     this.alertService.error("Approval denied");
@@ -60,7 +64,11 @@ export class AdminComponent implements OnInit {
             .subscribe(
                 data => {
                     this.router.navigate(['/admin']);
-                    window.location.reload();
+                    this.users = [];
+                    this.approvedUsers = [];
+                    this.disapprovedUsers = [];
+                    this.ngOnInit();
+                    // window.location.reload();
                 },
                 error => {
                     this.alertService.error("Disapproval denied");
