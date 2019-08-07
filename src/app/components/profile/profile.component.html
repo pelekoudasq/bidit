@@ -12,40 +12,48 @@
 		<div class="col-sm-6" *ngIf="!edit"><a class="btn btn-primary float-right" (click)="onEditClick()" style="color: white;">Edit <i class="fa fa-edit fa-xs"></i></a></div>
 		<div class="col-sm-6" *ngIf="edit"><a class="btn cancelbutton float-right" (click)="onEditClick()" style="color: white;">Cancel</a></div>
 	</div>
-	<table *ngIf="!edit">
-		<tr>
-			<td class="pr-4" style="font-weight: normal;">Username: </td>
-			<td class="h6" style="color: #444444;">{{ currentUser.username }}</td>
-		</tr>
-		<tr>
-			<td class="pr-4" style="font-weight: normal;">Ratings: </td>
-			<td class="h6" style="color: #444444;">{{ currentUser.sellerRating }}/{{ currentUser.bidderRating }}</td>
-		</tr>
-		<tr>
-			<td class="pr-4" style="font-weight: normal;">First Name: </td>
-			<td class="h6" style="color: #444444;">{{ currentUser.first_name }}</td>
-		</tr>
-		<tr>
-			<td class="pr-4" style="font-weight: normal;">Last Name: </td>
-			<td class="h6" style="color: #444444;">{{ currentUser.last_name }}</td>
-		</tr>
-		<tr>
-			<td class="pr-4" style="font-weight: normal;">Email: </td>
-			<td class="h6" style="color: #444444;">{{ currentUser.email }}</td>
-		</tr>
-		<tr>
-			<td class="pr-4" style="font-weight: normal;">Phone: </td>
-			<td class="h6" style="color: #444444;">{{ currentUser.phone }}</td>
-		</tr>
-		<tr>
-			<td class="pr-4" style="font-weight: normal;">Address: </td>
-			<td class="h6" style="color: #444444;">{{ currentUser.address.street }}, {{ currentUser.address.city }}, {{ currentUser.address.country }}</td>
-		</tr>
-		<tr>
-			<td class="pr-4" style="font-weight: normal;">Zip: </td>
-			<td class="h6" style="color: #444444;">{{ currentUser.address.zipcode }}</td>
-		</tr>
-	</table>
+	<div class="row">
+	<div class="col-sm pb-2">
+		<table *ngIf="!edit">
+			<tr>
+				<td class="pr-4" style="font-weight: normal;">Username: </td>
+				<td class="h6" style="color: #444444;">{{ currentUser.username }}</td>
+			</tr>
+			<tr>
+				<td class="pr-4" style="font-weight: normal;">First Name: </td>
+				<td class="h6" style="color: #444444;">{{ currentUser.first_name }}</td>
+			</tr>
+			<tr>
+				<td class="pr-4" style="font-weight: normal;">Last Name: </td>
+				<td class="h6" style="color: #444444;">{{ currentUser.last_name }}</td>
+			</tr>
+			<tr>
+				<td class="pr-4" style="font-weight: normal;">Email: </td>
+				<td class="h6" style="color: #444444;">{{ currentUser.email }}</td>
+			</tr>
+		</table>
+	</div>
+	<div class="col-sm pb-2">
+		<table *ngIf="!edit">
+			<tr>
+				<td class="pr-4" style="font-weight: normal;">Ratings (Seller/Bidder): </td>
+				<td class="h6" style="color: #444444;">{{ currentUser.sellerRating }}/{{ currentUser.bidderRating }}</td>
+			</tr>
+			<tr>
+				<td class="pr-4" style="font-weight: normal;">Phone: </td>
+				<td class="h6" style="color: #444444;">{{ currentUser.phone }}</td>
+			</tr>
+			<tr>
+				<td class="pr-4" style="font-weight: normal;">Address: </td>
+				<td class="h6" style="color: #444444;">{{ currentUser.address.street }}, {{ currentUser.address.city }}, {{ currentUser.address.country }}</td>
+			</tr>
+			<tr>
+				<td class="pr-4" style="font-weight: normal;">Zip: </td>
+				<td class="h6" style="color: #444444;">{{ currentUser.address.zipcode }}</td>
+			</tr>
+		</table>
+	</div>
+	</div>
 	<app-editprofile *ngIf="edit"></app-editprofile>
 </div>
 <h5>My Dashboard</h5>
