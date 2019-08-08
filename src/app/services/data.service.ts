@@ -6,66 +6,71 @@ import { Auction, Bid } from '../models/auction';
 
 @Injectable()
 export class DataService {
-    constructor(private http: HttpClient) { }
+  
+    address: string;
+  
+    constructor(private http: HttpClient) {
+        // this.address = "83.212.108.244";
+        this.address = "localhost";
+    }
 
     getAll() {
-        return this.http.get<User[]>(`http://localhost:3000/api/users`);
+        return this.http.get<User[]>(`http://${this.address}:3000/api/users`);
     }
 
     getUserAuctions(id: string) {
-        return this.http.get<Auction[]>(`http://localhost:3000/api/auctions/` + id);
+        return this.http.get<Auction[]>(`http://${this.address}:3000/api/auctions/` + id);
     }
 
     getAuctions() {
-        return this.http.get<Auction[]>(`http://localhost:3000/api/auctions`);
+        return this.http.get<Auction[]>(`http://${this.address}:3000/api/auctions`);
     }
 
     getAuction(id: string) {
-        return this.http.get<Auction>(`http://localhost:3000/api/auction/` + id);
+        return this.http.get<Auction>(`http://${this.address}:3000/api/auction/` + id);
     }
 
     getBid(id: string) {
-        return this.http.get<Bid>(`http://localhost:3000/api/bid/` + id);
+        return this.http.get<Bid>(`http://${this.address}:3000/api/bid/` + id);
     }
 
     getUserBids(id: string) {
-        return this.http.get<Bid[]>(`http://localhost:3000/api/bids/` + id);
+        return this.http.get<Bid[]>(`http://${this.address}:3000/api/bids/` + id);
     }
 
     approveUser(id: string) {
-        return this.http.get(`http://localhost:3000/api/users/approve/` + id);
+        return this.http.get(`http://${this.address}:3000/api/users/approve/` + id);
     }
 
     disapproveUser(id: string) {
-        return this.http.get(`http://localhost:3000/api/users/disapprove/` + id);
+        return this.http.get(`http://${this.address}:3000/api/users/disapprove/` + id);
     }
 
     getById(id: string) {
-        return this.http.get<User>(`http://localhost:3000/api/user/` + id);
+        return this.http.get<User>(`http://${this.address}:3000/api/user/` + id);
     }
 
     register(user: User) {
-        return this.http.post(`http://localhost:3000/api/users/register`, user);
+        return this.http.post(`http://${this.address}:3000/api/users/register`, user);
     }
 
     addAuction(auction: Auction, userid: string) {
-        return this.http.post(`http://localhost:3000/api/newauction/`, { userid: userid, auction: auction });
+        return this.http.post(`http://${this.address}:3000/api/newauction/`, { userid: userid, auction: auction });
     }
 
     startAuction(id: string, enddate: Date) {
-        return this.http.post(`http://localhost:3000/api/startauction/`, { auctionid: id, enddate: enddate });
+        return this.http.post(`http://${this.address}:3000/api/startauction/`, { auctionid: id, enddate: enddate });
     }
 
     updateUser(user: User, userid: string) {
-        return this.http.post(`http://localhost:3000/api/userupdate/`, { userid: userid, user: user });
+        return this.http.post(`http://${this.address}:3000/api/userupdate/`, { userid: userid, user: user });
     }
 
     updateAuction(auction: Auction, auctionid: string) {
-        return this.http.post(`http://localhost:3000/api/auctionupdate/`, { auction: auction, auctionid: auctionid });   
+        return this.http.post(`http://${this.address}:3000/api/auctionupdate/`, { auction: auction, auctionid: auctionid });   
     }
 
     deleteAuction(id: string) {
-    	console.log("HIAR");
-    	return this.http.delete(`http://localhost:3000/api/auctiondelete/`+ id);
+        return this.http.delete(`http://${this.address}:3000/api/auctiondelete/`+ id);
     }
 }
