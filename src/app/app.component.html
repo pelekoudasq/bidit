@@ -39,7 +39,7 @@
 </header>
 <div class="container-fluid">
 	<alert></alert>
-	<router-outlet></router-outlet>
+	<router-outlet (activate)="onActivate($event)"></router-outlet>
 </div>
 <footer class="page-footer font-small blue pt-4">
     <div class="container-fluid text-center text-md-left">

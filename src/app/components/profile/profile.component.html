@@ -3,64 +3,72 @@
 <div class="container">
 <br>
 <h5>My Profile</h5>
-<div class="text-center"  *ngIf="!loading">
+<!-- <div class="text-center"  *ngIf="!loading">
 	<img src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" /> 
-</div>
-<div class="content-section" *ngIf="loading">
+</div> -->
+<div class="card my-2" >
+<!-- <div class="content-section" *ngIf="loading"> -->
+	<div class="card-header">
 	<div class="row">
 		<div class="col-sm-6 my-auto"><h6>Personal Info</h6></div>
 		<div class="col-sm-6" *ngIf="!edit"><a class="btn btn-primary float-right" (click)="onEditClick()" style="color: white;">Edit <i class="fa fa-edit fa-xs"></i></a></div>
 		<div class="col-sm-6" *ngIf="edit"><a class="btn cancelbutton float-right" (click)="onEditClick()" style="color: white;">Cancel</a></div>
 	</div>
-	<div class="row">
-	<div class="col-sm pb-2">
-		<table *ngIf="!edit">
-			<tr>
-				<td class="pr-4" style="font-weight: normal;">Username: </td>
-				<td class="h6" style="color: #444444;">{{ currentUser.username }}</td>
-			</tr>
-			<tr>
-				<td class="pr-4" style="font-weight: normal;">First Name: </td>
-				<td class="h6" style="color: #444444;">{{ currentUser.first_name }}</td>
-			</tr>
-			<tr>
-				<td class="pr-4" style="font-weight: normal;">Last Name: </td>
-				<td class="h6" style="color: #444444;">{{ currentUser.last_name }}</td>
-			</tr>
-			<tr>
-				<td class="pr-4" style="font-weight: normal;">Email: </td>
-				<td class="h6" style="color: #444444;">{{ currentUser.email }}</td>
-			</tr>
-		</table>
 	</div>
-	<div class="col-sm pb-2">
-		<table *ngIf="!edit">
-			<tr>
-				<td class="pr-4" style="font-weight: normal;">Ratings (Seller/Bidder): </td>
-				<td class="h6" style="color: #444444;">{{ currentUser.sellerRating }}/{{ currentUser.bidderRating }}</td>
-			</tr>
-			<tr>
-				<td class="pr-4" style="font-weight: normal;">Phone: </td>
-				<td class="h6" style="color: #444444;">{{ currentUser.phone }}</td>
-			</tr>
-			<tr>
-				<td class="pr-4" style="font-weight: normal;">Address: </td>
-				<td class="h6" style="color: #444444;">{{ currentUser.address.street }}, {{ currentUser.address.city }}, {{ currentUser.address.country }}</td>
-			</tr>
-			<tr>
-				<td class="pr-4" style="font-weight: normal;">Zip: </td>
-				<td class="h6" style="color: #444444;">{{ currentUser.address.zipcode }}</td>
-			</tr>
-		</table>
+	<div class="card-body">
+		<div class="row">
+			<div class="col-sm pb-2">
+				<table *ngIf="!edit">
+					<tr>
+						<td class="pr-4" style="font-weight: normal;">Username: </td>
+						<td class="h6" style="color: #444444;">{{ currentUser.username }}</td>
+					</tr>
+					<tr>
+						<td class="pr-4" style="font-weight: normal;">First Name: </td>
+						<td class="h6" style="color: #444444;">{{ currentUser.first_name }}</td>
+					</tr>
+					<tr>
+						<td class="pr-4" style="font-weight: normal;">Last Name: </td>
+						<td class="h6" style="color: #444444;">{{ currentUser.last_name }}</td>
+					</tr>
+					<tr>
+						<td class="pr-4" style="font-weight: normal;">Email: </td>
+						<td class="h6" style="color: #444444;">{{ currentUser.email }}</td>
+					</tr>
+				</table>
+			</div>
+			<div class="col-sm pb-2">
+				<table *ngIf="!edit">
+					<tr>
+						<td class="pr-4" style="font-weight: normal;">Ratings (Seller/Bidder): </td>
+						<td class="h6" style="color: #444444;">{{ currentUser.sellerRating }}/{{ currentUser.bidderRating }}</td>
+					</tr>
+					<tr>
+						<td class="pr-4" style="font-weight: normal;">Phone: </td>
+						<td class="h6" style="color: #444444;">{{ currentUser.phone }}</td>
+					</tr>
+					<tr>
+						<td class="pr-4" style="font-weight: normal;">Address: </td>
+						<td class="h6" style="color: #444444;">{{ currentUser.address.street }}, {{ currentUser.address.city }}, {{ currentUser.address.country }}</td>
+					</tr>
+					<tr>
+						<td class="pr-4" style="font-weight: normal;">Zip: </td>
+						<td class="h6" style="color: #444444;">{{ currentUser.address.zipcode }}</td>
+					</tr>
+				</table>
+			</div>
+		</div>
 	</div>
+	<div class="px-3">
+		<app-editprofile *ngIf="edit"></app-editprofile>
 	</div>
-	<app-editprofile *ngIf="edit"></app-editprofile>
+<!-- </div> -->
 </div>
 <h5>My Dashboard</h5>
 <div class="text-center"  *ngIf="!loading">
 	<img src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="/> 
 </div>
-<div class="content-section" *ngIf="loading">
+<div class="content-section mt-2" *ngIf="loading">
 	<div class="row">
 		<div class="col-sm-6 my-auto"><h6>My Auctions</h6></div>
 		<div class="col-sm-6"><a class="btn btn-primary float-right" routerLink="/newauction">New Auction <i class="fa fa-plus fa-xs"></i></a></div>
@@ -112,13 +120,8 @@
 				<jw-modal id="dates" class="text-center">
 					<a (click)="closeModal('dates')" class="btn-link float-right" style="cursor: pointer!important;"><i class="fa fa-times"></i></a>
 					<h6>Please set the ending date for the auction</h6>
-					<!-- datepicker from bootstrap -->
 					<form [formGroup]="endForm" (ngSubmit)="startAuction(curAuctForModal)">
 						<div class="form-group">
-							<!-- <div class="form-inline float-center justify-content-center" id="end">
-								<label for="end">Auction ends at: </label>
-								<input id="date" class="form-control mb-2 mr-sm-2 mb-sm-0" type="datetime-local" value="2019-10-20T13:45:00">
-							</div> -->
 							<div *ngIf="dateError" class="alert alert-danger" role="alert">
 								End date must be later of today
 							</div>
