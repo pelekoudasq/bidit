@@ -16,6 +16,7 @@ export class AuthenticationService {
     public isAdmin: boolean;
     public approved: boolean;
     public auctionE: string = "";
+    public category: string = "";
 
     constructor(private http: HttpClient) {
         this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('currentUser')));
@@ -23,6 +24,7 @@ export class AuthenticationService {
         this.loggedin = false;
         this.isAdmin = false;
         this.currentUser.subscribe(x => this.user = x);
+        this.category = localStorage.getItem('category');
         
         if (this.user){
             this.loggedin = true;
@@ -46,7 +48,6 @@ export class AuthenticationService {
                 this.loggedin = true;
                 this.isAdmin = user.admin;
                 this.approved = user.approved;
-                // console.log(user);
                 return user;
             }));
     }

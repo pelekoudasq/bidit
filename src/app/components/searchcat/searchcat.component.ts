@@ -10,11 +10,11 @@ import { User } from '../../models/user';
 import { Auction } from '../../models/auction';
 
 @Component({
-	selector: 'app-home',
-	templateUrl: './home.component.html',
-	styleUrls: ['./home.component.css']
+	selector: 'app-searchcat',
+	templateUrl: './searchcat.component.html',
+	styleUrls: ['./searchcat.component.css']
 })
-export class HomeComponent implements OnInit {
+export class SearchCatComponent implements OnInit {
 
 	users: User[] = [];
 	category: string = "";
@@ -51,14 +51,14 @@ export class HomeComponent implements OnInit {
             ]
         }
     ];
-
-	constructor(
+  
+  	constructor(
 		private dataService: DataService,
 		private router: Router,
 		private authenticationService: AuthenticationService,
-		private sanitizer: DomSanitizer)
-	{
+		private sanitizer: DomSanitizer) { 
 		this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
+	
 	}
 
 	transform(i: number) {
@@ -66,10 +66,14 @@ export class HomeComponent implements OnInit {
 	}
 
 	ngOnInit() {
-		this.dataService.getAuctions().pipe(first()).subscribe(auctions => {
-			this.auctions = auctions;
-			this.loading = true;
-		});
+		this.category = this.authenticationService.category;
+		if (this.category)
+			this.dataService.getCatAuctions(this.category).pipe(first()).subscribe(auctions => {
+				this.auctions = auctions;
+				this.loading = true;
+			});
+		else 
+			this.router.navigate(['/home']);
 	}
 
 	onNameClick(id: string) {
@@ -81,7 +85,7 @@ export class HomeComponent implements OnInit {
 		if (cat) {
 			console.log(cat);
 			localStorage.setItem('category', cat);
-			this.router.navigate(['/searchcat']);
+			location.reload();
 		}	
 	}
 }

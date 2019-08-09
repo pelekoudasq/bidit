@@ -26,6 +26,10 @@ export class DataService {
         return this.http.get<Auction[]>(`http://${this.address}:3000/api/auctions`);
     }
 
+    getCatAuctions(cat: string) {
+        return this.http.get<Auction[]>(`http://${this.address}:3000/api/auctions/`+ cat);
+    }
+
     getAuction(id: string) {
         return this.http.get<Auction>(`http://${this.address}:3000/api/auction/` + id);
     }

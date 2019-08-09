@@ -25,6 +25,7 @@ import { AuctionComponent } from './components/auction/auction.component';
 import { NewAuctionComponent } from './components/newauction/newauction.component';
 import { EditProfileComponent } from './components/editprofile/editprofile.component';
 import { EditAuctionComponent } from './components/editauction/editauction.component';
+import { SearchCatComponent } from './components/searchcat/searchcat.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import { EditAuctionComponent } from './components/editauction/editauction.compo
     AuctionComponent,
     NewAuctionComponent,
     EditProfileComponent,
-    EditAuctionComponent
+    EditAuctionComponent,
+    SearchCatComponent
   ],
   imports: [
     BrowserModule,

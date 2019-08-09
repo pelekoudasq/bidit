@@ -8,6 +8,7 @@ import { ProfileComponent } from './components/profile/profile.component';
 import { AdminComponent } from './components/admin/admin.component';
 import { AuctionComponent } from './components/auction/auction.component';
 import { NewAuctionComponent } from './components/newauction/newauction.component';
+import { SearchCatComponent } from './components/searchcat/searchcat.component';
 import { AuthGuard, AuthGuardAdmin } from './guards/auth.guard';
 
 const routes: Routes = [
@@ -18,7 +19,9 @@ const routes: Routes = [
 	{ path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
 	{ path: 'newauction', component: NewAuctionComponent, canActivate: [AuthGuard] },
 	{ path: 'auction/:id', component: AuctionComponent },
-	{ path: '**', redirectTo: '' }
+	{ path: 'searchcat', component: SearchCatComponent },
+	{ path: '**', redirectTo: '' },
+
 ];
 
 @NgModule({

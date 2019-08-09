@@ -104,6 +104,18 @@ router.get('/auctions', function(req, res, next) {
 	});
 });
 
+// get auctions by category
+router.get('/auctions/:cat', function(req, res, next) {
+	console.log("api: auctions by category");
+	db.Auctions.find({ "categories": { $in: [req.params.cat]} },function(err, auctions) {
+		if (err) {
+			res.send(err);
+		}
+		console.log(auctions)
+		res.json(auctions);
+	});
+});
+
 // find auctions by seller_id
 router.get('/auctions/:id', function(req, res, next) {
 	console.log('api: auction of user');
