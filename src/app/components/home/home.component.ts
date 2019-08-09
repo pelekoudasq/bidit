@@ -21,6 +21,35 @@ export class HomeComponent implements OnInit {
 	loggedin: boolean;
 	auctions: Auction[] = [];
 	loading: boolean = false;
+	ctgrs: any[] = [
+        {
+            name: 'Clothing',
+            sub: [
+                {value: 'men-0', viewValue: 'Men'},
+                {value: 'women-1', viewValue: 'Women'},
+                {value: 'kids-2', viewValue: 'Kids'},
+                {value: 'shoes-3', viewValue: 'Shoes'}
+            ]
+        },
+        {
+            name: 'Toys',
+            sub: [
+                {value: 'infants-0', viewValue: 'Infants'},
+                {value: 'toddlers-1', viewValue: 'Toddlers'},
+                {value: '3-6-years-2', viewValue: '3-6 Years old'},
+                {value: '6-9-years-3', viewValue: '6-9 Years old'}
+            ]
+        },
+        {
+            name: 'Electronics',
+            sub: [
+                {value: 'phone-0', viewValue: 'Phone'},
+                {value: 'laptop-1', viewValue: 'Laptop'},
+                {value: 'tv-2', viewValue: 'TV'},
+                {value: 'pc-3', viewValue: 'PC'}
+            ]
+        }
+    ];
 
 	constructor(
 		private dataService: DataService,
@@ -46,4 +75,9 @@ export class HomeComponent implements OnInit {
 		if (id)
 			this.router.navigate(['/auction', id]);
 	}
+
+	// onCatClick(id: string) {
+	// 	if(id)
+	// 		this.router.navigate(['/search', id]);
+	// }
 }

@@ -3,60 +3,19 @@
 		<div class="content-section bg-transparent border-0">
 			<h4>Categories</h4>
 			<div id="accordion">
-				<div>
-					<div  id="headingOne">
+				<div *ngFor="let cat of ctgrs; index as i">
+					<div  [attr.id]="'heading'+i">
 					<h5 class="mb-0">
-						<button class="btn btn-link pl-0" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-						<h6 class="mb-0">Clothing</h6>
+						<button class="btn btn-link pl-0" data-toggle="collapse" [attr.data-target]="'#collapse'+i" aria-expanded="true" [attr.aria-controls]="'collapse'+i">
+						<h6 class="mb-0">{{cat.name}}</h6>
 						</button>
 					</h5>
 					</div>
 				
-					<div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+					<div [attr.id]="'collapse'+i" class="collapse" [attr.aria-labelledby]="'heading'+i" data-parent="#accordion">
 						<div class="border-bottom">
 							<ul class="list-unstyled">
-								<li><a class="btn-link pl-3" href="">Men</a></li>
-								<li><a class="btn-link pl-3" href="">Women</a></li>
-								<li><a class="btn-link pl-3" href="">Kids</a></li>
-								<li><a class="btn-link pl-3" href="">Shoes</a></li>
-							</ul>
-						</div>
-					</div>
-				</div>
-				<div>
-					<div id="headingTwo">
-					<h5 class="mb-0">
-						<button class="btn btn-link pl-0 collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-						<h6 class="mb-0">Toys</h6>
-						</button>
-					</h5>
-					</div>
-					<div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
-						<div >
-							<ul class="list-unstyled">
-								<li><a class="btn-link pl-3" href="">Infants</a></li>
-								<li><a class="btn-link pl-3" href="">Toddlers</a></li>
-								<li><a class="btn-link pl-3" href="">3-6 Years old</a></li>
-								<li><a class="btn-link pl-3" href="">6-9 Years old</a></li>
-							</ul>
-						</div>
-					</div>
-				</div>
-				<div>
-					<div id="headingThree">
-						<h5 class="mb-0">
-							<button class="btn btn-link pl-0 collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-							<h6 class="mb-0">Electronics</h6>
-							</button>
-						</h5>
-					</div>
-					<div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
-						<div>
-							<ul class="list-unstyled">
-								<li><a class="btn-link pl-3" href="">Phone</a></li>
-								<li><a class="btn-link pl-3" href="">Laptop</a></li>
-								<li><a class="btn-link pl-3" href="">Television</a></li>
-								<li><a class="btn-link pl-3" href="">PC</a></li>
+								<li *ngFor="let sub of cat.sub"><a class="btn-link pl-3" (click)="onCatClick(sub.viewValue)">{{sub.viewValue}}</a></li>
 							</ul>
 						</div>
 					</div>
@@ -88,8 +47,8 @@
 			<div class="row" *ngIf="loading">
 				<div *ngFor="let auction of auctions; index as i" class="card col-sm-4 my-1 mx-0.5 content-section">
 					<!-- <img src="https://www.freeiconspng.com/uploads/no-image-icon-13.png" class="card-img-top img-fluid pt-2 mx-auto w-75" alt="..."> -->
-					<div class="d-flex align-content-center border" style="height: 100%;">
-						<img [src]="transform(i)" class="card-img-top my-auto"  (click)="onNameClick(auction._id)">
+					<div class="d-flex align-content-center border hand" style="height: 100%;"  (click)="onNameClick(auction._id)">
+						<img [src]="transform(i)" class="card-img-top my-auto">
 					</div>
 					<div class="card-title text-truncate py-1">
 						<a class="btn btn-link text-left px-0" [title]="auction.name" (click)="onNameClick(auction._id)">{{auction.name}}</a>												

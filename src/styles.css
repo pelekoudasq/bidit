@@ -1,7 +1,6 @@
 body {
     background: rgb(231, 227, 217)!important;
     color: #333333!important;
-    /*margin-top: 5rem;*/
     margin: 0 !important;
     height: 100%;
     min-height: 100vh !important;
@@ -117,15 +116,11 @@ div.container a.input-group-btn {
 .btn-primary {
     background-color: #267174 !important;
     border-color: #267174 !important; 
-    /* border: 2px solid #267174 !important; */
-    /* border: none !important; */
 }
 
 .btn-primary:hover {
     box-shadow: 11px 11px 13px -4px rgba(38,113,116,0.22) !important;
-    /* box-shadow: 0 8px 12px 0 rgba(0, 0, 0, 0.22), 0 25px 55px 0 rgba(0, 0, 0, 0.21) !important; */
     background-color: transparent !important;
-    /* background-color: #9cbdbe !important; */
     color: #267174 !important;
 }
 
@@ -137,6 +132,9 @@ div.container a.input-group-btn {
     font-weight: 500;
 }
 
+.hand {
+    cursor: pointer;
+}
 /* ############################################################################## */
                             /* MODALS */
 /* ############################################################################## */
@@ -149,9 +147,9 @@ jw-modal {
     /* modal container fixed across whole screen */
     position: fixed;
     top: 20%;
-    right: 0;
+    right: 20%;
     bottom: 0;
-    left: 0;
+    left: 20%;
 
     /* z-index must be higher than .jw-modal-background */
     z-index: 1000;
