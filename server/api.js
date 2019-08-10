@@ -105,7 +105,7 @@ router.get('/auctions', function(req, res, next) {
 });
 
 // get auctions by category
-router.get('/auctions/:cat', function(req, res, next) {
+router.get('/auctionscat/:cat', function(req, res, next) {
 	console.log("api: auctions by category");
 	db.Auctions.find({ "categories": { $in: [req.params.cat]} },function(err, auctions) {
 		if (err) {
