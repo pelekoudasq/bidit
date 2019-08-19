@@ -67,7 +67,11 @@ export class HomeComponent implements OnInit {
 
 	ngOnInit() {
 		this.dataService.getAuctions().pipe(first()).subscribe(auctions => {
-			this.auctions = auctions;
+			for (var i = auctions.length - 1; i >= 0; i--) {
+				if (auctions[i].started) 
+					this.auctions.push(auctions[i]);
+			}
+			// this.auctions = auctions;
 			this.loading = true;
 		});
 	}
