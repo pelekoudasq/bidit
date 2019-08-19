@@ -48,8 +48,8 @@
 			<div class="row" *ngIf="loading">
 				<div *ngFor="let auction of auctions; index as i" class="card col-sm-4 my-1 mx-0.5 content-section">
 					<!-- <img src="https://www.freeiconspng.com/uploads/no-image-icon-13.png" class="card-img-top img-fluid pt-2 mx-auto w-75" alt="..."> -->
-					<div class="d-flex align-content-center border hand" style="height: 100%;"  (click)="onNameClick(auction._id)">
-						<img [src]="transform(i)" class="card-img-top my-auto">
+					<div class="d-flex align-content-center border hand" style="height: 250px; line-height: 200px; overflow: hidden;"  (click)="onNameClick(auction._id)">
+						<img [src]="transform(i)" class="card-img-top my-auto" style="width: 100%; height: auto; vertical-align: middle;">
 					</div>
 					<div class="card-title text-truncate py-2">
 						<a class="btn btn-link text-left px-0" [title]="auction.name" (click)="onNameClick(auction._id)">{{auction.name}}</a>												
