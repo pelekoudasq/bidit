@@ -55,11 +55,11 @@
 						<a class="btn btn-link text-left px-0" [title]="auction.name" (click)="onNameClick(auction._id)">{{auction.name}}</a>												
 					</div>
 					<div class="card-body px-0 pt-0">
-						<p class="card-text small text-truncate">{{auction.description}}</p>
+						<p class="card-text text-truncate font-weight-light">{{auction.description}}</p>
 						<!-- <a class="btn btn-primary small mx-auto" (click)="onNameClick(auction._id)" style="color: white;">Take a look</a> -->
 					</div>
 					<div class="card-footer">
-						<p>Current price: {{auction.currently}} $</p>
+						<span>Current price: <b>{{auction.currently}} $</b></span>
 					</div>
 				</div>
 			</div>

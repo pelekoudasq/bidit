@@ -144,7 +144,27 @@
 				</div>
 				<ng-container *ngIf="currentUser">
 					<ng-container *ngIf="currentUser._id != auction.seller_id">
-						<button *ngIf="auction.started" type="button" class="btn btn-primary btn-lg btn-block">Bid Now!</button>
+						<ng-container *ngIf="auction.started">
+							<form *ngIf="auction" [formGroup]="bidForm" (ngSubmit)="onSubmit()">
+							<div class="form-group">
+								<input type="number" formControlName="bid_price" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.bid_price?.errors }" />
+								<div *ngIf="submitted && f.bid_price?.errors" class="invalid-feedback">
+									<div *ngIf="f.bid_price?.errors.required">Enter a valid price</div>
+								</div>
+							</div>
+							<ng-container *ngIf="!bidClicked">
+								<button type="button" class="btn btn-primary btn-lg btn-block" (click)="btnClicked()">Bid Now!</button>
+							</ng-container>
+							<ng-container *ngIf="bidClicked">
+								<div class="btn-group">
+									<div class="form-group">
+										<button type="submit" class="btn btn-primary btn-lg">Confirm</button>
+										<button type="button" class="btn btn-primary btn-lg" (click)="btnClicked()">Cancel</button>
+									</div>
+								</div>
+							</ng-container>
+						</form>
+						</ng-container>
 					</ng-container>
 					<ng-container *ngIf="currentUser._id == auction.seller_id">
 						<button [disabled]="auction.started && auction.number_of_bids>0" *ngIf="!editA" type="button" class="btn btn-primary btn-lg btn-block" (click)="onEditAClick(auction._id)">Edit Auction</button>
@@ -155,6 +175,7 @@
 					<div class="text-center">
 						<div *ngIf="authenticationService.loggedin; else login" >
 							<p>Our Suggestions:</p>
+							<i>under construction</i>
 						</div>
 						<ng-template #login>
 							<h3>Join BidIt Now!</h3>
@@ -176,11 +197,13 @@
 		<!-- If user is the seller -->
 		<ng-container *ngIf="authenticationService.loggedin && auction.number_of_bids>0">
 		<!-- <div class="row"> -->
-			<div class="content-section">
-				<h6>All offers</h6>
+			<div class="card my-2" *ngIf="loading">
+				<div class="card-header">
+					<h6 class="pt-2">All offers</h6>
+				</div>
 				<ul class="list-group" >
 					<ng-container *ngFor="let bid of bids; index as i">
-						<li class="list-group-item border-0">
+						<li class="list-group-item rounded-0 border-right-0 border-left-0">
 							<button class="btn btn-link pl-0" type="button" data-toggle="collapse" [attr.data-target]=" '#collapseExample'+i" aria-expanded="false" aria-controls="collapseExample">
 							<i class="fa fa-angle-down"></i>
 							</button>
@@ -189,7 +212,7 @@
 								<div class="card card-body mt-2 border-bottom-0 border-right-0 border-left-0 border-top rounded-0">
 									<div class="row">
 										<div class="col-sm">
-											<span class="notstrong">Time of offer:</span> {{bid.time}} <br>
+											<span class="notstrong">Time of offer:</span> {{bid.time | date:'fullDate' }} <br>
 											<span class="notstrong">User:</span> {{bid.bidder_id}} <br>
 										</div>
 									</div>				

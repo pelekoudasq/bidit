@@ -87,7 +87,10 @@ export class EditAuctionComponent implements OnInit {
 					image: [this.auction.image, [Validators.required, this.requiredFileType('png')]],
 					categories: [this.auction.categories, Validators.required]
 				});
-		});
+            }, 
+            error => {
+                // console.log(error);
+            });
 		
 	}
 

@@ -77,4 +77,8 @@ export class DataService {
     deleteAuction(id: string) {
         return this.http.delete(`http://${this.address}:3000/api/auctiondelete/`+ id);
     }
+
+    addBid(id: string, price: number, userid: string) {
+        return this.http.post(`http://${this.address}:3000/api/addbid/`, { auctionid: id, price: price, userid: userid }); 
+    }
 }

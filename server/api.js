@@ -341,6 +341,30 @@ router.get('/users/disapprove/:id', function(req, res, next) {
 	});
 });
 
+router.post('/addbid', function(req, res, next) {
+	console.log('api: add bid to auction '+ req.body.auctionid);
+	const today = new Date();
+	db.Bids.save({
+		auction_id : req.body.auctionid,
+		bidder_id : req.body.userid,
+		time : today,
+		amount : req.body.price
+	}, function(err, bid) {
+		if (err) {
+			res.send(err);
+			return;
+		}
+		console.log(bid);
+		db.Auctions.update({ _id: mongojs.ObjectID(req.body.auctionid) }, { $push: { bids: bid._id }, $inc: { number_of_bids : 1 }, $set: { currently: bid.amount } }, function(err, user) {
+			if (err) {
+				res.send(err);
+				return;
+			}
+			res.json(user);
+		});
+	});
+});
+
 module.exports = {
 	router : router,
 	getById: getById
