@@ -1,12 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { first } from 'rxjs/operators';
+import { DomSanitizer } from '@angular/platform-browser';
 
 import { AlertService } from '../../services/alert.service';
 import { AuthenticationService } from '../../services/authentication.service';
 import { DataService } from '../../services/data.service';
 
 import { User } from '../../models/user';
+import { Auction } from '../../models/auction';
 
 @Component({
 	selector: 'app-admin',
@@ -16,12 +18,15 @@ import { User } from '../../models/user';
 export class AdminComponent implements OnInit {
 
 	users: User[] = [];
+	auctions: Auction[] = [];
+	auctionJsonUri = [];
 	approvedUsers: User[] = [];
 	disapprovedUsers: User[] = [];
 	currentUser: User;
 	loggedin: boolean;
 
 	constructor(
+		private sanitizer: DomSanitizer,
 		private route: ActivatedRoute,
         private router: Router,
 		private dataService: DataService,
@@ -39,6 +44,13 @@ export class AdminComponent implements OnInit {
 					this.disapprovedUsers.push(this.users[i]);
 			}
 		});
+		this.dataService.getAuctions().pipe(first()).subscribe(auctions =>{
+			this.auctions = auctions;
+			for (var i = 0; i < this.auctions.length; i++) {
+				var theJSON = JSON.stringify(this.auctions[i]);
+				this.auctionJsonUri.push(this.sanitizer.bypassSecurityTrustUrl("data:application/json;charset=UTF-8," + encodeURIComponent(theJSON)));
+			}
+		});
 	}	
 
 	approve(user: User) {
@@ -50,6 +62,7 @@ export class AdminComponent implements OnInit {
                     this.users = [];
                     this.approvedUsers = [];
                     this.disapprovedUsers = [];
+                    this.auctionJsonUri = [];
                     this.ngOnInit();
                     // window.location.reload();
                 },
@@ -67,6 +80,7 @@ export class AdminComponent implements OnInit {
                     this.users = [];
                     this.approvedUsers = [];
                     this.disapprovedUsers = [];
+                    this.auctionJsonUri = [];
                     this.ngOnInit();
                     // window.location.reload();
                 },

@@ -8,74 +8,161 @@
 </div> -->
 <br>
 <div class="container">
-<h5>Pending Users</h5>
-<ul class="list-group">
-	<ng-container *ngFor="let user of disapprovedUsers; index as i">
-		<li class="list-group-item" *ngIf="!user.approved">
-			<button class="btn btn-link pl-0" type="button" data-toggle="collapse" [attr.data-target]=" '#collapseExample'+i" aria-expanded="false" aria-controls="collapseExample">
-			<i class="fa fa-angle-down"></i>
-			</button>
-			{{user.first_name}} {{user.last_name}}<!--, <span class="notstrong">Admin:</span>  {{user.admin}}-->
-			<button class="btn apprbutton float-right" (click)="approve(user)">Approve</button>
-			<div class="collapse" id="collapseExample{{i}}">
-				<div class="card card-body mt-2 border-bottom-0 border-right-0 border-left-0 border-top rounded-0">
-					<div class="row">
-						<div class="col-sm">
-							<span class="notstrong">Username:</span> {{user.username}} <br>
-							<span class="notstrong">Email:</span> {{user.email}} <br>
-							<span class="notstrong">Rating as Seller:</span> {{user.sellerRating}} <br>
-							<span class="notstrong">Rating as Bidder:</span> {{user.bidderRating}} <br>
-						</div>
-						<div class="col-sm">
-							<span class="notstrong">Address:</span> {{user.address.street}}, {{user.address.city}} <br>
-							<span class="notstrong">Zipcode:</span> {{user.address.zipcode}} <br>
-							<span class="notstrong">Country:</span> {{user.address.country}} <br>
-							<span class="notstrong">Phone:</span> {{user.phone}} <br>
-						</div>
-					</div>				
-				</div>
-			</div>			
+	<ul class="nav nav-tabs" id="myTab" role="tablist">
+		<li class="nav-item">
+			<a class="nav-link active" id="users-tab" data-toggle="tab" href="#users" role="tab" aria-controls="users" aria-selected="true">Users</a>
 		</li>
-	</ng-container>
-	<div *ngIf="disapprovedUsers == 0" class="font-weight-light font-italic">No pending users</div>
-</ul>
-<br>
-<h5>Approved Users</h5>
-<ul class="list-group">
-	<ng-container *ngFor="let user of approvedUsers; index as i">
-		<li class="list-group-item" *ngIf="user.approved">
-			<button class="btn btn-link pl-0" type="button" data-toggle="collapse" [attr.data-target]=" '#collapseExample2'+i" aria-expanded="false" aria-controls="collapseExample">
-			<i class="fa fa-angle-down"></i>
-			</button>
-			{{user.first_name}} {{user.last_name}}<!--, <span class="notstrong">Admin:</span>  {{user.admin}}-->
-			<button class="btn disbutton float-right" (click)="disapprove(user)">Disapprove</button>
-			<div class="collapse" id="collapseExample2{{i}}">
-				<div class="card card-body mt-2 border-bottom-0 border-right-0 border-left-0 border-top rounded-0">
-					<div class="row">
-						<div class="col-sm">
-							<span class="notstrong">Username:</span> {{user.username}} <br>
-							<span class="notstrong">Email:</span> {{user.email}} <br>
-							<span class="notstrong">Rating as Seller:</span> {{user.sellerRating}} <br>
-							<span class="notstrong">Rating as Bidder:</span> {{user.bidderRating}} <br>
-						</div>
-						<div class="col-sm">
-							<span class="notstrong">Address:</span> {{user.address.street}}, {{user.address.city}} <br>
-							<span class="notstrong">Zipcode:</span> {{user.address.zipcode}} <br>
-							<span class="notstrong">Country:</span> {{user.address.country}} <br>
-							<span class="notstrong">Phone:</span> {{user.phone}} <br>
-						</div>
-					</div>				
+		<li class="nav-item">
+			<a class="nav-link" id="auctions-tab" data-toggle="tab" href="#auctions" role="tab" aria-controls="auctions" aria-selected="false">Auctions</a>
+		</li>
+	</ul>
+	<div class="tab-content content-section mt-0 pt-0" id="myTabContent">
+		<div class="tab-pane fade show active" id="users" role="tabpanel" aria-labelledby="users-tab">
+			<br>
+			<div class="card my-2">
+				<div class="card-header">
+					<h5 class="pt-2">Pending Users</h5>
 				</div>
+				<ul class="list-group">
+					<ng-container *ngFor="let user of disapprovedUsers; index as i">
+						<li class="list-group-item rounded-0 border-right-0 border-left-0" *ngIf="!user.approved">
+							<button class="btn btn-link pl-0" type="button" data-toggle="collapse" [attr.data-target]=" '#collapseExample'+i" aria-expanded="false" aria-controls="collapseExample">
+							<i class="fa fa-angle-down"></i>
+							</button>
+							{{user.first_name}} {{user.last_name}}<!--, <span class="notstrong">Admin:</span>  {{user.admin}}-->
+							<button class="btn apprbutton float-right" (click)="approve(user)">Approve</button>
+							<div class="collapse" id="collapseExample{{i}}">
+								<div class="card card-body mt-2 border-bottom-0 border-right-0 border-left-0 border-top rounded-0">
+									<div class="row">
+										<div class="col-sm">
+											<span class="notstrong">Username:</span> {{user.username}} <br>
+											<span class="notstrong">Email:</span> {{user.email}} <br>
+											<span class="notstrong">Rating as Seller:</span> {{user.sellerRating}} <br>
+											<span class="notstrong">Rating as Bidder:</span> {{user.bidderRating}} <br>
+										</div>
+										<div class="col-sm">
+											<span class="notstrong">Address:</span> {{user.address.street}}, {{user.address.city}} <br>
+											<span class="notstrong">Zipcode:</span> {{user.address.zipcode}} <br>
+											<span class="notstrong">Country:</span> {{user.address.country}} <br>
+											<span class="notstrong">Phone:</span> {{user.phone}} <br>
+										</div>
+									</div>				
+								</div>
+							</div>			
+						</li>
+					</ng-container>
+					<div *ngIf="disapprovedUsers == 0" class="font-weight-light font-italic">No pending users</div>
+				</ul>
 			</div>
-		</li>
-	</ng-container>
-	<div *ngIf="approvedUsers == 0" class="font-weight-light font-italic">No approved users</div>
-</ul>
-<br><br>
-<!-- <nav aria-label="breadcrumb">
-	<ol class="breadcrumb">
-		<li class="breadcrumb-item"><a class="btn-link" href="/">Home</a></li>
-		<li class="breadcrumb-item active" aria-current="page">Admin Page</li>
-	</ol>
-</nav> -->
+			<br>
+			<div class="card my-2">
+				<div class="card-header">
+					<h5 class="pt-2">Approved Users</h5>
+				</div>
+				<ul class="list-group">
+					<ng-container *ngFor="let user of approvedUsers; index as i">
+						<li class="list-group-item rounded-0 border-right-0 border-left-0" *ngIf="user.approved">
+							<button class="btn btn-link pl-0" type="button" data-toggle="collapse" [attr.data-target]=" '#collapseExample2'+i" aria-expanded="false" aria-controls="collapseExample">
+							<i class="fa fa-angle-down"></i>
+							</button>
+							{{user.first_name}} {{user.last_name}}<!--, <span class="notstrong">Admin:</span>  {{user.admin}}-->
+							<button class="btn disbutton float-right" (click)="disapprove(user)">Disapprove</button>
+							<div class="collapse" id="collapseExample2{{i}}">
+								<div class="card card-body mt-2 border-bottom-0 border-right-0 border-left-0 border-top rounded-0">
+									<div class="row">
+										<div class="col-sm">
+											<span class="notstrong">Username:</span> {{user.username}} <br>
+											<span class="notstrong">Email:</span> {{user.email}} <br>
+											<span class="notstrong">Rating as Seller:</span> {{user.sellerRating}} <br>
+											<span class="notstrong">Rating as Bidder:</span> {{user.bidderRating}} <br>
+										</div>
+										<div class="col-sm">
+											<span class="notstrong">Address:</span> {{user.address.street}}, {{user.address.city}} <br>
+											<span class="notstrong">Zipcode:</span> {{user.address.zipcode}} <br>
+											<span class="notstrong">Country:</span> {{user.address.country}} <br>
+											<span class="notstrong">Phone:</span> {{user.phone}} <br>
+										</div>
+									</div>				
+								</div>
+							</div>
+						</li>
+					</ng-container>
+					<div *ngIf="approvedUsers == 0" class="font-weight-light font-italic">No approved users</div>
+				</ul>
+			</div>
+		</div>
+		<div class="tab-pane fade" id="auctions" role="tabpanel" aria-labelledby="auctions-tab">
+			<br>
+			<div class="card my-2">
+				<div class="card-header">
+					<h5 class="pt-2">All Auctions</h5>
+				</div>
+				<ul class="list-group">
+					<ng-container *ngFor="let auction of auctions; index as i">
+						<li class="list-group-item rounded-0 border-right-0 border-left-0">
+							<button class="btn btn-link pl-0" type="button" data-toggle="collapse" [attr.data-target]=" '#collapseExample'+i" aria-expanded="false" aria-controls="collapseExample">
+							<i class="fa fa-angle-down"></i>
+							</button>
+							{{auction.name}}
+							<a class="btn btn-outline-dark float-right mx-1" [href]="auctionJsonUri[i]" download="auction.json"><i class="fa fa-download" aria-hidden="true"></i> XML</a>
+							<a class="btn btn-outline-dark float-right" [href]="auctionJsonUri[i]" download="auction.json"><i class="fa fa-download" aria-hidden="true"></i> JSON</a>
+							<div class="collapse" id="collapseExample{{i}}">
+								<div class="card card-body mt-2 border-bottom-0 border-right-0 border-left-0 border-top rounded-0">
+									<div class="row">
+										<div class="col-sm">
+											<table>
+												<tr>
+													<td class="pr-4 h6" style="color: #444444;">Categories: </td>
+													<td class="text-truncate" style="font-weight: normal;">
+															<ng-container *ngFor="let cat of auction.categories; index as k">
+																<i>{{cat}}</i>
+																<ng-container *ngIf="auction.categories.length != k+1">
+																<i>, </i>
+																</ng-container>
+															</ng-container>
+													</td>
+												</tr>
+												<tr *ngIf="auction.started">
+													<td class="pr-4 h6" style="color: #444444;">Currently at: </td>
+													<td class="" style="font-weight: normal;"><i>{{auction.currently}} $</i></td>
+												</tr>
+												<tr>
+													<td class="pr-4 h6" style="color: #444444;">Starting Price: </td>
+													<td class="" style="font-weight: normal;"><i>{{auction.first_bid}} $</i></td>
+												</tr>
+											</table>
+										</div>
+										<div class="col-sm">
+											<table *ngIf="auction.started">
+												<tr>
+													<td class="pr-4 h6" style="color: #444444;">Number of bids: </td>
+													<td class="" style="font-weight: normal;"><i>{{auction.number_of_bids}}</i></td>
+												</tr>
+												<tr *ngIf="auction.started">
+													<td class="pr-4 h6" style="color: #444444;">Starting Time: </td>
+													<td class="" style="font-weight: normal;"><i>{{auction.startingDate | date:'fullDate' }}</i></td>
+												</tr>
+												<tr>
+													<td class="pr-4 h6" style="color: #444444;">Ending Time: </td>
+													<td class="" style="font-weight: normal;"><i>{{auction.endingDate | date:'fullDate' }}</i></td>
+												</tr>
+											</table>
+										</div>
+									</div>				
+								</div>
+							</div>			
+						</li>
+					</ng-container>
+					<div *ngIf="disapprovedUsers == 0" class="font-weight-light font-italic">No auctions</div>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<br><br>
+	<!-- <nav aria-label="breadcrumb">
+		<ol class="breadcrumb">
+			<li class="breadcrumb-item"><a class="btn-link" href="/">Home</a></li>
+			<li class="breadcrumb-item active" aria-current="page">Admin Page</li>
+		</ol>
+	</nav> -->
 </div>
