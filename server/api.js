@@ -7,12 +7,17 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const mongoose = require('mongoose');
 const fs = require("fs");
+const redis = require("redis");
 // const multer = require('multer');
 // const Grid = require('gridfs-stream');
 // const mongo = require('mongodb');
 // const crypto = require('crypto');
 // const path = require('path');
 // const GridFsStorage = require('multer-gridfs-storage');
+
+const REDIS_PORT = process.env.PORT || 6379;
+
+const client = redis.createClient(REDIS_PORT);
 
 const User = require('./user.model');
 const Auction = require('./auction.model');
@@ -111,7 +116,7 @@ router.get('/auctionscat/:cat', function(req, res, next) {
 		if (err) {
 			res.send(err);
 		}
-		console.log(auctions)
+		// console.log(auctions)
 		res.json(auctions);
 	});
 });
@@ -127,24 +132,58 @@ router.get('/auctions/:id', function(req, res, next) {
 	});
 });
 
+function cacheAuction(req, res, next) {
+  const { id } = req.params.id;
+
+  client.get(req.params.id, (err, auction) => {
+    if (err) throw err;
+
+    if (auction !== null) {
+    	console.log("found auction in cache");
+      res.send(JSON.parse(auction));
+    } else {
+      next();
+    }
+  });
+}
+
 // find auction by id
-router.get('/auction/:id', function(req, res, next) {
+router.get('/auction/:id', cacheAuction, function(req, res, next) {
 	console.log('api: auction by Id');
 	db.Auctions.findOne({ _id: mongojs.ObjectID(req.params.id) }, function(err, auction) {
 		if (err) {
 			res.send(err);
 		}
+		client.setex(req.params.id, 2, JSON.stringify(auction));
 		res.json(auction);
 	});
 });
 
+function cacheBid(req, res, next) {
+  const { id } = req.params.id;
+
+  client.get(req.params.id, (err, bid) => {
+    if (err) throw err;
+
+    if (bid !== null) {
+    	console.log("found bid in cache");
+      res.send(JSON.parse(bid));
+    } else {
+      next();
+    }
+  });
+}
+
 // find bid by id
-router.get('/bid/:id', function(req, res, next) {
+router.get('/bid/:id', cacheBid, function(req, res, next) {
 	console.log('api: bid by Id '+req.params.id);
 	db.Bids.findOne({ _id: mongojs.ObjectID(req.params.id) }, function(err, bid) {
 		if (err) {
 			res.send(err);
+			return;
 		}
+		// console.log(JSON.stringify(bid));
+		client.setex(req.params.id, 3600, JSON.stringify(bid));
 		res.json(bid);
 	});
 });
@@ -244,7 +283,7 @@ router.post('/startauction', function(req, res, next) {
 	console.log('api: start auction');
 	const today = new Date();
 	const enddate = new Date(req.body.enddate);
-	console.log("today: "+today+" enddate: "+enddate+","+req.body.enddate);
+	// console.log("today: "+today+" enddate: "+enddate+","+req.body.enddate);
 	if (today>enddate){
 		res.status(400).json({ error: 'End date must be later of today' });
 		return;
