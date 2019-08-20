@@ -35,3 +35,8 @@ MongoDB w/ Node.js, Express, & Mongoose
 node server run
 ```
 
+Redis Caching
+```bash
+redis-server
+```
+
