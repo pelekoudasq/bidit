@@ -108,7 +108,12 @@
 									<td>{{ auction.startingDate| date:'fullDate' }}</td>
 								</tr>
 								<tr class="small" *ngIf="auction.started">
-									<td class="w-50 text-muted">This auction ends at:</td>
+									<ng-container *ngIf="completed">
+										<td class="w-50 text-muted">This auction ended at:</td>
+									</ng-container>
+									<ng-container *ngIf="!completed">
+										<td class="w-50 text-muted">This auction ends at:</td>
+									</ng-container>
 									<td>{{ auction.endingDate | date:'fullDate' }}</td>
 								</tr>
 								<tr class="small">
@@ -134,9 +139,9 @@
 									<td class="font-weight-bold" style="color: #267174">{{seller.username}}</td>
 									<td>( {{seller.sellerRating}} <i class="fa fa-gavel" style="color: #267174"></i> )</td>
 								</tr>
-								<tr class="small">
+								<!-- <tr class="small">
 									<td> <a href="" class="btn-link">Contact Seller</a></td>
-								</tr>
+								</tr> -->
 							</tbody>
 						</table>
 					</div>
@@ -153,7 +158,7 @@
 								</div>
 							</div>
 							<ng-container *ngIf="!bidClicked">
-								<button type="button" class="btn btn-primary btn-lg btn-block" (click)="btnClicked()">Bid Now!</button>
+								<button [disabled]="completed" type="button" class="btn btn-primary btn-lg btn-block" (click)="btnClicked()">Bid Now!</button>
 							</ng-container>
 							<ng-container *ngIf="bidClicked">
 								<div class="btn-group">
@@ -167,7 +172,7 @@
 						</ng-container>
 					</ng-container>
 					<ng-container *ngIf="currentUser._id == auction.seller_id">
-						<button [disabled]="auction.started && auction.number_of_bids>0" *ngIf="!editA" type="button" class="btn btn-primary btn-lg btn-block" (click)="onEditAClick(auction._id)">Edit Auction</button>
+						<button [disabled]="auction.started && auction.number_of_bids>0 || completed" *ngIf="!editA" type="button" class="btn btn-primary btn-lg btn-block" (click)="onEditAClick(auction._id)">Edit Auction</button>
 						<button *ngIf="!auction.started && editA" type="button" class="btn cancelbutton btn-lg btn-block" (click)="onEditAClick(auction._id)">Cancel Edit</button>
 					</ng-container>
 				</ng-container>

@@ -27,6 +27,7 @@ export class AuctionComponent implements OnInit {
 	seller: User;
 	editA: boolean = false;
 	bidClicked: boolean = false;
+	completed: boolean = false;
 
 	constructor(
 		private formBuilder: FormBuilder,
@@ -34,7 +35,8 @@ export class AuctionComponent implements OnInit {
 		private router: Router,
 		private dataService: DataService,
 		private authenticationService: AuthenticationService,
-		private sanitizer: DomSanitizer)
+		private sanitizer: DomSanitizer,
+		private alertService: AlertService)
 	{
 		this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
 	}
@@ -47,6 +49,13 @@ export class AuctionComponent implements OnInit {
 		this.requestedAuction = this.route.snapshot.params.id;
 		this.dataService.getAuction(this.requestedAuction).pipe(first()).subscribe(auction => {
 			this.auction = auction;
+			var today = new Date();
+			var ending = new Date(this.auction.endingDate);
+			// console.log(ending, today);
+			if (today > ending) {
+				this.completed = true;
+				this.alertService.error("This auction has been closed");
+			}
 			this.dataService.getById(auction.seller_id).pipe(first()).subscribe(user => {
 				this.seller = user;
 				for (var i = 0; i < this.auction.bids.length; i++) {
@@ -100,13 +109,13 @@ export class AuctionComponent implements OnInit {
 		if (this.bidForm.invalid) {
 			return;
 		}
-		console.log(this.bidForm);
+		// console.log(this.bidForm);
 		this.dataService.addBid(this.auction._id, this.bidForm.value.bid_price, this.currentUser._id)
 			.pipe(first())
 			.subscribe(
 				data => {
 					// this.modalService.open('approval');
-					// this.alertService.success('Edit successful.', true);
+					this.alertService.success('Your bid was made successfully!', true);
 					// this.authenticationService.logout();
 					// this.router.navigate(['/login']);
 					this.loading = false;
@@ -115,8 +124,8 @@ export class AuctionComponent implements OnInit {
 					this.ngOnInit();
 				},
 				error => {
-					console.log(error);
-					// this.alertService.error(error);
+					console.log(error.error.error);
+					this.alertService.error(error.error.error);
 					// this.loading = false;
 				});
 	}
