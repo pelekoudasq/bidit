@@ -20,6 +20,7 @@ export class AdminComponent implements OnInit {
 	users: User[] = [];
 	auctions: Auction[] = [];
 	auctionJsonUri = [];
+	auctionXmlUri = [];
 	approvedUsers: User[] = [];
 	disapprovedUsers: User[] = [];
 	currentUser: User;
@@ -49,6 +50,10 @@ export class AdminComponent implements OnInit {
 			for (var i = 0; i < this.auctions.length; i++) {
 				var theJSON = JSON.stringify(this.auctions[i]);
 				this.auctionJsonUri.push(this.sanitizer.bypassSecurityTrustUrl("data:application/json;charset=UTF-8," + encodeURIComponent(theJSON)));
+				var convert = require('xml-js');
+				var options = {compact: true, ignoreComment: true, spaces: 4};
+				var theXML = convert.json2xml(theJSON, options);
+				this.auctionXmlUri.push(this.sanitizer.bypassSecurityTrustUrl("data:application/xml;charset=UTF-8," + encodeURIComponent(theXML)));
 			}
 		});
 	}	
