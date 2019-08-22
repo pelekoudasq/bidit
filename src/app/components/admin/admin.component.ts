@@ -25,6 +25,8 @@ export class AdminComponent implements OnInit {
 	disapprovedUsers: User[] = [];
 	currentUser: User;
 	loggedin: boolean;
+	loading: boolean = false;
+	loading2: boolean = false;
 
 	constructor(
 		private sanitizer: DomSanitizer,
@@ -44,6 +46,7 @@ export class AdminComponent implements OnInit {
 				else
 					this.disapprovedUsers.push(this.users[i]);
 			}
+			this.loading = true;
 		});
 		this.dataService.getAuctions().pipe(first()).subscribe(auctions =>{
 			this.auctions = auctions;
@@ -55,6 +58,7 @@ export class AdminComponent implements OnInit {
 				var theXML = convert.json2xml(theJSON, options);
 				this.auctionXmlUri.push(this.sanitizer.bypassSecurityTrustUrl("data:application/xml;charset=UTF-8," + encodeURIComponent(theXML)));
 			}
+			this.loading2 = true;
 		});
 	}	
 
