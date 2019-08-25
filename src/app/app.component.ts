@@ -6,6 +6,8 @@ import { isPlatformBrowser } from '@angular/common';
 import { AuthenticationService } from './services/authentication.service';
 import { User } from './models/user';
 // import { LoginComponent } from './components/login/login.component';
+declare var ol: any;
+export var oll :any = ol;
 
 @Component({
 	selector: 'app-root',
@@ -16,6 +18,7 @@ import { User } from './models/user';
 export class AppComponent {
 
 	currentUser: User;
+	map: any;
 
 	constructor(
 		private authenticationService: AuthenticationService,
@@ -26,7 +29,19 @@ export class AppComponent {
 	}
 	
 	ngOnInit() {
-		this.authenticationService.currentUser.subscribe(x => this.currentUser = x);		
+		this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
+		// this.map = new ol.Map({
+		// 	target: 'map',
+		// 	layers: [
+		// 	  new ol.layer.Tile({
+		// 		source: new ol.source.OSM()
+		// 	  })
+		// 	],
+		// 	view: new ol.View({
+		// 	  center: ol.proj.fromLonLat([73.8567, 18.5204]),
+		// 	  zoom: 8
+		// 	})
+		//   });	
 	}
 
 	get isAdmin() {

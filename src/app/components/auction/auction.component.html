@@ -121,9 +121,14 @@
 									<td>{{ auction.location }}, {{ auction.country }}</td>
 								</tr>
 							</tbody>
-						</table>						
+						</table>					
 					</div>					
 				</div>
+				<!-- <button *ngIf="!toViewMap" class="btn btn-primary" (click)="viewMap()">View Map</button> -->
+				<!-- <button *ngIf="toViewMap" class="btn cancelbutton" (click)="viewMap()">Close Map</button> -->
+				<!-- <ng-container *ngIf="toViewMap"> -->
+					<!-- <div #gmap style="width:100%;height:400px"></div> -->
+				<!-- </ng-container> -->
 				<div class="content-section" *ngIf="editA">
 					<app-editauction></app-editauction>
 				</div>

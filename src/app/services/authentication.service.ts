@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -17,12 +18,16 @@ export class AuthenticationService {
     public approved: boolean;
     public auctionE: string = "";
     public category: string = "";
+    public inAuction: boolean;
 
-    constructor(private http: HttpClient) {
+    constructor(private http: HttpClient,
+                private router: Router)
+    {
         this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('currentUser')));
         this.currentUser = this.currentUserSubject.asObservable();
         this.loggedin = false;
         this.isAdmin = false;
+        this.inAuction = false;
         this.currentUser.subscribe(x => this.user = x);
         this.category = localStorage.getItem('category');
         
@@ -30,7 +35,7 @@ export class AuthenticationService {
             this.loggedin = true;
             this.isAdmin = this.user.admin;
             this.approved = this.user.approved;
-        }            
+        }
     }
 
     public get currentUserValue(): User {
