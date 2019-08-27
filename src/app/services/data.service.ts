@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 
 import { User } from '../models/user';
 import { Auction, Bid } from '../models/auction';
+import { Chat, Message } from '../models/chat';
 
 @Injectable()
 export class DataService {
@@ -80,5 +81,21 @@ export class DataService {
 
     addBid(id: string, price: number, userid: string) {
         return this.http.post(`http://${this.address}:3000/api/addbid/`, { auctionid: id, price: price, userid: userid }); 
+    }
+
+    getChatWithUser(id: string, userid: string) {
+        return this.http.post<Chat>(`http://${this.address}:3000/api/getchat/`, { participant1id: id, participant2id: userid }); 
+    }
+
+    sendMessage(message: string, chatid: string, userid: string) {
+        return this.http.post<Chat>(`http://${this.address}:3000/api/sendmessage/`, { message: message, chat: chatid, sender: userid });
+    }
+
+    getMessage(id: string) {
+        return this.http.get<Message>(`http://${this.address}:3000/api/message/` + id);
+    }
+
+    getChat(id: string) {
+        return this.http.get<Chat>(`http://${this.address}:3000/api/chat/` + id);
     }
 }

@@ -2,7 +2,7 @@ export class Bid {
     _id: string;
     auction_id: string;
     bidder_id: string;
-    time: string;
+    time: Date;
     amount: number;
     // -------------------
     name: string;

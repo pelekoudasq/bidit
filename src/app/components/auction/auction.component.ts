@@ -247,4 +247,7 @@ export class AuctionComponent implements OnInit {
 				});
 	}
 
+	onContactClick() {
+		this.router.navigate(['/chat', this.auction.seller_id]);
+	}
 }

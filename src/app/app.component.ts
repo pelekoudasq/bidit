@@ -30,18 +30,18 @@ export class AppComponent {
 	
 	ngOnInit() {
 		this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
-		// this.map = new ol.Map({
-		// 	target: 'map',
-		// 	layers: [
-		// 	  new ol.layer.Tile({
-		// 		source: new ol.source.OSM()
-		// 	  })
-		// 	],
-		// 	view: new ol.View({
-		// 	  center: ol.proj.fromLonLat([73.8567, 18.5204]),
-		// 	  zoom: 8
-		// 	})
-		//   });	
+		this.map = new ol.Map({
+			target: 'map',
+			layers: [
+				new ol.layer.Tile({
+					source: new ol.source.OSM()
+				})
+			],
+			view: new ol.View({
+				center: ol.proj.fromLonLat([23.6682993, 37.9908164]),
+				zoom: 8
+			})
+		});	
 	}
 
 	get isAdmin() {

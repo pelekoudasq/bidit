@@ -1,0 +1,198 @@
+body {
+    background: rgb(231, 227, 217)!important;
+    color: #333333!important;
+    margin: 0 !important;
+    height: 100%;
+    min-height: 100vh !important;
+    position: relative !important;
+    padding-bottom: 500px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: #444444;
+}
+
+ul {
+    margin: 0;
+}
+
+main{
+    margin-top: 0px;
+}
+
+footer {
+    background-color: #CAD3C8!important;
+    position: absolute;
+    bottom: 0!important;
+    width: 100%;
+}
+
+div.container a.input-group-btn {
+    font-size: 14px;
+}
+
+.asteriskField {
+    display: none;
+}
+
+.nav-tabs {
+    font-size:  17px !important;
+}
+
+.ml-auto {
+    left: auto !important;
+}
+
+#top-nav {
+    background-color: #040C0E;
+    font-size: 14px;
+    height: 20;
+    padding: 3px;
+}
+
+.nav .nav-item .nav-link .active{
+    color: black !important;
+}
+
+.bg-steel {
+    background-color: #267174;
+}
+
+.navbar {
+    padding-left: 0px;
+}
+
+.site-header .navbar-nav .nav-link {
+    color: #cbd5db;
+}
+
+.site-header .navbar-nav .nav-link:hover {
+    color: #ffffff;
+}
+
+.site-header .navbar-nav .nav-link.active {
+    font-weight: 500;
+}
+
+.content-section {
+    margin-top: 20px;
+    background: #ffffff;
+    padding: 10px 20px;
+    border: 1px solid #dddddd;
+    border-radius: 3px;
+    margin-bottom: 20px;
+}
+
+.btn-toolbar{
+    text-align: center;
+}
+
+.dropdown .dropdown-menu {
+    -webkit-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    -ms-transition: all 0.3s;
+    -o-transition: all 0.3s;
+    transition: all 0.3s;
+
+    max-height: 0;
+    display: block;
+    overflow: hidden;
+    opacity: 0;
+}
+
+.dropdown:hover .dropdown-menu {
+    max-height: 200px;
+    opacity: 1;
+}
+
+.menubot{
+  transition: box-shadow .3s;
+}
+
+.menubot:hover {
+  box-shadow: 0 16px 28px 0 rgba(0, 0, 0, 0.22), 0 25px 55px 0 rgba(0, 0, 0, 0.21);
+}
+
+.btn-primary {
+    background-color: #267174 !important;
+    border-color: #267174 !important; 
+}
+
+.btn-primary:hover {
+    box-shadow: 11px 11px 13px -4px rgba(38,113,116,0.22) !important;
+    background-color: transparent !important;
+    color: #267174 !important;
+}
+
+.btn-link {
+    color: #267174 !important;
+}
+
+.notstrong {
+    font-weight: 500;
+}
+
+.hand {
+    cursor: pointer;
+}
+
+.arrow .breadcrumb-item + .breadcrumb-item::before {
+    content: "›";
+    vertical-align: top;
+    /* color: #408080; */
+    font-size: 20px;
+    line-height: 22px;
+ }
+ 
+/* ############################################################################## */
+                            /* MODALS */
+/* ############################################################################## */
+
+jw-modal {
+    display: none;
+}     
+                       
+.jw-modal {
+    /* modal container fixed across whole screen */
+    position: fixed;
+    top: 20%;
+    right: 20%;
+    bottom: 0;
+    left: 20%;
+
+    /* z-index must be higher than .jw-modal-background */
+    z-index: 1000;
+    
+    /* enables scrolling for tall modals */
+    overflow: auto;
+
+}
+
+.jw-modal-body {
+    padding: 20px;
+    background: #fff;
+
+    /* margin exposes part of the modal background */
+    margin: 40px;
+}
+
+.jw-modal-background {
+    /* modal background fixed across whole screen */
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+
+    /* semi-transparent black  */
+    background-color: #000;
+    opacity: 0.75;
+    
+    /* z-index must be below .jw-modal and above everything else  */
+    z-index: 900;
+}
+
+body.jw-modal-open {
+    /* body overflow is hidden to hide main scrollbar when modal window is open */
+    overflow: hidden;
+}

@@ -154,26 +154,29 @@
 				</div>
 				<ng-container *ngIf="currentUser">
 					<ng-container *ngIf="currentUser._id != auction.seller_id">
-						<ng-container *ngIf="auction.started">
+						<ng-container *ngIf="auction.started && !completed">
 							<form *ngIf="auction" [formGroup]="bidForm" (ngSubmit)="onSubmit()">
-							<div class="form-group">
-								<input type="number" formControlName="bid_price" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.bid_price?.errors }" />
-								<div *ngIf="submitted && f.bid_price?.errors" class="invalid-feedback">
-									<div *ngIf="f.bid_price?.errors.required">Enter a valid price</div>
-								</div>
-							</div>
-							<ng-container *ngIf="!bidClicked">
-								<button [disabled]="completed" type="button" class="btn btn-primary btn-lg btn-block" (click)="btnClicked()">Bid Now!</button>
-							</ng-container>
-							<ng-container *ngIf="bidClicked">
-								<div class="btn-group">
-									<div class="form-group">
-										<button type="submit" class="btn btn-primary btn-lg">Confirm</button>
-										<button type="button" class="btn btn-primary btn-lg" (click)="btnClicked()">Cancel</button>
+								<div class="form-group">
+									<input type="number" formControlName="bid_price" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.bid_price?.errors }" />
+									<div *ngIf="submitted && f.bid_price?.errors" class="invalid-feedback">
+										<div *ngIf="f.bid_price?.errors.required">Enter a valid price</div>
 									</div>
 								</div>
-							</ng-container>
-						</form>
+								<ng-container *ngIf="!bidClicked">
+									<button [disabled]="completed" type="button" class="btn btn-primary btn-lg btn-block" (click)="btnClicked()">Bid Now!</button>
+								</ng-container>
+								<ng-container *ngIf="bidClicked">
+									<div class="btn-group">
+										<div class="form-group">
+											<button type="submit" class="btn btn-primary btn-lg">Confirm</button>
+											<button type="button" class="btn btn-primary btn-lg" (click)="btnClicked()">Cancel</button>
+										</div>
+									</div>
+								</ng-container>
+							</form>
+						</ng-container>
+						<ng-container *ngIf="completed">
+							<button (click)="onContactClick()" class="btn btn-link">Contact seller</button>
 						</ng-container>
 					</ng-container>
 					<ng-container *ngIf="currentUser._id == auction.seller_id">

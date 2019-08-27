@@ -6,6 +6,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { JwtInterceptor } from './jwt-interceptor';
 import { DatePipe } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 import { AlertComponent } from './guards/alert.component';
 import { ModalComponent } from './guards/modal.component';
@@ -26,6 +27,8 @@ import { NewAuctionComponent } from './components/newauction/newauction.componen
 import { EditProfileComponent } from './components/editprofile/editprofile.component';
 import { EditAuctionComponent } from './components/editauction/editauction.component';
 import { SearchCatComponent } from './components/searchcat/searchcat.component';
+import { MessagingComponent } from './components/messaging/messaging.component';
+import { ChatComponent } from './components/chat/chat.component';
 
 @NgModule({
   declarations: [
@@ -41,7 +44,9 @@ import { SearchCatComponent } from './components/searchcat/searchcat.component';
     NewAuctionComponent,
     EditProfileComponent,
     EditAuctionComponent,
-    SearchCatComponent
+    SearchCatComponent,
+    MessagingComponent,
+    ChatComponent
   ],
   imports: [
     BrowserModule,
@@ -49,7 +54,8 @@ import { SearchCatComponent } from './components/searchcat/searchcat.component';
     ReactiveFormsModule,
     MatSelectModule,
     BrowserAnimationsModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule
   ],
   providers: [
     DatePipe,

@@ -9,6 +9,8 @@ import { AdminComponent } from './components/admin/admin.component';
 import { AuctionComponent } from './components/auction/auction.component';
 import { NewAuctionComponent } from './components/newauction/newauction.component';
 import { SearchCatComponent } from './components/searchcat/searchcat.component';
+import { MessagingComponent } from './components/messaging/messaging.component';
+import { ChatComponent } from './components/chat/chat.component';
 import { AuthGuard, AuthGuardAdmin } from './guards/auth.guard';
 
 const routes: Routes = [
@@ -20,6 +22,8 @@ const routes: Routes = [
 	{ path: 'newauction', component: NewAuctionComponent, canActivate: [AuthGuard] },
 	{ path: 'auction/:id', component: AuctionComponent },
 	{ path: 'searchcat', component: SearchCatComponent },
+	{ path: 'messaging', component: MessagingComponent, canActivate: [AuthGuard] },
+	{ path: 'chat/:id', component: ChatComponent, canActivate: [AuthGuard] },
 	{ path: '**', redirectTo: '' },
 
 ];

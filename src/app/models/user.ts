@@ -16,4 +16,5 @@ export class User {
 	sellerRating: number;
 	admin: boolean;
 	approved: boolean;
+	chats: any[];
 }

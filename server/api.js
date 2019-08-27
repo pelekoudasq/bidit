@@ -269,7 +269,8 @@ router.post('/users/register', function(req, res, next){
 						bidderRating: 0,
 						sellerRating: 0,
 						admin: false,
-						approved: false
+						approved: false,
+						chats: []
 					});
 					res.send(user);
 					return;
@@ -389,7 +390,7 @@ router.post('/addbid', function(req, res, next) {
 			return;
 		}
 		if (today>auction.endingDate) {
-			res.status(400).json({ error: 'This auction has already been comoleted' });
+			res.status(400).json({ error: 'This auction has already been completed' });
 			return;
 		} else {
 			db.Bids.save({
@@ -414,6 +415,140 @@ router.post('/addbid', function(req, res, next) {
 		}
 	});
 });
+
+router.post('/getchat', function(req, res, next) {
+	console.log('api: chat');
+	const participant1 = req.body.participant1id;
+	const participant2 = req.body.participant2id;
+	db.Chats.findOne({ participants: { $all: [participant1, participant2] } }, function(err, chat) {
+		if (err || chat == null) {
+			db.Chats.save({
+				participants: [participant1, participant2],
+			}, function(err, chat) {
+				if (err) {
+					res.send(err);
+					return;
+				}
+				db.Users.findAndModify({
+					query: { _id: mongojs.ObjectID(participant1) },
+					update: { $push: { chats: chat._id } }
+				}, function(err, user) {
+						if (err) {
+							res.send(err);
+							return;
+						}
+					});
+				db.Users.findAndModify({
+					query: { _id: mongojs.ObjectID(participant2) },
+					update: { $push: { chats: chat._id } }
+				}, function(err, user) {
+						if (err) {
+							res.send(err);
+							return;
+						}
+					});
+				// console.log('api: chat created ' + chat);
+				res.json(chat);
+			})
+		} else {
+			// console.log('api: chat found ' + chat);
+			res.json(chat);
+		}
+	});
+});
+
+router.post('/sendmessage', function(req, res, next) {
+	console.log('api: send message');
+	const today = new Date();
+	db.Chats.findOne({ _id: mongojs.ObjectID(req.body.chat) }, function(err, chat) {
+		if (err) {
+			res.send(err);
+			return;
+		}
+		db.Messages.save({
+			chat : chat._id,
+			sender_id : req.body.sender,
+			message : req.body.message,
+			time : today
+		}, function(err, message) {
+			if (err) {
+				res.send(err);
+				return;
+			}
+			// console.log(bid);
+			db.Chats.update({ _id: mongojs.ObjectID(req.body.chat) }, { $push: { messages: message._id } }, function(err, chat) {
+				if (err) {
+					res.send(err);
+					return;
+				}
+				res.json(chat);
+			});
+		});
+	});
+});
+
+function cacheMessage(req, res, next) {
+	const { id } = req.params.id;
+
+	client.get(req.params.id, (err, message) => {
+		if (err) throw err;
+
+		if (message !== null) {
+			console.log("found message in cache");
+			res.send(JSON.parse(message));
+		} else {
+			next();
+		}
+	});
+}
+
+// find message by id
+router.get('/message/:id', cacheMessage, function(req, res, next) {
+	console.log('api: message by Id ' + req.params.id);
+	db.Messages.findOne({ _id: mongojs.ObjectID(req.params.id) }, function(err, message) {
+		if (err) {
+			res.send(err);
+			return;
+		}
+		// console.log(JSON.stringify(message));
+		client.setex(req.params.id, 3600, JSON.stringify(message));
+		res.json(message);
+	});
+});
+
+function cacheChat(req, res, next) {
+	const { id } = req.params.id;
+
+	client.get(req.params.id, (err, chat) => {
+		if (err) throw err;
+
+		if (chat !== null) {
+			console.log("found chat in cache");
+			res.send(JSON.parse(chat));
+		} else {
+			next();
+		}
+	});
+}
+
+// find chat by id
+router.get('/chat/:id', cacheChat, function(req, res, next) {
+	console.log('api: chat by Id ' + req.params.id);
+	db.Chats.findOne({ _id: mongojs.ObjectID(req.params.id) }, function(err, chat) {
+		if (err) {
+			res.send(err);
+			return;
+		}
+		// console.log(JSON.stringify(chat));
+		client.setex(req.params.id, 3600, JSON.stringify(chat));
+		res.json(chat);
+	});
+});
+
+// router.post('/whois', function(req, res, next) {
+// 	const chatid = req.body.chat;
+// 	const
+// });
 
 module.exports = {
 	router : router,

@@ -17,7 +17,8 @@ const schema = new Schema({
 		city: { type: String, required: true },
 		country: { type: String, required: true },
 		zipcode: { type: Number, required: true },
-	}
+	},
+    chats: { type: Array, required: false }
 //    createdDate: { type: Date, default: Date.now }
 });
 
