@@ -20,6 +20,7 @@ export class MessagingComponent implements OnInit {
 	chats: Chat[] = [];
 	currentUser: User;
 	loading: boolean = false;
+	otherUser: User;
 
 	constructor(
 		private route: ActivatedRoute,
@@ -32,12 +33,20 @@ export class MessagingComponent implements OnInit {
 	}
 
 	ngOnInit() {
-		for (var i = this.currentUser.chats.length - 1; i >= 0; i--) {
+		for (var i = 0; i < this.currentUser.chats.length; i++) {
 			this.dataService.getChat(this.currentUser.chats[i]).pipe(first()).subscribe(chat => {
-				this.chats.push(chat);
+				var other: string = null;
+				if (chat.participants[0] != this.currentUser._id)
+					other = chat.participants[0];
+				else
+					other = chat.participants[1];
+				this.dataService.getById(other).pipe(first()).subscribe(user => {
+					chat.displayName = user.username;
+					this.loading = true;
+					this.chats.push(chat);
+				});
 			});
 		}
-		this.loading = true;
 	}
 
 	onChatClick(chat: any) {

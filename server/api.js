@@ -460,7 +460,10 @@ router.post('/getchat', function(req, res, next) {
 router.post('/sendmessage', function(req, res, next) {
 	console.log('api: send message');
 	const today = new Date();
-	db.Chats.findOne({ _id: mongojs.ObjectID(req.body.chat) }, function(err, chat) {
+	db.Chats.findAndModify({
+		query: { _id: mongojs.ObjectID(req.body.chat) },
+		update: { $set: { notify: req.body.receiver } }
+	}, function(err, chat) {
 		if (err) {
 			res.send(err);
 			return;
@@ -532,7 +535,7 @@ function cacheChat(req, res, next) {
 }
 
 // find chat by id
-router.get('/chat/:id', cacheChat, function(req, res, next) {
+router.get('/chat/:id', function(req, res, next) {
 	console.log('api: chat by Id ' + req.params.id);
 	db.Chats.findOne({ _id: mongojs.ObjectID(req.params.id) }, function(err, chat) {
 		if (err) {
@@ -541,6 +544,23 @@ router.get('/chat/:id', cacheChat, function(req, res, next) {
 		}
 		// console.log(JSON.stringify(chat));
 		client.setex(req.params.id, 3600, JSON.stringify(chat));
+		res.json(chat);
+	});
+});
+
+// upd chat notify
+router.get('/chatnotified/:id', function(req, res, next) {
+	console.log('api: chat notified ' + req.params.id);
+	db.Chats.findAndModify({
+		query: { _id: mongojs.ObjectID(req.params.id) },
+		update: { $set: { notify: null } }
+	}, function(err, chat) {
+		if (err) {
+			res.send(err);
+			return;
+		}
+		// console.log(JSON.stringify(chat));
+		// client.setex(req.params.id, 3600, JSON.stringify(chat));
 		res.json(chat);
 	});
 });

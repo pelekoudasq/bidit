@@ -48,6 +48,11 @@ export class ChatComponent implements OnInit {
 						});
 					}
 				}
+				if (this.chat.notify == this.currentUser._id) {
+					this.dataService.notifiedChat(this.chat._id).pipe(first()).subscribe(chat => {
+						this.chat = chat;
+					});
+				}
 				this.loading = true;
 			});
 		});
@@ -55,7 +60,7 @@ export class ChatComponent implements OnInit {
 
 	onSend() {
 		if (this.message) {
-			this.dataService.sendMessage(this.message, this.chat._id, this.currentUser._id).pipe(first()).subscribe(chat => {
+			this.dataService.sendMessage(this.message, this.chat._id, this.currentUser._id, this.requestedChat).pipe(first()).subscribe(chat => {
 				this.chat = chat;
 				this.messages = [];
 				this.message = '';

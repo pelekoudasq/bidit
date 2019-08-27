@@ -10,4 +10,6 @@ export class Chat {
     _id: string;
     participants: any[];
     messages: any[];
+    notify: string;
+    displayName: string;
 }

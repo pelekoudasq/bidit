@@ -87,8 +87,8 @@ export class DataService {
         return this.http.post<Chat>(`http://${this.address}:3000/api/getchat/`, { participant1id: id, participant2id: userid }); 
     }
 
-    sendMessage(message: string, chatid: string, userid: string) {
-        return this.http.post<Chat>(`http://${this.address}:3000/api/sendmessage/`, { message: message, chat: chatid, sender: userid });
+    sendMessage(message: string, chatid: string, userid: string, receiver: string) {
+        return this.http.post<Chat>(`http://${this.address}:3000/api/sendmessage/`, { message: message, chat: chatid, sender: userid, receiver: receiver });
     }
 
     getMessage(id: string) {
@@ -97,5 +97,9 @@ export class DataService {
 
     getChat(id: string) {
         return this.http.get<Chat>(`http://${this.address}:3000/api/chat/` + id);
+    }
+
+    notifiedChat(id: string) {
+        return this.http.get<Chat>(`http://${this.address}:3000/api/chatnotified/` + id);
     }
 }
