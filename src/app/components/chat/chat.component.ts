@@ -9,6 +9,7 @@ import { DataService } from '../../services/data.service';
 
 import { User } from '../../models/user';
 import { Chat, Message } from '../../models/chat';
+import { AppComponent } from '../../app.component';
 
 @Component({
 	selector: 'app-chat',
@@ -30,6 +31,7 @@ export class ChatComponent implements OnInit {
 		private router: Router,
 		private dataService: DataService,
 		private authenticationService: AuthenticationService,
+		private appComponent: AppComponent,
 		private alertService: AlertService)
 	{
 		this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
@@ -39,6 +41,7 @@ export class ChatComponent implements OnInit {
 		this.requestedChat = this.route.snapshot.params.id;
 		this.dataService.getById(this.requestedChat).pipe(first()).subscribe(user => {
 			this.otherUser = user;
+
 			this.dataService.getChatWithUser(this.requestedChat, this.currentUser._id).pipe(first()).subscribe(chat => {
 				this.chat = chat;
 				if (this.chat.messages) {
@@ -51,6 +54,13 @@ export class ChatComponent implements OnInit {
 				if (this.chat.notify == this.currentUser._id) {
 					this.dataService.notifiedChat(this.chat._id).pipe(first()).subscribe(chat => {
 						this.chat = chat;
+						this.dataService.getUserMessages(this.currentUser._id).subscribe(chats => {
+							this.authenticationService.notifications = 0;
+							for (var i = chats.length - 1; i >= 0; i--) {
+								if (chats[i].notify == this.currentUser._id)
+									this.authenticationService.notifications++;
+							}
+						});
 					});
 				}
 				this.loading = true;

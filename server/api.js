@@ -565,6 +565,18 @@ router.get('/chatnotified/:id', function(req, res, next) {
 	});
 });
 
+// find chats by participant's id
+router.get('/messages/:id', function(req, res, next) {
+	console.log('api: messages by user');
+	db.Chats.find({ participants: { $in: [req.params.id] } }, function(err, chats) {
+		if (err) {
+			res.send(err);
+		}
+		res.json(chats);
+	});
+});
+
+
 // router.post('/whois', function(req, res, next) {
 // 	const chatid = req.body.chat;
 // 	const

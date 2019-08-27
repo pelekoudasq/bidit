@@ -3,6 +3,7 @@ import { Router, RouterModule, ActivatedRoute } from '@angular/router';
 import { PLATFORM_ID, APP_ID, Inject } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 
+import { DataService } from './services/data.service';
 import { AuthenticationService } from './services/authentication.service';
 import { User } from './models/user';
 // import { LoginComponent } from './components/login/login.component';
@@ -22,6 +23,7 @@ export class AppComponent {
 
 	constructor(
 		private authenticationService: AuthenticationService,
+		private dataService: DataService,
 		private router: Router,
 		@Inject(PLATFORM_ID) private platformId: Object,
 		@Inject(APP_ID) private appId: string) {
@@ -41,7 +43,14 @@ export class AppComponent {
 				center: ol.proj.fromLonLat([23.6682993, 37.9908164]),
 				zoom: 8
 			})
-		});	
+		});
+		this.authenticationService.notifications = 0;
+		this.dataService.getUserMessages(this.currentUser._id).subscribe(chats => {
+			for (var i = chats.length - 1; i >= 0; i--) {
+				if (chats[i].notify == this.currentUser._id)
+					this.authenticationService.notifications++;
+			}
+		});
 	}
 
 	get isAdmin() {

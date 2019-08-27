@@ -14,7 +14,11 @@
                             <a class="nav-item nav-link" routerLink="/profile" routerLinkActive="active">Profile</a>
                         </div>
                         <div *ngIf="authenticationService.approved">
-                            <a class="nav-item nav-link" routerLink="/messaging" routerLinkActive="active">Messages</a>
+                            <a class="nav-item nav-link" routerLink="/messaging" routerLinkActive="active">Messages
+                                <ng-container *ngIf="authenticationService.notifications != 0">
+                                    <span class="badge badge-danger">{{authenticationService.notifications}}</span>
+                                </ng-container>
+                            </a>
                         </div>
                     </ng-container>
 	                <!-- <li class="nav-item dropdown" id="drop1">

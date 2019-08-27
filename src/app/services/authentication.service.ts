@@ -4,6 +4,8 @@ import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
+import { DataService } from './data.service';
+
 import { User } from '../models/user';
 import { Auction } from '../models/auction';
 
@@ -19,8 +21,10 @@ export class AuthenticationService {
     public auctionE: string = "";
     public category: string = "";
     public inAuction: boolean;
+    public notifications: number = 0;
 
     constructor(private http: HttpClient,
+                private dataService: DataService,
                 private router: Router)
     {
         this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('currentUser')));
@@ -53,6 +57,13 @@ export class AuthenticationService {
                 this.loggedin = true;
                 this.isAdmin = user.admin;
                 this.approved = user.approved;
+                this.dataService.getUserMessages(user._id).subscribe(chats => {
+                    this.notifications = 0;
+                    for (var i = chats.length - 1; i >= 0; i--) {
+                        if (chats[i].notify == user._id)
+                            this.notifications++;
+                    }
+                });
                 return user;
             }));
     }

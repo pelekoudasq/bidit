@@ -44,6 +44,13 @@ export class MessagingComponent implements OnInit {
 					chat.displayName = user.username;
 					this.loading = true;
 					this.chats.push(chat);
+					this.dataService.getUserMessages(this.currentUser._id).subscribe(chats => {
+						this.authenticationService.notifications = 0;
+						for (var i = chats.length - 1; i >= 0; i--) {
+							if (chats[i].notify == this.currentUser._id)
+								this.authenticationService.notifications++;
+						}
+					});
 				});
 			});
 		}

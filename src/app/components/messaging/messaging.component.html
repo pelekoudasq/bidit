@@ -10,7 +10,7 @@
 					<div class="col-sm-10">
 						<button class="btn btn-link" (click)="onChatClick(chat)" [ngClass]="{notification: chat.notify == currentUser._id}">{{ chat.displayName }}
 							<ng-container *ngIf="chat.notify == currentUser._id">
-								<i class="fa fa-exclamation-circle" aria-hidden="true" style="color: #ffa500 !important;"></i>
+								<span class="badge badge-danger">New</span>
 							</ng-container>
 						</button>
 					</div>
