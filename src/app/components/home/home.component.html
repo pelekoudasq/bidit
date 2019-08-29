@@ -16,7 +16,7 @@
 						<div class="border-bottom">
 							<ul class="list-unstyled">
                                 <ng-container *ngFor="let sub of authenticationService.categories">
-									<li *ngIf="sub.path == cat.name"><a class="hand btn-link pl-3" (click)="onCatClick(sub._id)">{{sub.name}}</a></li>
+									<li *ngIf="sub.path == cat.name"><a class="hand btn-link pl-3" (click)="onCatClick(sub.name)">{{sub.name}}</a></li>
                                 </ng-container>
 							</ul>
 						</div>

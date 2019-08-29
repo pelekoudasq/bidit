@@ -136,6 +136,10 @@ div.container a.input-group-btn {
     cursor: pointer;
 }
 
+.hand:hover {
+    text-decoration: underline !important;
+}
+
 .arrow .breadcrumb-item + .breadcrumb-item::before {
     content: "›";
     vertical-align: top;

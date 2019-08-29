@@ -118,12 +118,22 @@ export class NewAuctionComponent implements OnInit {
     }
 
     selectchange(args){ 
-        for (var i = 0; i < args.target.selectedOptions.length; i++) {
+        this.category = [];
+        for( var i = 0; i < args.target.selectedOptions.length; i++){
             this.category.push(args.target.selectedOptions[i].text);
         }
+        for (let i = 0; i < this.category.length; i++) {
+            this.dataService.getCategory(this.category[i]).pipe(first()).subscribe(cat => {
+                for (let i = 0; i < cat.path.length; i++) {                
+                    if (!this.category.includes(cat.path[i])){
+                        this.category.push(cat.path[i]);
+                    }
+                }
+            });
+        }
+
         this.auctionForm.patchValue({
             categories: this.category
         });
-        this.category = [];
     } 
 }

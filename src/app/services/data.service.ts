@@ -112,7 +112,7 @@ export class DataService {
         return this.http.get<Category[]>(`http://${this.address}:3000/api/categories`);
     }
 
-    getCategory(id: string) {
-        return this.http.get<Category>(`http://${this.address}:3000/api/category/` + id);
+    getCategory(name: string) {
+        return this.http.get<Category>(`http://${this.address}:3000/api/category/` + name);
     }
 }

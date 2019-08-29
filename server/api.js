@@ -578,7 +578,7 @@ router.get('/messages/:id', function(req, res, next) {
 
 // get all categories
 router.get('/categories', function(req, res, next) {
-	console.log('api: categories ' + req.params.id);	
+	console.log('api: categories ');	
 	db.Categories.find(function(err, cats) {
 		if (err) {
 			res.send(err);
@@ -587,16 +587,16 @@ router.get('/categories', function(req, res, next) {
 	});
 });
 
-// find category by id
-router.get('/category/:id', function(req, res, next) {
-	console.log('api: category by Id ' + req.params.id);
-	db.Categories.findOne({ _id: mongojs.ObjectID(req.params.id) }, function(err, cat) {
+// find category by name
+router.get('/category/:name', function(req, res, next) {
+	console.log('api: category by name ' + req.params.name);
+	db.Categories.findOne({ "name": req.params.name }, function(err, cat) {
 		if (err) {
 			res.send(err);
 			return;
 		}
 		// console.log(JSON.stringify(chat));
-		client.setex(req.params.id, 3600, JSON.stringify(cat));
+		client.setex(req.params.name, 3600, JSON.stringify(cat));
 		res.json(cat);
 	});
 });
