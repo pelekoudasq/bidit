@@ -2,11 +2,12 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, first } from 'rxjs/operators';
 
 import { DataService } from './data.service';
 
 import { User } from '../models/user';
+import { Category } from '../models/category';
 import { Auction } from '../models/auction';
 
 @Injectable({ providedIn: 'root' })
@@ -22,6 +23,8 @@ export class AuthenticationService {
     public category: string = "";
     public inAuction: boolean;
     public notifications: number = 0;
+    public categories: Category[] = [];
+	public main: Category[] = [];
 
     constructor(private http: HttpClient,
                 private dataService: DataService,
@@ -34,6 +37,13 @@ export class AuthenticationService {
         this.inAuction = false;
         this.currentUser.subscribe(x => this.user = x);
         this.category = localStorage.getItem('category');
+        this.dataService.getCategories().pipe(first()).subscribe(cats => {
+			this.categories = cats;
+			cats.forEach(cat => {
+				if(cat.path == null)
+					this.main.push(cat);
+			});
+		});
         
         if (this.user){
             this.loggedin = true;

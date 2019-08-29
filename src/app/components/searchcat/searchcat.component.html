@@ -3,7 +3,7 @@
             <div class="content-section bg-transparent border-0">
                 <h4>Categories</h4>
                 <div id="accordion">
-                    <div *ngFor="let cat of ctgrs; index as i">
+                    <div *ngFor="let cat of authenticationService.main; index as i">
                         <div  [attr.id]="'heading'+i">
                         <h5 class="mb-0">
                             <button class="btn btn-link pl-0" data-toggle="collapse" [attr.data-target]="'#collapse'+i" aria-expanded="true" [attr.aria-controls]="'collapse'+i">
@@ -15,7 +15,9 @@
                         <div [attr.id]="'collapse'+i" class="collapse" [attr.aria-labelledby]="'heading'+i" data-parent="#accordion">
                             <div class="border-bottom">
                                 <ul class="list-unstyled">
-                                    <li *ngFor="let sub of cat.sub"><a class="hand btn-link pl-3" (click)="onCatClick(sub.viewValue)">{{sub.viewValue}}</a></li>
+                                    <ng-container *ngFor="let sub of authenticationService.categories">
+                                        <li *ngIf="sub.path == cat.name"><a class="hand btn-link pl-3" (click)="onCatClick(sub._id)">{{sub.name}}</a></li>
+                                    </ng-container>
                                 </ul>
                             </div>
                         </div>
@@ -41,32 +43,38 @@
                 <!-- </span> -->
             </form>
             <div class="container" >
-                <ol class="breadcrumb  mb-2 p-0 bg-transparent arrow">
-                    <li class="breadcrumb-item"><a class="btn-link" href="/">All</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">{{category}}</li>
-                </ol>
                 <div class="text-center"  *ngIf="!loading">
                     <img src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" /> 
                 </div>
-                <div class="row" *ngIf="loading">
-                    <div *ngFor="let auction of auctions; index as i" class="card col-sm-4 my-1 mx-0.5 content-section">
-                        <!-- <img src="https://www.freeiconspng.com/uploads/no-image-icon-13.png" class="card-img-top img-fluid pt-2 mx-auto w-75" alt="..."> -->
-                        <div class="d-flex align-content-center border hand" style="height: 100%;"  (click)="onNameClick(auction._id)">
-                            <img [src]="transform(i)" class="card-img-top my-auto">
+                <ng-container *ngIf="loading">
+                    <ol class="breadcrumb  mb-2 p-0 bg-transparent arrow">
+                        <li class="breadcrumb-item"><a class="btn-link" href="/">All</a></li>
+                        <!-- <ng-container *ngFor="let cat of category.path">
+                            <li class="breadcrumb-item"><a class="btn-link" (click)="onCatClick(cat._id)">{{cat}}</a></li>                        
+                        </ng-container> -->
+                        <li class="breadcrumb-item active" aria-current="page">{{category.name}}</li>
+                    </ol>
+
+                    <div class="row">
+                        <div *ngFor="let auction of auctions; index as i" class="card col-sm-4 my-1 mx-0.5 content-section">
+                            <!-- <img src="https://www.freeiconspng.com/uploads/no-image-icon-13.png" class="card-img-top img-fluid pt-2 mx-auto w-75" alt="..."> -->
+                            <div class="d-flex align-content-center border hand" style="height: 100%;"  (click)="onNameClick(auction._id)">
+                                <img [src]="transform(i)" class="card-img-top my-auto">
+                            </div>
+                            <div class="card-title text-truncate py-2">
+                                <a class="btn btn-link text-left px-0" [title]="auction.name" (click)="onNameClick(auction._id)">{{auction.name}}</a>												
+                            </div>
+                            <div class="card-body px-0 pt-0">
+                                <p class="card-text small text-truncate">{{auction.description}}</p>
+                                <!-- <a class="btn btn-primary small mx-auto" (click)="onNameClick(auction._id)" style="color: white;">Take a look</a> -->
+                            </div>
+                            <div class="card-footer">
+                                <p>Current price: {{auction.currently}} $</p>
+                            </div>
                         </div>
-                        <div class="card-title text-truncate py-2">
-                            <a class="btn btn-link text-left px-0" [title]="auction.name" (click)="onNameClick(auction._id)">{{auction.name}}</a>												
-                        </div>
-                        <div class="card-body px-0 pt-0">
-                            <p class="card-text small text-truncate">{{auction.description}}</p>
-                            <!-- <a class="btn btn-primary small mx-auto" (click)="onNameClick(auction._id)" style="color: white;">Take a look</a> -->
-                        </div>
-                        <div class="card-footer">
-                            <p>Current price: {{auction.currently}} $</p>
-                        </div>
+                        <div *ngIf="auctions == 0" class="font-weight-light font-italic">No results for this category.</div>                    
                     </div>
-                </div>
-                <div *ngIf="auctions == 0" class="font-weight-light font-italic">No results for this category.</div>
+                </ng-container>
             </div>
         </div>
         

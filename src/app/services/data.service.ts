@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { User } from '../models/user';
 import { Auction, Bid } from '../models/auction';
 import { Chat, Message } from '../models/chat';
+import { Category } from '../models/category';
 
 @Injectable()
 export class DataService {
@@ -105,5 +106,13 @@ export class DataService {
 
     getUserMessages(id: string) {
         return this.http.get<Chat[]>(`http://${this.address}:3000/api/messages/` + id);
+    }
+
+    getCategories() {
+        return this.http.get<Category[]>(`http://${this.address}:3000/api/categories`);
+    }
+
+    getCategory(id: string) {
+        return this.http.get<Category>(`http://${this.address}:3000/api/category/` + id);
     }
 }
