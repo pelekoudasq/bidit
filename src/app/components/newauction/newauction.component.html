@@ -41,10 +41,10 @@
                         </mat-form-field> -->
                 <select class="mdb-select md-form form-control" (change)="selectchange($event)" multiple> 
                     <option value="" disabled selected></option>
-                    <ng-container *ngFor="let cat of ctgrs; index as i">
+                    <ng-container *ngFor="let cat of authenticationService.main; index as i">
                         <optgroup [label]="cat.name">
-                            <ng-container >
-                                <option [value]="sub.value" *ngFor="let sub of cat.sub; index as j" [ngClass]="{ 'is-invalid': submitted && f.categories?.errors }">{{sub.viewValue}}</option>
+                            <ng-container *ngFor="let sub of authenticationService.categories; index as j">
+                                <option [value]="sub.name" *ngIf="sub.path == cat.name" [ngClass]="{ 'is-invalid': submitted && f.categories?.errors }">{{sub.name}}</option>
                             </ng-container>
                         </optgroup>
                     </ng-container>
