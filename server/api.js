@@ -308,7 +308,11 @@ router.post('/auctionupdate', function(req, res, next) {
 				categories: updAuct.categories,
 				first_bid: updAuct.startingPrice,
 				buy_price: updAuct.buyPrice,
-				location: updAuct.location,
+				location: {
+					name: updAuct.location,
+					longitude: updAuct.longitude,
+					latitude: updAuct.latitude
+				},
 				country: updAuct.country,
 				description: updAuct.description,
 				image: updAuct.image
@@ -350,7 +354,11 @@ router.post('/newauction', function(req, res, next) {
 		buy_price: auctionParams.buyPrice,
 		number_of_bids: 0,
 		bids: [],
-		location: auctionParams.location,
+		location: {
+			name: auctionParams.location,
+			longitude: auctionParams.longitude,
+			latitude: auctionParams.latitude
+		},
 		country: auctionParams.country,
 		seller_id: req.body.userid,
 		description: auctionParams.description,

@@ -19,7 +19,7 @@
 	<div class="form-group">
 		<label for="image">Main Photo</label>
 		<div class="custom-file">
-			<input type="file" class="custom-file-input" id="image" (change)="onFileSelected($event)" [ngClass]="{ 'is-invalid': submitted && f.image?.errors }" >
+			<input type="file" class="custom-file-input" id="image" (change)="onFileSelected($event)" [ngClass]="{ 'is-invalid': submitted && f.image?.errors }" multiple>
 			<label class="custom-file-label" for="file">{{image ? image : 'Replace file' }}</label>
 		</div>
 		<div *ngIf="submitted && f.image?.errors" class="invalid-feedback">
@@ -75,6 +75,14 @@
 		<div *ngIf="submitted && f.location?.errors" class="invalid-feedback">
 			<div *ngIf="f.location?.errors.required">Location is required</div>
 		</div>
+	</div>
+	<div class="form-group">
+		<label for="longitude">Longitude</label>
+		<input type="text" formControlName="longitude" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.longitude?.errors }" />
+	</div>
+	<div class="form-group">
+		<label for="latitude">Latitude</label>
+		<input type="text" formControlName="latitude" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.latitude?.errors }" />
 	</div>
 	<div class="form-group">
 		<label for="country">Country</label>

@@ -44,6 +44,8 @@ export class NewAuctionComponent implements OnInit {
             startingPrice: ['', Validators.required],
             buyPrice: ['', /*Validators.required*/],
             location: ['', Validators.required],
+            longitude: [''],
+            latitude: [''],
             country: ['', Validators.required],
             description: ['', Validators.required],
             image: ['', [Validators.required, this.requiredFileType('png')]],

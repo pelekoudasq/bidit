@@ -55,13 +55,10 @@ export class AuctionComponent implements OnInit {
 	bidClicked: boolean = false;
 	completed: boolean = false;
 	toViewMap: boolean = false;
-	longitude: number;
-	latitude: number;
+	longitude: number = null;
+	latitude: number = null;
 	mapsrc: string;
-	// map: any;
-	// @ViewChild('gmap', {read: true}) gmapElement: ElementRef;
-	// map: google.maps.Map;
-	// private afterViewInitSubject: Subject<any> = new Subject();
+	mapok: boolean = false;
 
 	constructor(
 		private formBuilder: FormBuilder,
@@ -81,19 +78,19 @@ export class AuctionComponent implements OnInit {
 
 	
 
-	ngOnInit() {
-		// this.initializeMap();
-		this.longitude = 23.7156;
-		this.latitude = 37.9282;
-		this.mapsrc = "http://83.212.104.209:4200/?lat="+this.latitude+"&long="+this.longitude;
-		this.url = this.sanitizer.bypassSecurityTrustResourceUrl(this.mapsrc);
-		this.requestedAuction = this.route.snapshot.params.id;
+	ngOnInit() {		
+		this.requestedAuction = this.route.snapshot.params.id;		
 		this.authenticationService.inAuction = true;
 		this.dataService.getAuction(this.requestedAuction).pipe(first()).subscribe(auction => {
 			this.auction = auction;
+			this.longitude = auction.location.latitude;
+			this.latitude = auction.location.longitude;
+			if(this.latitude != null && this.longitude != null)
+				this.mapok = true;
+			this.mapsrc = "http://83.212.102.165:4200/?lat="+this.latitude+"&long="+this.longitude;		
+			this.url = this.sanitizer.bypassSecurityTrustResourceUrl(this.mapsrc);
 			var today = new Date();
 			var ending = new Date(this.auction.endingDate);
-			// console.log(ending, today);
 			if (today > ending) {
 				this.completed = true;
 				this.alertService.error("This auction has been closed");
@@ -117,93 +114,6 @@ export class AuctionComponent implements OnInit {
 		});
 		
 	}
-
-	// viewMap() {
-	// 	const mapProperties = {
-	// 		center: new google.maps.LatLng(35.2271, -80.8431),
-	// 		zoom: 15,
-	// 		mapTypeId: google.maps.MapTypeId.ROADMAP
-	// 	};
-	// 	if (this.gmapElement) {
-	// 		console.log("Heree");
-	// 		this.map = new google.maps.Map(this.gmapElement.nativeElement,mapProperties);
-	// 	}
-	// 	else {
-	// 		this.afterViewInitSubject.subscribe(() => {
-	// 			console.log("H E R E");
-	// 			this.map = new google.maps.Map(this.gmapElement.nativeElement,mapProperties);
-	// 		})
-	// 	}
-	// 	console.log("view map");
-	// 	this.toViewMap = true;
-	// }
-
-	ngAfterViewInit() {
-		// this.afterViewInitSubject.next(true);
-		// const mapProperties = {
-		// 	center: new google.maps.LatLng(35.2271, -80.8431),
-		// 	zoom: 15,
-		// 	mapTypeId: google.maps.MapTypeId.ROADMAP
-		// };
-		// setTimeout(() => {
-		// 	this.map = new google.maps.Map(this.gmapElement.nativeElement,mapProperties);		
-		// }, 10000);
-	}
-	// 	console.log(`OnInit`);
-	
-	// 	var osmFrAttribution = `&copy; Openstreetmap France |
-	// 	Données <a href="http://www.openstreetmap.org/copyright"
-	// 	 rel="noreferrer">© les contributeurs OpenStreetMap</a>`;
-	// 	var map = new Map({
-	// 	  layers: [
-	// 		new TileLayer({
-	// 		  source: new OSM({
-	// 			attributions: [osmFrAttribution]
-	// 		  })
-	// 		})
-	// 	  ],
-	// 	  controls: defaultControls({
-	// 		attribution: false
-	// 	  }).extend([
-	// 		new Attribution({
-	// 		  collapsible: false
-	// 		}),
-	// 		new ZoomToExtent({
-	// 		  extent: [
-	// 			813079.7791264898,
-	// 			5929220.284081122,
-	// 			848966.9639063801,
-	// 			5936863.986909639
-	// 		  ]
-	// 		}),
-	// 		new FullScreen(),
-	// 		new ScaleLine()
-	// 	  ]),
-	// 	  interactions: defaultInteractions().extend([new DragRotateAndZoom()]),
-	// 	  target: "map",
-	// 	  view: new View({
-	// 		center: fromLonLat([2, 45]),
-	// 		zoom: 6
-	// 	  })
-	// 	});
-	
-	//   }
-	// // initializeMap() {
-	// 	console.log("map creation");
-	// 	this.map = new oll.Map({
-	// 		target: 'map',
-	// 		layers: [
-	// 		  new oll.layer.Tile({
-	// 			source: new oll.source.OSM()
-	// 		  })
-	// 		],
-	// 		view: new oll.View({
-	// 		  center: oll.proj.fromLonLat([73.8567, 18.5204]),
-	// 		  zoom: 8
-	// 		})
-	// 	  });
-
-	// }
 
 	// convenience getter for easy access to form fields
     get f() { return this.bidForm.controls; }
@@ -234,19 +144,14 @@ export class AuctionComponent implements OnInit {
 	}
 
 	onSubmit() {
-		//window.location.reload();
 		if (this.bidForm.invalid) {
 			return;
 		}
-		// console.log(this.bidForm);
 		this.dataService.addBid(this.auction._id, this.bidForm.value.bid_price, this.currentUser._id)
 			.pipe(first())
 			.subscribe(
 				data => {
-					// this.modalService.open('approval');
 					this.alertService.success('Your bid was made successfully!', true);
-					// this.authenticationService.logout();
-					// this.router.navigate(['/login']);
 					this.loading = false;
 					this.bidClicked = false;
 					this.bids = [];

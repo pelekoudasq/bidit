@@ -6,9 +6,6 @@ import { isPlatformBrowser } from '@angular/common';
 import { DataService } from './services/data.service';
 import { AuthenticationService } from './services/authentication.service';
 import { User } from './models/user';
-// import { LoginComponent } from './components/login/login.component';
-declare var ol: any;
-export var oll :any = ol;
 
 @Component({
 	selector: 'app-root',
@@ -19,7 +16,6 @@ export var oll :any = ol;
 export class AppComponent {
 
 	currentUser: User;
-	map: any;
 
 	constructor(
 		private authenticationService: AuthenticationService,
@@ -32,18 +28,6 @@ export class AppComponent {
 	
 	ngOnInit() {
 		this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
-		this.map = new ol.Map({
-			target: 'map',
-			layers: [
-				new ol.layer.Tile({
-					source: new ol.source.OSM()
-				})
-			],
-			view: new ol.View({
-				center: ol.proj.fromLonLat([23.6682993, 37.9908164]),
-				zoom: 8
-			})
-		});
 		this.authenticationService.notifications = 0;
 		this.dataService.getUserMessages(this.currentUser._id).subscribe(chats => {
 			for (var i = chats.length - 1; i >= 0; i--) {
@@ -67,7 +51,6 @@ export class AppComponent {
 		  	let scrollToTop = window.setInterval(() => {
 				let pos = window.pageYOffset;
 				if (pos > 0) {
-					// window.scrollTo(0, pos - 20); // how far to scroll on each step
 					window.scrollTo(0, 0); // how far to scroll on each step
 				} else {
 					window.clearInterval(scrollToTop);
