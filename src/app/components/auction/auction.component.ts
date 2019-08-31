@@ -1,4 +1,5 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, Input } from '@angular/core';
+import { DomSanitizer,SafeResourceUrl } from '@angular/platform-browser';
 import { Subject } from 'rxjs';
 import { first } from 'rxjs/operators';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -7,7 +8,6 @@ import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/fo
 import { AlertService } from '../../services/alert.service';
 import { AuthenticationService } from '../../services/authentication.service';
 import { DataService } from '../../services/data.service';
-import { DomSanitizer } from '@angular/platform-browser';
 
 import {} from 'googlemaps';
 // import { Map, View } from 'ol';
@@ -41,6 +41,9 @@ import { Auction, Bid } from '../../models/auction';
 })
 export class AuctionComponent implements OnInit {
 
+	@Input()
+    url: SafeResourceUrl;
+
 	requestedAuction: string;
 	bidForm: FormGroup;	
 	auction: Auction;
@@ -52,6 +55,9 @@ export class AuctionComponent implements OnInit {
 	bidClicked: boolean = false;
 	completed: boolean = false;
 	toViewMap: boolean = false;
+	longitude: number;
+	latitude: number;
+	mapsrc: string;
 	// map: any;
 	// @ViewChild('gmap', {read: true}) gmapElement: ElementRef;
 	// map: google.maps.Map;
@@ -73,8 +79,14 @@ export class AuctionComponent implements OnInit {
 		return this.sanitizer.bypassSecurityTrustResourceUrl(this.auction.image);
 	}
 
+	
+
 	ngOnInit() {
 		// this.initializeMap();
+		this.longitude = 23.7156;
+		this.latitude = 37.9282;
+		this.mapsrc = "http://83.212.104.209:4200/?lat="+this.latitude+"&long="+this.longitude;
+		this.url = this.sanitizer.bypassSecurityTrustResourceUrl(this.mapsrc);
 		this.requestedAuction = this.route.snapshot.params.id;
 		this.authenticationService.inAuction = true;
 		this.dataService.getAuction(this.requestedAuction).pipe(first()).subscribe(auction => {
