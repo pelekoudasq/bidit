@@ -29,7 +29,6 @@ export class SearchCatComponent implements OnInit {
 		private router: Router,
 		private authenticationService: AuthenticationService,
 		private sanitizer: DomSanitizer) {
-		// this.authenticationService.category = "";
 		this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
 	
 	}

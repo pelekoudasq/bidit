@@ -73,7 +73,6 @@ export class AdminComponent implements OnInit {
                     this.disapprovedUsers = [];
                     this.auctionJsonUri = [];
                     this.ngOnInit();
-                    // window.location.reload();
                 },
                 error => {
                     this.alertService.error("Approval denied");
@@ -91,7 +90,6 @@ export class AdminComponent implements OnInit {
                     this.disapprovedUsers = [];
                     this.auctionJsonUri = [];
                     this.ngOnInit();
-                    // window.location.reload();
                 },
                 error => {
                     this.alertService.error("Disapproval denied");

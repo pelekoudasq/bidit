@@ -9,27 +9,6 @@ import { AlertService } from '../../services/alert.service';
 import { AuthenticationService } from '../../services/authentication.service';
 import { DataService } from '../../services/data.service';
 
-import {} from 'googlemaps';
-// import { Map, View } from 'ol';
-// import { Tile } from 'ol/layer';
-// import { OSM } from 'ol/source';
-// import {
-// 	defaults as defaultControls,
-// 	Attribution,
-// 	FullScreen,
-// 	ScaleLine,
-// 	ZoomToExtent
-//   } from "ol/control.js";
-//   import {
-// 	defaults as defaultInteractions,
-// 	DragRotateAndZoom
-//   } from "ol/interaction.js";
-//   import { fromLonLat } from "ol/proj.js";
-//   import TileLayer from "ol/layer/Tile.js";  
-
-// import { oll } from '../../app.component';
-
-// declare var ol;
 
 import { User } from '../../models/user';
 import { Auction, Bid } from '../../models/auction';
@@ -54,7 +33,6 @@ export class AuctionComponent implements OnInit {
 	editA: boolean = false;
 	bidClicked: boolean = false;
 	completed: boolean = false;
-	toViewMap: boolean = false;
 	longitude: number = null;
 	latitude: number = null;
 	mapsrc: string;
@@ -81,7 +59,9 @@ export class AuctionComponent implements OnInit {
 	ngOnInit() {		
 		this.requestedAuction = this.route.snapshot.params.id;		
 		this.authenticationService.inAuction = true;
+
 		this.dataService.getAuction(this.requestedAuction).pipe(first()).subscribe(auction => {
+
 			this.auction = auction;
 			this.longitude = auction.location.latitude;
 			this.latitude = auction.location.longitude;
@@ -89,6 +69,7 @@ export class AuctionComponent implements OnInit {
 				this.mapok = true;
 			this.mapsrc = "http://83.212.102.165:4200/?lat="+this.latitude+"&long="+this.longitude;		
 			this.url = this.sanitizer.bypassSecurityTrustResourceUrl(this.mapsrc);
+			
 			var today = new Date();
 			var ending = new Date(this.auction.endingDate);
 			if (today > ending) {

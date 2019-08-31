@@ -17,7 +17,6 @@ import { Auction } from '../../models/auction';
 export class HomeComponent implements OnInit {
 
 	users: User[] = [];
-	// category: string = "";
 	currentUser: User;
 	loggedin: boolean;
 	auctions: Auction[] = [];
@@ -42,7 +41,6 @@ export class HomeComponent implements OnInit {
 				if (auctions[i].started) 
 					this.auctions.push(auctions[i]);
 			}
-			// this.auctions = auctions;
 			this.loading = true;
 		});
 	}

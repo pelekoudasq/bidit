@@ -116,9 +116,6 @@ export class EditAuctionComponent implements OnInit {
 			.subscribe(
 				data => {
 					this.modalService.open('approval');
-					// this.alertService.success('Edit successful.', true);
-					// this.authenticationService.logout();
-					// this.router.navigate(['/login']);
 				},
 				error => {
 					console.log(error);

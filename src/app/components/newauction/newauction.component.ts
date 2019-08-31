@@ -101,8 +101,6 @@ export class NewAuctionComponent implements OnInit {
             .subscribe(
                 data => {
                     this.modalService.open('approval');
-                    // this.alertService.success('Auction added.', true);
-                    // this.router.navigate(['/']);
                 },
                 error => {
                     this.alertService.error(error);

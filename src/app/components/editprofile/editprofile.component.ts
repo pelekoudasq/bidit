@@ -69,9 +69,6 @@ export class EditProfileComponent implements OnInit {
 			.subscribe(
 				data => {
 					this.modalService.open('approval');
-					// this.alertService.success('Edit successful.', true);
-					// this.authenticationService.logout();
-					// this.router.navigate(['/login']);
 				},
 				error => {
 					this.alertService.error(error);

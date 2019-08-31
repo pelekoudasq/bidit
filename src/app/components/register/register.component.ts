@@ -57,8 +57,6 @@ export class RegisterComponent implements OnInit {
             .subscribe(
                 data => {
                     this.modalService.open('approval');
-                    // this.alertService.success('Registration successful.', true);
-                    // this.router.navigate(['/']);
                 },
                 error => {
                     console.log(error.error.error);

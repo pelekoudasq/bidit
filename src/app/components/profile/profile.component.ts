@@ -64,7 +64,6 @@ export class ProfileComponent implements OnInit {
 		this.endForm = this.formBuilder.group({
 			enddate: ['', Validators.required],
 		});
-		// console.log(this.currentUser);
 	}
 
 	// convenience getter for easy access to form fields

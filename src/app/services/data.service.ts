@@ -12,7 +12,6 @@ export class DataService {
     address: string;
   
     constructor(private http: HttpClient) {
-        // this.address = "83.212.108.244";
         this.address = "localhost";
     }
 

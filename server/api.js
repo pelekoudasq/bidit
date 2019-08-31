@@ -8,12 +8,6 @@ const jwt = require('jsonwebtoken');
 const mongoose = require('mongoose');
 const fs = require("fs");
 const redis = require("redis");
-// const multer = require('multer');
-// const Grid = require('gridfs-stream');
-// const mongo = require('mongodb');
-// const crypto = require('crypto');
-// const path = require('path');
-// const GridFsStorage = require('multer-gridfs-storage');
 
 const REDIS_PORT = process.env.PORT || 6379;
 
@@ -22,35 +16,6 @@ const client = redis.createClient(REDIS_PORT);
 const User = require('./user.model');
 const Auction = require('./auction.model');
 const Bid = require('./bid.model');
-
-// // stream
-// const gfs = Grid(db, mongo);
-// gfs.collection('Uploads');
-
-// // storage engine
-// const storage = new GridFsStorage({
-// 	url: config.dburi,
-// 	file: (req, file) => {
-// 		return new Promise((resolve, reject) => {
-// 			crypto.randomBytes(16, (err, buf) => {
-// 				if (err) {
-// 					return reject(err);
-// 				}
-// 				const filename = buf.toString('hex') + path.extname(file.originalname);
-// 				const fileInfo = {
-// 					filename: filename,
-// 					bucketName: 'Uploads'
-// 				};
-// 				resolve(fileInfo);
-// 			});
-// 		});
-// 	}
-// });
-// const upload = multer({ storage });
-
-// router.post('/upload', upload.single('file'), (req, res) => {
-// 	res.json({ file: req.file });
-// })
 
 async function getById(id) {
 	await db.Users.findOne({_id: id}, function(err, user){
@@ -77,7 +42,7 @@ async function compareStuff(user, password){
 	}
 }
 
-// get all users
+//Get all users
 router.get('/users', function(req, res, next) {
 	db.Users.find(function(err, users) {
 		if (err) {
@@ -87,7 +52,7 @@ router.get('/users', function(req, res, next) {
 	});
 });
 
-// find user by id
+//Find user by id
 router.get('/user/:id', function(req, res, next) {
 	console.log('api: user by Id');
 	db.Users.findOne({ _id: mongojs.ObjectID(req.params.id) }, function(err, user) {
@@ -98,7 +63,7 @@ router.get('/user/:id', function(req, res, next) {
 	});
 });
 
-// get all auctions
+//Get all auctions
 router.get('/auctions', function(req, res, next) {
 	console.log("api: auctions");
 	db.Auctions.find(function(err, auctions) {
@@ -109,7 +74,7 @@ router.get('/auctions', function(req, res, next) {
 	});
 });
 
-// get auctions by category
+//Get auctions by category
 router.get('/auctionscat/:cat', function(req, res, next) {
 	console.log("api: auctions by category");
 	db.Auctions.find({ "categories": { $in: [req.params.cat]} },function(err, auctions) {
@@ -121,7 +86,7 @@ router.get('/auctionscat/:cat', function(req, res, next) {
 	});
 });
 
-// find auctions by seller_id
+//Find auctions by seller_id
 router.get('/auctions/:id', function(req, res, next) {
 	console.log('api: auction of user');
 	db.Auctions.find({ "seller_id": req.params.id }, function(err, auctions) {
@@ -147,7 +112,7 @@ function cacheAuction(req, res, next) {
   });
 }
 
-// find auction by id
+//Find auction by id
 router.get('/auction/:id', cacheAuction, function(req, res, next) {
 	console.log('api: auction by Id');
 	db.Auctions.findOne({ _id: mongojs.ObjectID(req.params.id) }, function(err, auction) {
@@ -174,7 +139,7 @@ function cacheBid(req, res, next) {
   });
 }
 
-// find bid by id
+//Find bid by id
 router.get('/bid/:id', cacheBid, function(req, res, next) {
 	console.log('api: bid by Id '+req.params.id);
 	db.Bids.findOne({ _id: mongojs.ObjectID(req.params.id) }, function(err, bid) {
@@ -188,7 +153,7 @@ router.get('/bid/:id', cacheBid, function(req, res, next) {
 	});
 });
 
-// find bids by bidder_id
+//Find bids by bidder_id
 router.get('/bids/:id', function(req, res, next) {
 	console.log('api: bid of bidder');
 	db.Bids.find({ "bidder_id": req.params.id }, function(err, bids) {
@@ -199,6 +164,7 @@ router.get('/bids/:id', function(req, res, next) {
 	});
 });
 
+//Authenticate user
 router.post('/users/authenticate', function(req, res, next) {
 	console.log('api: authenticate');
 	db.Users.findOne({ username: req.body.username }, function(err, user) {
@@ -280,11 +246,11 @@ router.post('/users/register', function(req, res, next){
 	});
 });
 
+//Start auction
 router.post('/startauction', function(req, res, next) {
 	console.log('api: start auction');
 	const today = new Date();
 	const enddate = new Date(req.body.enddate);
-	// console.log("today: "+today+" enddate: "+enddate+","+req.body.enddate);
 	if (today>enddate){
 		res.status(400).json({ error: 'End date must be later of today' });
 		return;
@@ -325,7 +291,7 @@ router.post('/auctionupdate', function(req, res, next) {
 	});
 });
 
-//delete auction
+//Delete auction
 router.delete('/auctiondelete/:id', function(req, res, next) {
 	console.log('api: delete auction');
 	db.Auctions.remove({ _id: mongojs.ObjectID(req.params.id) }, function(err, auction) {
@@ -369,6 +335,7 @@ router.post('/newauction', function(req, res, next) {
 	return;
 });
 
+//Approve user
 router.get('/users/approve/:id', function(req, res, next) {
 	console.log('api: post approve');
 	db.Users.update({ _id: mongojs.ObjectID(req.params.id) }, { $set: { approved: true } }, function(err, user) {
@@ -379,6 +346,7 @@ router.get('/users/approve/:id', function(req, res, next) {
 	});
 });
 
+//Disapprove user
 router.get('/users/disapprove/:id', function(req, res, next) {
 	console.log('api: post disapprove');
 	db.Users.update({ _id: mongojs.ObjectID(req.params.id) }, { $set: { approved: false } }, function(err, user) {
@@ -389,6 +357,7 @@ router.get('/users/disapprove/:id', function(req, res, next) {
 	});
 });
 
+//Add bid
 router.post('/addbid', function(req, res, next) {
 	console.log('api: add bid to auction '+ req.body.auctionid);
 	const today = new Date();
@@ -424,6 +393,7 @@ router.post('/addbid', function(req, res, next) {
 	});
 });
 
+//Get chat with certain participants
 router.post('/getchat', function(req, res, next) {
 	console.log('api: chat');
 	const participant1 = req.body.participant1id;
@@ -455,16 +425,15 @@ router.post('/getchat', function(req, res, next) {
 							return;
 						}
 					});
-				// console.log('api: chat created ' + chat);
 				res.json(chat);
 			})
 		} else {
-			// console.log('api: chat found ' + chat);
 			res.json(chat);
 		}
 	});
 });
 
+//Send message
 router.post('/sendmessage', function(req, res, next) {
 	console.log('api: send message');
 	const today = new Date();
@@ -486,7 +455,6 @@ router.post('/sendmessage', function(req, res, next) {
 				res.send(err);
 				return;
 			}
-			// console.log(bid);
 			db.Chats.update({ _id: mongojs.ObjectID(req.body.chat) }, { $push: { messages: message._id } }, function(err, chat) {
 				if (err) {
 					res.send(err);
@@ -513,7 +481,7 @@ function cacheMessage(req, res, next) {
 	});
 }
 
-// find message by id
+//Find message by id
 router.get('/message/:id', cacheMessage, function(req, res, next) {
 	console.log('api: message by Id ' + req.params.id);
 	db.Messages.findOne({ _id: mongojs.ObjectID(req.params.id) }, function(err, message) {
@@ -521,7 +489,6 @@ router.get('/message/:id', cacheMessage, function(req, res, next) {
 			res.send(err);
 			return;
 		}
-		// console.log(JSON.stringify(message));
 		client.setex(req.params.id, 3600, JSON.stringify(message));
 		res.json(message);
 	});
@@ -542,7 +509,7 @@ function cacheChat(req, res, next) {
 	});
 }
 
-// find chat by id
+//Find chat by id
 router.get('/chat/:id', function(req, res, next) {
 	console.log('api: chat by Id ' + req.params.id);
 	db.Chats.findOne({ _id: mongojs.ObjectID(req.params.id) }, function(err, chat) {
@@ -556,7 +523,7 @@ router.get('/chat/:id', function(req, res, next) {
 	});
 });
 
-// upd chat notify
+//Update chat notify
 router.get('/chatnotified/:id', function(req, res, next) {
 	console.log('api: chat notified ' + req.params.id);
 	db.Chats.findAndModify({
@@ -567,13 +534,11 @@ router.get('/chatnotified/:id', function(req, res, next) {
 			res.send(err);
 			return;
 		}
-		// console.log(JSON.stringify(chat));
-		// client.setex(req.params.id, 3600, JSON.stringify(chat));
 		res.json(chat);
 	});
 });
 
-// find chats by participant's id
+//Find chats by participant's id
 router.get('/messages/:id', function(req, res, next) {
 	console.log('api: messages by user');
 	db.Chats.find({ participants: { $in: [req.params.id] } }, function(err, chats) {
@@ -584,9 +549,9 @@ router.get('/messages/:id', function(req, res, next) {
 	});
 });
 
-// get all categories
+//Get all categories
 router.get('/categories', function(req, res, next) {
-	console.log('api: categories ');	
+	console.log('api: categories');	
 	db.Categories.find(function(err, cats) {
 		if (err) {
 			res.send(err);
@@ -595,7 +560,7 @@ router.get('/categories', function(req, res, next) {
 	});
 });
 
-// find category by name
+//Find category by name
 router.get('/category/:name', function(req, res, next) {
 	console.log('api: category by name ' + req.params.name);
 	db.Categories.findOne({ "name": req.params.name }, function(err, cat) {
@@ -603,17 +568,10 @@ router.get('/category/:name', function(req, res, next) {
 			res.send(err);
 			return;
 		}
-		// console.log(JSON.stringify(chat));
 		client.setex(req.params.name, 3600, JSON.stringify(cat));
 		res.json(cat);
 	});
 });
-
-
-// router.post('/whois', function(req, res, next) {
-// 	const chatid = req.body.chat;
-// 	const
-// });
 
 module.exports = {
 	router : router,
