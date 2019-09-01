@@ -59,32 +59,55 @@
             </div>
             <div class="form-group">
                 <label for="address">Address</label>
-                <input type="text" formControlName="address" class="form-control" id="address" placeholder="75 Harvard St" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" >
-                <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
-                    <div *ngIf="f.password.errors.required">Password is required</div>
+                <input type="text" formControlName="address" class="form-control" id="address" placeholder="75 Harvard St" [ngClass]="{ 'is-invalid': submitted && f.address.errors }" >
+                <div *ngIf="submitted && f.address.errors" class="invalid-feedback">
+                    <div *ngIf="f.address.errors.required">Address is required</div>
                 </div>
             </div>
             <div class="form-row">
                 <div class="form-group col-md-6">
                     <label for="city">City</label>
-                    <input type="text" formControlName="city" class="form-control" id="city" placeholder="Dedham, MA" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" >
-                    <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
-                        <div *ngIf="f.password.errors.required">Password is required</div>
+                    <input type="text" formControlName="city" class="form-control" id="city" placeholder="Dedham, MA" [ngClass]="{ 'is-invalid': submitted && f.city.errors }" >
+                    <div *ngIf="submitted && f.city.errors" class="invalid-feedback">
+                        <div *ngIf="f.city.errors.required">City is required</div>
                     </div>
                 </div>
                 <div class="form-group col-md-4">
                     <label for="country">Country</label>
-                    <input type="text" formControlName="country" class="form-control" id="country" placeholder="USA" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" >
-                    <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
-                        <div *ngIf="f.password.errors.required">Password is required</div>
+                    <input type="text" formControlName="country" class="form-control" id="country" placeholder="USA" [ngClass]="{ 'is-invalid': submitted && f.country.errors }" >
+                    <div *ngIf="submitted && f.country.errors" class="invalid-feedback">
+                        <div *ngIf="f.country.errors.required">Country is required</div>
                     </div>
                 </div>
                 <div class="form-group col-md-2">
-                    <label for="zipcode">Zip</label>
-                    <input type="text" formControlName="zipcode" class="form-control" id="zipcode" placeholder="02026" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" >
-                    <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
-                        <div *ngIf="f.password.errors.required">Password is required</div>
+                    <label for="zipcode">Zipcode</label>
+                    <input type="text" formControlName="zipcode" class="form-control" id="zipcode" placeholder="02026" [ngClass]="{ 'is-invalid': submitted && f.zipcode.errors }" >
+                    <div *ngIf="submitted && f.zipcode.errors" class="invalid-feedback">
+                        <div *ngIf="f.zipcode.errors.required">Zipcode is required</div>
                     </div>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="longitude">Longitude</label>
+                    <input type="text" formControlName="longitude" class="form-control" id="longitude" [ngClass]="{ 'is-invalid': submitted && f.longitude.errors }" >
+                    <div *ngIf="submitted && f.longitude.errors" class="invalid-feedback">
+                        <div *ngIf="f.longitude.errors.required">Longitude is required</div>
+                    </div>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="latitude">Latitude</label>
+                    <input type="text" formControlName="latitude" class="form-control" id="latitude" [ngClass]="{ 'is-invalid': submitted && f.latitude.errors }" >
+                    <div *ngIf="submitted && f.latitude.errors" class="invalid-feedback">
+                        <div *ngIf="f.latitude.errors.required">Latitude is required</div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="afm">TIN</label>
+                <input type="text" formControlName="afm" class="form-control" id="afm" [ngClass]="{ 'is-invalid': submitted && f.afm.errors }" >
+                <div *ngIf="submitted && f.afm.errors" class="invalid-feedback">
+                    <div *ngIf="f.afm.errors.required">TIN is required</div>
                 </div>
             </div>
             <br>

@@ -191,8 +191,11 @@ router.post('/userupdate', function(req, res, next) {
 					street: updUser.address,
 					city: updUser.city,
 					country: updUser.country,
-					zipcode: updUser.zipcode
-				}
+					zipcode: updUser.zipcode,
+					longitude: updUser.longitude,
+					latitude: updUser.latitude
+				},
+				afm: updUser.afm
 			} 
 		}, function(err, user) {
 		if (user) {
@@ -230,8 +233,11 @@ router.post('/users/register', function(req, res, next){
 							street: userParam.address,
 							city: userParam.city,
 							country: userParam.country,
-							zipcode: userParam.zipcode
+							zipcode: userParam.zipcode,
+							longitude: userParam.longitude,
+							latitude: userParam.latitude
 						},
+						afm: userParam.afm,
 						bidderRating: 0,
 						sellerRating: 0,
 						admin: false,

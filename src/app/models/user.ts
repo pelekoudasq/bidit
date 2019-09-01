@@ -11,7 +11,10 @@ export class User {
 		city: string;
 		country: string;
 		zipcode: string;
+		longitude: number;
+		latitude: number;
 	};
+	afm: number;
 	bidderRating: number;
 	sellerRating: number;
 	admin: boolean;

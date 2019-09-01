@@ -84,6 +84,29 @@
             </div>
         </div>
     </div>
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <label for="longitude">Longitude</label>
+            <input type="text" formControlName="longitude" class="form-control" id="longitude" [ngClass]="{ 'is-invalid': submitted && f.longitude.errors }" >
+            <div *ngIf="submitted && f.longitude.errors" class="invalid-feedback">
+                <div *ngIf="f.longitude.errors.required">Longitude is required</div>
+            </div>
+        </div>
+        <div class="form-group col-md-6">
+            <label for="latitude">Latitude</label>
+            <input type="text" formControlName="latitude" class="form-control" id="latitude" [ngClass]="{ 'is-invalid': submitted && f.latitude.errors }" >
+            <div *ngIf="submitted && f.latitude.errors" class="invalid-feedback">
+                <div *ngIf="f.latitude.errors.required">Latitude is required</div>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="afm">TIN</label>
+        <input type="text" formControlName="afm" class="form-control" id="afm" [ngClass]="{ 'is-invalid': submitted && f.afm.errors }" >
+        <div *ngIf="submitted && f.afm.errors" class="invalid-feedback">
+            <div *ngIf="f.afm.errors.required">TIN is required</div>
+        </div>
+    </div>
     <br>
     <div class="form-group">
         <button [disabled]="loading" class="btn btn-primary w-75 shadow mb-0">Edit Personal Info</button>

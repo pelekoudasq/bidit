@@ -38,6 +38,9 @@ export class RegisterComponent implements OnInit {
             city: ['', Validators.required],
             country: ['', Validators.required],
             zipcode: ['', Validators.required],
+            longitude: ['', Validators.required],
+            latitude: ['', Validators.required],
+            afm: ['', Validators.required],
         });
 	}
 

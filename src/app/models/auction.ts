@@ -20,9 +20,9 @@ export class Auction {
     number_of_bids: number;
     bids: string[];
     location: {
-        name: string,
-        longitude: number,
-        latitude: number
+        name: string;
+        longitude: number;
+        latitude: number;
     };
     country: string;
     started: boolean;

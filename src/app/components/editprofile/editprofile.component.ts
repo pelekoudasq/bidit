@@ -46,6 +46,9 @@ export class EditProfileComponent implements OnInit {
 			city: [this.currentUser.address.city, Validators.required],
 			country: [this.currentUser.address.country, Validators.required],
 			zipcode: [this.currentUser.address.zipcode, Validators.required],
+			longitude: [this.currentUser.address.longitude, Validators.required],
+			latitude: [this.currentUser.address.latitude, Validators.required],
+			afm: [this.currentUser.afm, Validators.required],
 		});
 	}
 
