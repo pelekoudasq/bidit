@@ -114,4 +114,8 @@ export class DataService {
     getCategory(name: string) {
         return this.http.get<Category>(`http://${this.address}:3000/api/category/` + name);
     }
+
+    closeAuction(id: string) {
+        return this.http.get<Auction>(`http://${this.address}:3000/api/closeauction/` + id);
+    }
 }

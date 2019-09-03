@@ -51,7 +51,7 @@ export class EditAuctionComponent implements OnInit {
 				this.editForm = this.formBuilder.group({
 					productName: [this.auction.name, Validators.required],
 					startingPrice: [this.auction.first_bid, Validators.required],
-					buyPrice: [this.auction.buy_price, Validators.required],
+					buyPrice: [this.auction.buy_price, /*Validators.required*/],
                     location: [this.auction.location.name, Validators.required],
                     longitude: [this.auction.location.longitude],
                     latitude: [this.auction.location.latitude],

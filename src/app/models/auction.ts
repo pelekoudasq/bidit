@@ -6,6 +6,7 @@ export class Bid {
     amount: number;
     // -------------------
     name: string;
+    username: string;
     current: number;
     ends: Date;
 }
@@ -33,4 +34,5 @@ export class Auction {
     endingDate: Date;
     // startingDateString: string;
     // endingDateString: string;
+    bought: boolean;
 }

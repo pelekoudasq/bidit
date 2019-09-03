@@ -335,7 +335,8 @@ router.post('/newauction', function(req, res, next) {
 		seller_id: req.body.userid,
 		description: auctionParams.description,
 		image: auctionParams.image,
-		started: false
+		started: false,
+		bought: false
 	});
 	res.send(auction);
 	return;
@@ -372,7 +373,7 @@ router.post('/addbid', function(req, res, next) {
 			res.send(err);
 			return;
 		}
-		if (today>auction.endingDate) {
+		if (today > auction.endingDate) {
 			res.status(400).json({ error: 'This auction has already been completed' });
 			return;
 		} else {
@@ -386,7 +387,6 @@ router.post('/addbid', function(req, res, next) {
 					res.send(err);
 					return;
 				}
-				// console.log(bid);
 				db.Auctions.update({ _id: mongojs.ObjectID(req.body.auctionid) }, { $push: { bids: bid._id }, $inc: { number_of_bids : 1 }, $set: { currently: bid.amount } }, function(err, user) {
 					if (err) {
 						res.send(err);
@@ -396,6 +396,21 @@ router.post('/addbid', function(req, res, next) {
 				});
 			});
 		}
+	});
+});
+
+//Update chat notify
+router.get('/closeauction/:id', function(req, res, next) {
+	console.log('api: close auction ' + req.params.id);
+	db.Auctions.findAndModify({
+		query: { _id: mongojs.ObjectID(req.params.id) },
+		update: { $set: { bought: true } }
+	}, function(err, auction) {
+		if (err) {
+			res.send(err);
+			return;
+		}
+		res.json(auction);
 	});
 });
 
