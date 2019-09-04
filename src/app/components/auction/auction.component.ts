@@ -37,6 +37,7 @@ export class AuctionComponent implements OnInit {
 	latitude: number = null;
 	mapsrc: string;
 	mapok: boolean = false;
+	maxBid: Bid;
 
 	constructor(
 		private formBuilder: FormBuilder,
@@ -72,22 +73,31 @@ export class AuctionComponent implements OnInit {
 			
 			var today = new Date();
 			var ending = new Date(this.auction.endingDate);
-			if (today > ending) {
+			if (today > ending || this.auction.bought) {
 				this.completed = true;
 				this.alertService.error("This auction has been closed");
 			}
 			this.dataService.getById(auction.seller_id).pipe(first()).subscribe(user => {
 				this.seller = user;
+				this.maxBid = new Bid;
+				this.maxBid.amount = -1;
 				for (var i = 0; i < this.auction.bids.length; i++) {
 					this.dataService.getBid(this.auction.bids[i]).pipe(first()).subscribe(bid => {
+						this.dataService.getById(bid.bidder_id).pipe(first()).subscribe(user =>{
+							bid.username = user.username;
+						});
 						this.bids.push(bid);
+						if (this.maxBid.amount < bid.amount)
+							this.maxBid = bid;
 					});
 				}
-				this.loading = true;
 				if (!this.auction.started) {
 					if (!this.currentUser || this.auction.seller_id != this.currentUser._id)
 						this.router.navigate(['/']);
 				}
+				// setTimeout(() => {
+					this.loading = true;	
+				// }, 1000);
 				this.bidForm = this.formBuilder.group({
 					bid_price: [this.auction.currently+1, [Validators.required, this.bidPriceCheck(this.auction.currently)]]
 				});
@@ -147,5 +157,29 @@ export class AuctionComponent implements OnInit {
 
 	onContactClick() {
 		this.router.navigate(['/chat', this.auction.seller_id]);
+	}
+
+	get sortBids() {
+		return this.bids.sort((a, b) => {
+			return <any>new Date(b.time) - <any>new Date(a.time);
+		});
+	}
+
+	buyNow() {
+		this.dataService.addBid(this.auction._id, this.auction.buy_price, this.currentUser._id).pipe(first()).subscribe(
+				data => {
+					this.dataService.closeAuction(this.auction._id).pipe(first()).subscribe(auction =>{
+						this.alertService.success('Your purchase was made successfully!', true);
+						this.loading = false;
+						this.bidClicked = false;
+						this.bids = [];
+						this.ngOnInit();
+					});
+				},
+				error => {
+					console.log(error.error.error);
+					this.alertService.error(error.error.error);
+					// this.loading = false;
+				});
 	}
 }

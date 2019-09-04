@@ -1,12 +1,10 @@
 <br>
-
 <div class="container">
 	<div class="text-center" *ngIf="!loading" >
-		<img src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" /> 
+		<i class="fa fa-spinner fa-pulse fa-spin fa-fw"></i>
 	</div>
 	<div *ngIf="loading">
 		<div class="row">
-
 			<div class="col-sm-4">
 				<div class="content-section">
 				<!-- <div id="carousel" class="carousel slide" data-ride="carousel">
@@ -66,7 +64,6 @@
 					<img [src]="transform()" class="img-fluid">
 				</div>
 			</div>
-
 			<div class="col-sm-5">
 				<div class="content-section" *ngIf="!editA">
 					<h6>{{auction.name}}<br>
@@ -131,7 +128,6 @@
 					<app-editauction></app-editauction>
 				</div>
 			</div>
-
 			<div class="col-sm-3">
 				<div class="content-section">
 					<h6>Seller Information</h6>
@@ -157,20 +153,24 @@
 									</div>
 								</div>
 								<ng-container *ngIf="!bidClicked">
-									<button [disabled]="completed" type="button" class="btn btn-primary btn-lg btn-block" (click)="btnClicked()">Bid Now!</button>
+									<button [disabled]="completed" type="button" class="btn btn-info btn-lg btn-block" (click)="btnClicked()">Bid Now!</button>
 								</ng-container>
 								<ng-container *ngIf="bidClicked">
 									<div class="btn-group">
 										<div class="form-group">
 											<button type="submit" class="btn btn-primary btn-lg">Confirm</button>
-											<button type="button" class="btn btn-primary btn-lg" (click)="btnClicked()">Cancel</button>
+											<button type="button" class="btn cancelbutton btn-lg" (click)="btnClicked()">Cancel</button>
 										</div>
 									</div>
 								</ng-container>
 							</form>
+							<br>
+							<button *ngIf="auction.buy_price" type="button" class="btn btn-primary btn-lg btn-block" (click)="buyNow()">Buy it Now</button>
 						</ng-container>
-						<ng-container *ngIf="completed">
-							<button (click)="onContactClick()" class="btn btn-link">Contact seller</button>
+						<ng-container *ngIf="completed && bids.length > 0 && (maxBid.bidder_id == currentUser._id)">
+							<small>Congrats! You bought the product for {{maxBid.amount}}$.</small><br>
+							<button (click)="onContactClick()" class="btn btn-primary btn-sm">Contact seller</button><br>
+							<small>to finalize the purchase</small>
 						</ng-container>
 					</ng-container>
 					<ng-container *ngIf="currentUser._id == auction.seller_id">
@@ -200,7 +200,6 @@
 				</div>
 			</div>
 		</div>
-
 		<!-- If user is the seller -->
 		<ng-container *ngIf="authenticationService.loggedin && auction.number_of_bids>0">
 		<!-- <div class="row"> -->
@@ -209,7 +208,7 @@
 					<h6 class="pt-2">All offers</h6>
 				</div>
 				<ul class="list-group" >
-					<ng-container *ngFor="let bid of bids; index as i">
+					<ng-container *ngFor="let bid of sortBids; index as i">
 						<li class="list-group-item rounded-0 border-right-0 border-left-0">
 							<button class="btn btn-link pl-0" type="button" data-toggle="collapse" [attr.data-target]=" '#collapseExample'+i" aria-expanded="false" aria-controls="collapseExample">
 							<i class="fa fa-angle-down"></i>
@@ -220,7 +219,7 @@
 									<div class="row">
 										<div class="col-sm">
 											<span class="notstrong">Time of offer:</span> {{bid.time | date:'fullDate' }} <br>
-											<span class="notstrong">User:</span> {{bid.bidder_id}} <br>
+											<span class="notstrong">User:</span> {{bid.username}} <br>
 										</div>
 									</div>				
 								</div>
@@ -231,7 +230,6 @@
 			</div>
 		<!-- </div> -->
 		</ng-container>
-
 	</div>
 </div>
 

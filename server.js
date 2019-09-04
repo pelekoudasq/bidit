@@ -1,4 +1,3 @@
-//bring express and body-parser module from node_modules
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
@@ -8,7 +7,7 @@ const jwt = require('./server/jwt');
 app.use(jwt());
 
 app.use(function(req, res, next) {
-	res.header("Access-Control-Allow-Origin", "http://localhost:4200"); // update to match the domain you will make the request from
+	res.header("Access-Control-Allow-Origin", "https://localhost:4200");
 	res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Access-Control-Allow-Headers, Access-Control-Request-Method, Access-Control-Request-Headers, Authorization");
 	res.header('Access-Control-Allow-Methods', 'GET, PUT, POST, DELETE, PATCH, OPTIONS');
 	next();
