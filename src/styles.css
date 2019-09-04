@@ -50,8 +50,12 @@ div.container a.input-group-btn {
     padding: 3px;
 }
 
-.nav .nav-item .nav-link .active{
+.nav .nav-item .nav-link .active {
     color: black !important;
+}
+
+.nav .nav-item .nav-link {
+    color: #267174 !important;
 }
 
 .bg-steel {

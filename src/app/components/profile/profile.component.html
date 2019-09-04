@@ -31,6 +31,10 @@
 						<td class="pr-4" style="font-weight: normal;">Email: </td>
 						<td class="h6" style="color: #444444;">{{ currentUser.email }}</td>
 					</tr>
+					<tr>
+						<td class="pr-4" style="font-weight: normal;">TIN: </td>
+						<td class="h6" style="color: #444444;">{{ currentUser.afm }}</td>
+					</tr>
 				</table>
 			</div>
 			<div class="col-sm pb-2">
@@ -50,6 +54,10 @@
 					<tr>
 						<td class="pr-4" style="font-weight: normal;">Zip: </td>
 						<td class="h6" style="color: #444444;">{{ currentUser.address.zipcode }}</td>
+					</tr>
+					<tr>
+						<td class="pr-4" style="font-weight: normal;">Long. / Lat.: </td>
+						<td class="h6" style="color: #444444;">{{ currentUser.address.longitude }} / {{ currentUser.address.latitude }}</td>
 					</tr>
 				</table>
 			</div>
