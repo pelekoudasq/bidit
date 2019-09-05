@@ -68,7 +68,7 @@ export class AuctionComponent implements OnInit {
 			this.latitude = auction.location.longitude;
 			if(this.latitude != null && this.longitude != null)
 				this.mapok = true;
-			this.mapsrc = "http://83.212.102.165:4200/?lat="+this.latitude+"&long="+this.longitude;		
+			this.mapsrc = "https://83.212.102.165:4200/?lat="+this.latitude+"&long="+this.longitude;		
 			this.url = this.sanitizer.bypassSecurityTrustResourceUrl(this.mapsrc);
 			
 			var today = new Date();
