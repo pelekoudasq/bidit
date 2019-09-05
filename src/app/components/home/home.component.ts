@@ -32,7 +32,7 @@ export class HomeComponent implements OnInit {
 	}
 
 	transform(i: number) {
-		return this.sanitizer.bypassSecurityTrustResourceUrl(this.auctions[i].image);
+		return this.sanitizer.bypassSecurityTrustResourceUrl(this.auctions[i].photos[0].url);
 	}
 
 	ngOnInit() {

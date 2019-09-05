@@ -1,5 +1,5 @@
 import { Component, OnInit, HostListener } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, AbstractControl, FormArray } from '@angular/forms';
 import { Router } from '@angular/router';
 import { first } from 'rxjs/operators';
 import { MatSelectModule } from '@angular/material/select';
@@ -48,13 +48,23 @@ export class NewAuctionComponent implements OnInit {
             latitude: [''],
             country: ['', Validators.required],
             description: ['', Validators.required],
-            image: ['', [Validators.required, this.requiredFileType('png')]],
-            categories: ['', Validators.required]
+            // image: ['', [Validators.required, this.requiredFileType('png')]],
+            categories: ['', Validators.required],
+            photos: this.formBuilder.array([])
         });
     }
 
     // convenience getter for easy access to form fields
     get f() { return this.auctionForm.controls; }
+
+    createItem(data): FormGroup {
+        return this.formBuilder.group(data);
+    }
+
+    //Help to get all photos controls as form array.
+    get photos(): FormArray {
+        return this.auctionForm.get('photos') as FormArray;
+    };
 
     requiredFileType( type: string ) {
         return function (control: AbstractControl) {
@@ -73,28 +83,37 @@ export class NewAuctionComponent implements OnInit {
     }
 
     onFileSelected(event) {
-        const reader = new FileReader();
+        const files = event.target.files;
         if(event.target.files && event.target.files.length) {
-            const [file] = event.target.files;
-            console.log(event.target.files);
-            reader.readAsDataURL(file);
-            reader.onload = () => {
-                this.auctionForm.patchValue({
-                    image: reader.result
-                });
-            };
+            // const [file] = event.target.files;
+            // console.log(event.target.files);
+            for (const file of files) {
+                const reader = new FileReader();
+                reader.onload = (e: any) => {
+                    // this.auctionForm.patchValue({
+                    //     image: reader.result
+                    // });
+                    this.photos.push(this.createItem({
+                        url: e.target.result  //Base64 string for preview image
+                    }));
+                };
+                reader.readAsDataURL(file);
+            }
         }
         this.image = event.target.files[0];
     }
 
     onSubmit() {
         this.submitted = true;
-        console.log(this.auctionForm);
+        // console.log(this.auctionForm);
         // stop here if form is invalid
         if (this.auctionForm.invalid) {
-            console.log(this.auctionForm);
+            // console.log(this.auctionForm);
             return;
         }
+        // console.log("horray");
+        // console.log(this.auctionForm.value);
+        //return;
         this.loading = true;
         this.dataService.addAuction(this.auctionForm.value, this.currentUser._id)
             .pipe(first())

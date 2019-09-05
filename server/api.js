@@ -314,8 +314,9 @@ router.post('/newauction', function(req, res, next) {
 	// console.log(req.body.userid);
 	const auctionParams = req.body.auction;
 	// console.log(auctionParams);
-	const base64Data = auctionParams.image.replace(/^data:([A-Za-z-+/]+);base64,/, '');
-	fs.writeFile("arghhhh.jpg", Buffer.from(base64Data, "base64"), function(err) {});
+	// console.log(auctionParams);
+	// const base64Data = auctionParams.image.replace(/^data:([A-Za-z-+/]+);base64,/, '');
+	// fs.writeFile("arghhhh.jpg", Buffer.from(base64Data, "base64"), function(err) {});
 	// save auction
 	// auction = new Auction();
 	auction = db.Auctions.save({
@@ -334,7 +335,7 @@ router.post('/newauction', function(req, res, next) {
 		country: auctionParams.country,
 		seller_id: req.body.userid,
 		description: auctionParams.description,
-		image: auctionParams.image,
+		photos: auctionParams.photos,
 		started: false,
 		bought: false
 	});

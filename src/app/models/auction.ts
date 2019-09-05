@@ -29,7 +29,7 @@ export class Auction {
     started: boolean;
     seller_id: string;
     description: string;
-    image: string;
+    photos: any[];
     startingDate: Date;
     endingDate: Date;
     // startingDateString: string;

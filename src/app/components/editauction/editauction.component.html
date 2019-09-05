@@ -1,7 +1,7 @@
 <div class="text-center"  *ngIf="!auction">
 	<i class="fa fa-spinner fa-pulse fa-spin fa-fw"></i>
 </div>
-<form *ngIf="auction" [formGroup]="editForm" (ngSubmit)="onSubmit()" enctype='multipart/form-data'>
+<form *ngIf="auction && loading" [formGroup]="editForm" (ngSubmit)="onSubmit()" enctype='multipart/form-data'>
 	<div class="form-group">
 		<label for="productName">Product Name</label>
 		<input type="text" formControlName="productName" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.productName?.errors }" />
@@ -17,13 +17,20 @@
 		</div>
 	</div>
 	<div class="form-group">
-		<label for="image">Main Photo</label>
+		<label for="photos">Change Photos</label>
 		<div class="custom-file">
-			<input type="file" class="custom-file-input" id="image" (change)="onFileSelected($event)" [ngClass]="{ 'is-invalid': submitted && f.image?.errors }" multiple>
-			<label class="custom-file-label" for="file">{{image ? image : 'Replace file' }}</label>
+			<input type="file" class="custom-file-input form-control" id="images" (change)="onFileSelected($event)" [ngClass]="{ 'is-invalid': submitted && f.image?.errors }" accept="image/x-png,image/jpeg" multiple>
+			<label class="custom-file-label" for="file">{{image ? image.name : 'Choose file' }}</label>
+		</div>
+		<div class="row mt-2" *ngIf="photos.length">
+			<div formArrayName="photos" class="col-sm-3" *ngFor="let photo of photos.controls; let i = index;">
+				<div [formGroupName]="i" >
+					<img [src]="photo.controls.url.value" class="img-thumbnail float-left" alt="Image Preview">
+				</div>
+			</div>
 		</div>
 		<div *ngIf="submitted && f.image?.errors" class="invalid-feedback">
-			<div *ngIf="f.image?.errors.required">Image is required</div>
+		    <div *ngIf="f.image?.errors.required">Image is required</div>
 		</div>
 	</div>
 	<div class="form-group">

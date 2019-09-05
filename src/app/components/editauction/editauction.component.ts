@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, AbstractControl, FormArray } from '@angular/forms';
 import { Router } from '@angular/router';
 import { first } from 'rxjs/operators';
 import { MatSelectModule } from '@angular/material/select';
@@ -57,9 +57,11 @@ export class EditAuctionComponent implements OnInit {
                     latitude: [this.auction.location.latitude],
 					country: [this.auction.country, Validators.required],
 					description: [this.auction.description, Validators.required],
-					image: [this.auction.image, [Validators.required, this.requiredFileType('png')]],
-					categories: [this.auction.categories, Validators.required]
+					// image: [this.auction.photos[0], [Validators.required, this.requiredFileType('png')]],
+					categories: [this.auction.categories, Validators.required],
+                    photos: this.formBuilder.array(this.auction.photos)
 				});
+                this.loading = true;
             }, 
             error => {
                 // console.log(error);
@@ -73,6 +75,15 @@ export class EditAuctionComponent implements OnInit {
 
 	// convenience getter for easy access to form fields
     get f() { return this.editForm.controls; }
+
+    createItem(data): FormGroup {
+        return this.formBuilder.group(data);
+    }
+
+    //Help to get all photos controls as form array.
+    get photos(): FormArray {
+        return this.editForm.get('photos') as FormArray;
+    };
 
     requiredFileType( type: string ) {
         return function (control: AbstractControl) {
@@ -91,15 +102,22 @@ export class EditAuctionComponent implements OnInit {
     }
 
     onFileSelected(event) {
-        const reader = new FileReader();
+        const files = event.target.files;
         if(event.target.files && event.target.files.length) {
-            const [file] = event.target.files;
-            reader.readAsDataURL(file);
-            reader.onload = () => {
-                this.editForm.patchValue({
-                    image: reader.result
-                });
-            };
+            // const [file] = event.target.files;
+            // console.log(event.target.files);
+            for (const file of files) {
+                const reader = new FileReader();
+                reader.onload = (e: any) => {
+                    // this.auctionForm.patchValue({
+                    //     image: reader.result
+                    // });
+                    this.photos.push(this.createItem({
+                        url: e.target.result  //Base64 string for preview image
+                    }));
+                };
+                reader.readAsDataURL(file);
+            }
         }
         this.image = event.target.files[0];
     }

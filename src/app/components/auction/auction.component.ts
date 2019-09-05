@@ -51,8 +51,8 @@ export class AuctionComponent implements OnInit {
 		this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
 	}
 
-	transform() {
-		return this.sanitizer.bypassSecurityTrustResourceUrl(this.auction.image);
+	transform(i: number) {
+		return this.sanitizer.bypassSecurityTrustResourceUrl(this.auction.photos[i].url);
 	}
 
 	
@@ -62,7 +62,7 @@ export class AuctionComponent implements OnInit {
 		this.authenticationService.inAuction = true;
 
 		this.dataService.getAuction(this.requestedAuction).pipe(first()).subscribe(auction => {
-
+			// console.log(auction);
 			this.auction = auction;
 			this.longitude = auction.location.latitude;
 			this.latitude = auction.location.longitude;
