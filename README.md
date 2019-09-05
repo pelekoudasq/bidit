@@ -2,13 +2,13 @@
 ###### Online Auction System, Project for Course `Web Application Technologies`
 _This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.3.8._
 
-Dev-run: --
+_[dev-run available](http://83.212.108.244:4200/ "~okeanos server")_
 
 Contributors
 ------------
 
-* [Sofia Kostakonti](https://github.com/sofiakstk/ "Sofia Kostakonti") : 1115201500080
-* [Ioannis Pelekoudas](https://github.com/pelekoudasq/ "Ioannis Pelekoudas") : 1115201500128
+* [Sofia Kostakonti](https://github.com/sofiakstk/ "Sofia Kostakonti")
+* [Ioannis Pelekoudas](https://github.com/pelekoudasq/ "Ioannis Pelekoudas")
 
 System requirements
 -------------------
@@ -22,9 +22,11 @@ Installation & Testing
 git clone git://github.com/pelekoudasq/bidit.git
 cd bidit
 npm install -g
-ng serve
+ng serve --ssl
 ```
-Then navigate to `http://localhost:4200/`
+Then navigate to `https://localhost:4200/`
+
+For auction's page map, clone [osm app](https://github.com/sofiakstk/osmapp "osm app") and run it elsewhere
 
 Back end
 --------
@@ -39,4 +41,3 @@ Redis Caching
 ```bash
 redis-server
 ```
-
