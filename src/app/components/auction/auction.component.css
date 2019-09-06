@@ -10,17 +10,26 @@
 .carousel {
 	margin-top: 20px;
 }
-.carousel-item .thumb {
-	width: 25%;
-	cursor: pointer;
-	float: left;
+
+.carousel-indicators {
+    margin: 0px;
+	height: 0px;
 }
-.carousel-item .thumb img {
+
+.carousel-indicators ol {
 	width: 100%;
-	margin: 2px;
 }
+
+.carousel-indicators li {
+	height: 3px !important;
+	border-radius: 0px !important;
+	width: 25%;
+	background-color: gray !important;
+}
+
 .carousel-item img {
-	width: 100%;	
+	width: 100%;
+	height: 25%;	
 }
 
 .cancelbutton {

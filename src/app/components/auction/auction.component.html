@@ -6,59 +6,66 @@
 	<div *ngIf="loading">
 		<div class="row">
 			<div class="col-sm-4">
-				<div class="content-section">
+				<div class="content-section pb-4">
 					<div id="carousel" class="carousel slide" data-ride="carousel">
+						<ol class="carousel-indicators"  *ngIf="auction.photos.length > 1">
+							<ng-container *ngFor="let photo of auction.photos; index as i">
+								<ng-container *ngIf="i == 0">
+									<li data-target="#carousel" data-slide-to="0" class="active"></li>
+								</ng-container>
+								<ng-container *ngIf="i != 0">
+									<li data-target="#carousel" data-slide-to="i"></li>
+								</ng-container>
+							</ng-container>
+						</ol>
 						<div class="carousel-inner">
 							<ng-container *ngFor="let photo of auction.photos; index as i">
 								<ng-container *ngIf="i == 0">
 									<div class="carousel-item active" data-thumb="0">
-										<img [src]="transform(i)" style="max-height: 500px!important;max-width: 300px!important;">
+										<div class="align-content-center" style="height: 250px; line-height: 200px;"  (click)="onNameClick(auction._id)">
+											<img [src]="transform(i)" style="max-height: 500px!important; min-height:300px!important; max-width: 300px!important; vertical-align: middle!important;">
+										</div>
 									</div>
 								</ng-container>
 								<ng-container *ngIf="i != 0">
 									<div class="carousel-item" data-thumb="0">
-										<img [src]="transform(i)" style="max-height: 500px!important;max-width: 300px!important;">
+										<div class="align-content-center" style="height: 250px; line-height: 200px;"  (click)="onNameClick(auction._id)">
+											<img [src]="transform(i)" style="max-height: 600px!important; min-height:300px!important; max-width: 300px!important; vertical-align: middle!important;">
+										</div>
 									</div>
 								</ng-container>
 							</ng-container>
-							<!-- <div class="carousel-item" data-thumb="0">
-								<img src="http://placehold.it/350x250/ff00ff/fff&amp;text=Product+Image+3">
-							</div>
-							<div class="carousel-item" data-thumb="0">
-								<img src="http://placehold.it/350x250/ffff00/000&amp;text=Product+Image+4">
-							</div> -->
-							<!-- <div class="carousel-item" data-thumb="1">
-								<img src="http://placehold.it/350x250/7B1C8E/fff&amp;text=Product+Image+5">
-							</div>
-							<div class="carousel-item" data-thumb="1">
-								<img src="http://placehold.it/350x250/9EF383/000&amp;text=Product+Image+6">
-							</div>
-							<div class="carousel-item" data-thumb="1">
-								<img src="http://placehold.it/350x250/D64908/fff&amp;text=Product+Image+7">
-							</div>
-							<div class="carousel-item" data-thumb="1">
-								<img src="http://placehold.it/350x250/E3A3A1/000&amp;text=Product+Image+8">
-							</div> -->
 						</div>
+						<ng-container *ngIf="auction.photos.length > 1">
+							<a class="carousel-control-prev" href="#carousel" role="button" data-slide="prev">
+								<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+								<span class="sr-only">Previous</span>
+							</a>
+							<a class="carousel-control-next" href="#carousel" role="button" data-slide="next">
+								<span class="carousel-control-next-icon" aria-hidden="true"></span>
+								<span class="sr-only">Next</span>
+							</a>
+						</ng-container>
+						
 					</div> 
-					<div *ngIf="auction.photos.length > 1" class="clearfix">
+					<!-- <div *ngIf="auction.photos.length > 1" class="clearfix">
 						<div id="thumbcarousel" class="carousel slide" data-interval="false">
 							<div class="carousel-inner">
 								<div class="carousel-item active">
 									<ng-container *ngFor="let photo of auction.photos; index as i">
 										<div data-target="#carousel" data-slide-to="i" class="thumb"><img [src]="transform(i)" style="max-height: 50!important; max-width: 100px!important"></div>
-									</ng-container>
+									</ng-container> -->
 									<!-- <div data-target="#carousel" data-slide-to="1" class="thumb"><img src="http://placehold.it/100/00ffff/000&amp;text=Product+Image+2"></div> -->
 									<!-- <div data-target="#carousel" data-slide-to="2" class="thumb"><img src="http://placehold.it/100/ff00ff/fff&amp;text=Product+Image+3"></div>
 									<div data-target="#carousel" data-slide-to="3" class="thumb"><img src="http://placehold.it/100/ffff00/000&amp;text=Product+Image+4"></div> -->
-								</div>
+								<!-- </div> -->
 								<!-- <div class="carousel-item">
 									<div data-target="#carousel" data-slide-to="4" class="thumb"><img src="http://placehold.it/100/612b65/fff&amp;text=Product+Image+5"></div>
 									<div data-target="#carousel" data-slide-to="5" class="thumb"><img src="http://placehold.it/100/00ffcc/000&amp;text=Product+Image+6"></div>
 									<div data-target="#carousel" data-slide-to="6" class="thumb"><img src="http://placehold.it/100/db371b/fff&amp;text=Product+Image+7"></div>
 									<div data-target="#carousel" data-slide-to="7" class="thumb"><img src="http://placehold.it/100/feb8aa/000&amp;text=Product+Image+8"></div>
 								</div> -->
-							</div>
+							<!-- </div>
 							<a class="carousel-control-prev" href="#thumbcarousel" role="button" data-slide="prev">
 								<span class="carousel-control-prev-icon" aria-hidden="true"></span>
 								<span class="sr-only">Previous</span>
@@ -68,7 +75,7 @@
 								<span class="sr-only">Next</span>
 							</a>
 						</div> 
-					</div>
+					</div> -->
 				</div>
 			</div>
 			<div class="col-sm-5">
