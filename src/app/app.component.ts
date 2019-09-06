@@ -29,14 +29,14 @@ export class AppComponent {
 	ngOnInit() {
 		this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
 		this.authenticationService.notifications = 0;
-		if (this.currentUser) {
-			this.dataService.getUserMessages(this.currentUser._id).subscribe(chats => {
-				for (var i = chats.length - 1; i >= 0; i--) {
-					if (chats[i].notify == this.currentUser._id)
-						this.authenticationService.notifications++;
-				}
-			});
-		}
+		// if (this.currentUser) {
+		// 	this.dataService.getUserMessages(this.currentUser._id).subscribe(chats => {
+		// 		for (var i = chats.length - 1; i >= 0; i--) {
+		// 			if (chats[i].notify == this.currentUser._id)
+		// 				this.authenticationService.notifications++;
+		// 		}
+		// 	});
+		// }
 	}
 
 	get isAdmin() {

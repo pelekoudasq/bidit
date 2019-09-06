@@ -1,0 +1,30 @@
+<br>
+<div class="container" *ngIf="loading">
+	<br>
+	<button routerLink="/messaging" class="btn btn-light btn-circle btn-circle-sm m-1"><i class="fa fa-caret-left"></i></button><b>{{otherUser.username}}</b>
+	<button (click)="onChatClick()" class="float-right btn btn-primary btn-sm">View chat with {{otherUser.username}}</button><br>
+	<div class="content-section">
+		<div class="form-group">
+			<div class="card">
+				<div id="messages" class="card-block mx-2 mt-1" style="min-height: 50px;">
+					<i>On {{message.time | date:'longDate'}} at {{message.time | date:'shortTime'}}
+					<ng-container *ngIf="message.sender_id == currentUser._id">you </ng-container>
+					<ng-container *ngIf="message.sender_id != currentUser._id">user {{otherUser.username}}</ng-container>
+					sent:</i>
+					<br><b>{{message.message}}</b>
+				</div>
+			</div>
+		</div>
+		<div *ngIf="message.sender_id != currentUser._id" class="form-row">
+			<div class="form-group col-sm-11">
+				<input [(ngModel)]="new_message" #ctrl="ngModel" class="form-control" placeholder="Enter a message..." required>
+			</div>
+			<div class="form-group col-sm-1">
+				<button type="submit" class="btn btn-primary btn-block" (click)="onSend()">
+					<ng-container *ngIf="message.sender_id != currentUser._id">Reply</ng-container>
+					<ng-container *ngIf="message.sender_id == currentUser._id">Send</ng-container>
+				</button>
+			</div>
+		</div>
+	</div>
+</div>

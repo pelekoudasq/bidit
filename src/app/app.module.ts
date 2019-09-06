@@ -29,6 +29,7 @@ import { EditAuctionComponent } from './components/editauction/editauction.compo
 import { SearchCatComponent } from './components/searchcat/searchcat.component';
 import { MessagingComponent } from './components/messaging/messaging.component';
 import { ChatComponent } from './components/chat/chat.component';
+import { SendMessageComponent } from './components/sendmessage/sendmessage.component';
 
 @NgModule({
   declarations: [
@@ -46,7 +47,8 @@ import { ChatComponent } from './components/chat/chat.component';
     EditAuctionComponent,
     SearchCatComponent,
     MessagingComponent,
-    ChatComponent
+    ChatComponent,
+    SendMessageComponent
   ],
   imports: [
     BrowserModule,

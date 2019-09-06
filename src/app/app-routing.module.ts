@@ -11,9 +11,11 @@ import { NewAuctionComponent } from './components/newauction/newauction.componen
 import { SearchCatComponent } from './components/searchcat/searchcat.component';
 import { MessagingComponent } from './components/messaging/messaging.component';
 import { ChatComponent } from './components/chat/chat.component';
+import { SendMessageComponent } from './components/sendmessage/sendmessage.component';
 import { AuthGuard, AuthGuardAdmin } from './guards/auth.guard';
 
 const routes: Routes = [
+
 	{ path: '', component: HomeComponent/*, canActivate: [AuthGuard]*/ },
 	{ path: 'login', component: LoginComponent },
 	{ path: 'register', component: RegisterComponent },
@@ -24,6 +26,7 @@ const routes: Routes = [
 	{ path: 'searchcat', component: SearchCatComponent },
 	{ path: 'messaging', component: MessagingComponent, canActivate: [AuthGuard] },
 	{ path: 'chat/:id', component: ChatComponent, canActivate: [AuthGuard] },
+	{ path: 'message/:id', component: SendMessageComponent, canActivate: [AuthGuard] },
 	{ path: '**', redirectTo: '' },
 
 ];

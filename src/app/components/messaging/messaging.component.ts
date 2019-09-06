@@ -17,10 +17,10 @@ import { Chat, Message } from '../../models/chat';
 })
 export class MessagingComponent implements OnInit {
 
-	chats: Chat[] = [];
+	inbox: Message[] = [];
+	sent: Message[] = [];
 	currentUser: User;
 	loading: boolean = false;
-	otherUser: User;
 
 	constructor(
 		private route: ActivatedRoute,
@@ -33,33 +33,39 @@ export class MessagingComponent implements OnInit {
 	}
 
 	ngOnInit() {
-		for (var i = 0; i < this.currentUser.chats.length; i++) {
-			this.dataService.getChat(this.currentUser.chats[i]).pipe(first()).subscribe(chat => {
-				var other: string = null;
-				if (chat.participants[0] != this.currentUser._id)
-					other = chat.participants[0];
-				else
-					other = chat.participants[1];
-				this.dataService.getById(other).pipe(first()).subscribe(user => {
-					chat.displayName = user.username;
-					this.loading = true;
-					this.chats.push(chat);
-					this.dataService.getUserMessages(this.currentUser._id).subscribe(chats => {
-						this.authenticationService.notifications = 0;
-						for (var i = chats.length - 1; i >= 0; i--) {
-							if (chats[i].notify == this.currentUser._id)
-								this.authenticationService.notifications++;
-						}
-					});
+		this.dataService.getUserInbox(this.currentUser._id).pipe(first()).subscribe(inbox_messages => {	
+			var mess: string[] = [];
+			for (var i = 0; i < inbox_messages.length ; i++) {
+				this.dataService.getById(inbox_messages[i].sender_id).pipe(first()).subscribe(user => {
+					mess.push(user.username);
 				});
-			});
-		}
+			}
+			setTimeout(() => {
+				for (var i = 0; i < inbox_messages.length ; i++) {
+					inbox_messages[i].displayName = mess[i];
+				}
+				this.inbox = inbox_messages;
+				this.loading = true;
+			}, 1500);
+		});
+		this.dataService.getUserSent(this.currentUser._id).pipe(first()).subscribe(sent_messages => {
+			var mess1: string[] = [];
+			for (var i = 0; i < sent_messages.length ; i++) {
+				this.dataService.getById(sent_messages[i].receiver_id).pipe(first()).subscribe(user => {
+					mess1.push(user.username);
+				});
+			}
+			setTimeout(() => {
+				for (var i = 0; i < sent_messages.length ; i++) {
+					sent_messages[i].displayName = mess1[i];
+				}
+				this.sent = sent_messages;
+				this.loading = true;
+			}, 1500);
+		});
 	}
 
-	onChatClick(chat: any) {
-		if (chat.participants[0] != this.currentUser._id)
-			this.router.navigate(['/chat', chat.participants[0]]);
-		else
-			this.router.navigate(['/chat', chat.participants[1]]);
+	onMessageClick(id: string) {
+		this.router.navigate(['/message', id]);
 	}
 }

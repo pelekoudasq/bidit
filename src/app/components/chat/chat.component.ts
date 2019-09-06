@@ -46,7 +46,7 @@ export class ChatComponent implements OnInit {
 				this.chat = chat;
 				if (this.chat.messages) {
 					for (var i = 0; i < this.chat.messages.length; i++) {
-						this.dataService.getMessage(this.chat.messages[i]).pipe(first()).subscribe(message => {
+						this.dataService.getMessage(this.chat.messages[i], this.currentUser._id).pipe(first()).subscribe(message => {
 							this.messages.push(message);
 						});
 					}

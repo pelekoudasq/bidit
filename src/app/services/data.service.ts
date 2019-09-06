@@ -91,8 +91,8 @@ export class DataService {
         return this.http.post<Chat>(`http://${this.address}:3000/api/sendmessage/`, { message: message, chat: chatid, sender: userid, receiver: receiver });
     }
 
-    getMessage(id: string) {
-        return this.http.get<Message>(`http://${this.address}:3000/api/message/` + id);
+    getMessage(id: string, userid: string) {
+        return this.http.post<Message>(`http://${this.address}:3000/api/message/`, { message_id: id, open_id: userid });
     }
 
     getChat(id: string) {
@@ -105,6 +105,14 @@ export class DataService {
 
     getUserMessages(id: string) {
         return this.http.get<Chat[]>(`http://${this.address}:3000/api/messages/` + id);
+    }
+
+    getUserInbox(id: string) {
+        return this.http.get<Message[]>(`http://${this.address}:3000/api/inbox/` + id);
+    }
+
+    getUserSent(id: string) {
+        return this.http.get<Message[]>(`http://${this.address}:3000/api/sent/` + id);
     }
 
     getCategories() {

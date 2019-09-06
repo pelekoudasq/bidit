@@ -67,13 +67,13 @@ export class AuthenticationService {
                 this.loggedin = true;
                 this.isAdmin = user.admin;
                 this.approved = user.approved;
-                this.dataService.getUserMessages(user._id).subscribe(chats => {
-                    this.notifications = 0;
-                    for (var i = chats.length - 1; i >= 0; i--) {
-                        if (chats[i].notify == user._id)
-                            this.notifications++;
-                    }
-                });
+                // this.dataService.getUserMessages(user._id).subscribe(chats => {
+                //     this.notifications = 0;
+                //     for (var i = chats.length - 1; i >= 0; i--) {
+                //         if (chats[i].notify == user._id)
+                //             this.notifications++;
+                //     }
+                // });
                 return user;
             }));
     }
