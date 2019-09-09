@@ -11,7 +11,6 @@ function jwt() {
             // public routes that don't require authentication
             '/api/users/authenticate',
             '/api/users/register',
-            '/api/auctions',
             '/api/activeauctions',
             '/api/categories',
             { url: /^\/api\/auction\/.*/},
