@@ -46,3 +46,4 @@ testem.log
 Thumbs.db
 arghhhh.jpg
 dump.rdb
+server/config.json
