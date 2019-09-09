@@ -23,8 +23,18 @@
 	                <a class="nav-item nav-link" routerLink="/admin" *ngIf="authenticationService.isAdmin" routerLinkActive="active">Admin</a>
 	            </div>
 	            <div class="navbar-nav my-2 my-lg-0" id="bar">
-	                <div *ngIf="authenticationService.loggedin">
-						<a class="btn d-inline nav-item nav-link" (click)="logout()">Logout</a>
+	                <div *ngIf="authenticationService.loggedin && loading">
+						<!-- <a class="btn d-inline nav-item nav-link" (click)="logout()">Logout</a> -->
+                        <li class="nav-item dropdown">
+                            <a *ngIf="loading" class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                {{currentUser.username}}
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="btn dropdown-item" routerLink="/profile"><i class="pr-1 fa fa-user" aria-hidden="true"></i>Profile</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="btn dropdown-item" (click)="logout()"><i class="pr-1 fa fa-sign-out" aria-hidden="true"></i>Logout</a>
+                            </div>
+                        </li>
 					</div>
 					<div *ngIf="!authenticationService.loggedin">
 	                    <a class="d-inline nav-item nav-link" routerLink="/login" routerLinkActive="active">Login</a>

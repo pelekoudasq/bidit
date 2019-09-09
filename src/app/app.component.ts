@@ -16,6 +16,7 @@ import { User } from './models/user';
 export class AppComponent {
 
 	currentUser: User;
+	loading: boolean = false;
 
 	constructor(
 		private authenticationService: AuthenticationService,
@@ -27,7 +28,10 @@ export class AppComponent {
 	}
 	
 	ngOnInit() {
-		this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
+		this.authenticationService.currentUser.subscribe(x => {
+			this.currentUser = x;
+			this.loading = true;
+		});
 		this.authenticationService.notifications = 0;
 		// if (this.currentUser) {
 		// 	this.dataService.getUserMessages(this.currentUser._id).subscribe(chats => {
