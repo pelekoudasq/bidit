@@ -18,7 +18,8 @@ import { Chat, Message } from '../../models/chat';
 export class SendMessageComponent implements OnInit {
 
 	currentUser: User;
-	otherUser: User;
+	currentMessage: Message;
+	otherUser: string;
 	loading: boolean = false;
 	requestedMessage: string;
 	message: Message;
@@ -33,31 +34,37 @@ export class SendMessageComponent implements OnInit {
 		private alertService: AlertService)
 	{
 		this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
+		this.currentMessage = JSON.parse(localStorage.getItem('currentMessage'));
 	}
 
+
 	ngOnInit() {
-		this.requestedMessage = this.route.snapshot.params.id;
-		this.dataService.getMessage(this.requestedMessage, this.currentUser._id).pipe(first()).subscribe(message => {
-			this.message = message;
-			if (this.message.sender_id != this.currentUser._id) {
-				this.dataService.getById(this.message.sender_id).pipe(first()).subscribe(user => {
-					this.otherUser = user;
+		if (this.currentUser._id != this.currentMessage.sender_id)
+			this.otherUser = this.currentMessage.sender_id;
+		else
+			this.otherUser = this.currentMessage.receiver_id;
+		// this.requestedMessage = this.route.snapshot.params.id;
+		// this.dataService.getMessage(this.requestedMessage, this.currentUser._id).pipe(first()).subscribe(message => {
+		// 	this.message = message;
+			// if (this.message.sender_id != this.currentUser._id) {
+			// 	this.dataService.getById(this.message.sender_id).pipe(first()).subscribe(user => {
+			// 		this.otherUser = user;
+			// 		this.loading = true;
+			// 	});
+			// } else {
+			// 	this.dataService.getById(this.message.receiver_id).pipe(first()).subscribe(user => {
+			// 		this.otherUser = user;
 					this.loading = true;
-				});
-			} else {
-				this.dataService.getById(this.message.receiver_id).pipe(first()).subscribe(user => {
-					this.otherUser = user;
-					this.loading = true;
-				});
-			}
-		});
+			// 	});
+			// }
+		// });
 	}
 
 	onSend() {
 		if (this.new_message) {
-			this.dataService.getChatWithUser(this.message.sender_id, this.currentUser._id).pipe(first()).subscribe(chat => {
+			this.dataService.getChatWithUser(this.currentMessage.sender_id, this.currentUser._id).pipe(first()).subscribe(chat => {
 				this.chat = chat;
-				this.dataService.sendMessage(this.new_message, this.chat._id, this.currentUser._id, this.message.sender_id).pipe(first()).subscribe(chat => {
+				this.dataService.sendMessage(this.new_message, this.chat._id, this.currentUser._id, this.currentMessage.sender_id).pipe(first()).subscribe(chat => {
 					this.router.navigate(['/messaging']);
 				});
 			});
@@ -65,6 +72,6 @@ export class SendMessageComponent implements OnInit {
 	}
 
 	onChatClick() {
-		this.router.navigate(['/chat', this.otherUser._id]);
+		this.router.navigate(['/chat', this.otherUser]);
 	}
 }

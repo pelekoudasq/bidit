@@ -33,6 +33,7 @@ export class MessagingComponent implements OnInit {
 	}
 
 	ngOnInit() {
+		localStorage.removeItem('currentMessage');
 		this.dataService.getUserInbox(this.currentUser._id).pipe(first()).subscribe(inbox_messages => {	
 			var mess: string[] = [];
 			for (var i = 0; i < inbox_messages.length ; i++) {
@@ -42,7 +43,7 @@ export class MessagingComponent implements OnInit {
 			}
 			setTimeout(() => {
 				for (var i = 0; i < inbox_messages.length ; i++) {
-					inbox_messages[i].displayName = mess[i];
+					inbox_messages[i].displayName = mess[inbox_messages.length - i - 1];
 				}
 				this.inbox = inbox_messages;
 				this.loading = true;
@@ -57,7 +58,7 @@ export class MessagingComponent implements OnInit {
 			}
 			setTimeout(() => {
 				for (var i = 0; i < sent_messages.length ; i++) {
-					sent_messages[i].displayName = mess1[i];
+					sent_messages[i].displayName = mess1[sent_messages.length - i - 1];
 				}
 				this.sent = sent_messages;
 				this.loading = true;
@@ -66,6 +67,11 @@ export class MessagingComponent implements OnInit {
 	}
 
 	onMessageClick(id: string) {
+		var m = this.inbox.find(o => o._id === id);
+		if (!m)
+			m = this.sent.find(o => o._id === id);
+		localStorage.setItem('currentMessage', JSON.stringify(m));
+		// console.log(m);
 		this.router.navigate(['/message', id]);
 	}
 }

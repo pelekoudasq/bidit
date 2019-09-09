@@ -79,6 +79,17 @@ router.get('/auctions', function(req, res, next) {
 	});
 });
 
+router.get('/activeauctions', function(req, res, next) {
+	console.log("api: auctions");
+	db.Auctions.find({ started: true }, function(err, auctions) {
+		if (err) {
+			res.send(err);
+			return;
+		}
+		res.json(auctions);
+	});
+});
+
 //Get auctions by category
 router.get('/auctionscat/:cat', function(req, res, next) {
 	console.log("api: auctions by category");
@@ -537,12 +548,14 @@ router.post('/message', function(req, res, next) {
 					res.send(err);
 					return;
 				}
-				// client.setex(req.body.message_id, 3600, JSON.stringify(message));
-				res.json(message);
+				// // client.setex(req.body.message_id, 3600, JSON.stringify(message));
+				// res.json(message);
+				// return;
 			});
 		}
 		// client.setex(req.body.message_id, 3600, JSON.stringify(message));
 		res.json(message);
+		return;
 	});
 });
 
