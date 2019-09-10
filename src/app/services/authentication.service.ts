@@ -25,6 +25,7 @@ export class AuthenticationService {
     public notifications: number = 0;
     public categories: Category[] = [];
 	public main: Category[] = [];
+    public username: string;
 
     constructor(private http: HttpClient,
                 private dataService: DataService,
@@ -67,6 +68,7 @@ export class AuthenticationService {
                 this.loggedin = true;
                 this.isAdmin = user.admin;
                 this.approved = user.approved;
+                this.username = user.username;
                 // this.dataService.getUserMessages(user._id).subscribe(chats => {
                 //     this.notifications = 0;
                 //     for (var i = chats.length - 1; i >= 0; i--) {

@@ -26,8 +26,8 @@
 	                <div *ngIf="authenticationService.loggedin && loading">
 						<!-- <a class="btn d-inline nav-item nav-link" (click)="logout()">Logout</a> -->
                         <li class="nav-item dropdown">
-                            <a *ngIf="loading" class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                {{currentUser.username}}
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                {{authenticationService.username}}
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <a class="btn dropdown-item" routerLink="/profile"><i class="pr-1 fa fa-user" aria-hidden="true"></i>Profile</a>
