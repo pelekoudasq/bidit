@@ -1,7 +1,14 @@
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
+const https = require("https");
+const fs = require("fs");
 //system module
+
+const options = {
+	key: fs.readFileSync("./server.key"),
+	cert: fs.readFileSync("./server.crt")
+};
 
 const jwt = require('./server/jwt');
 app.use(jwt());
@@ -26,6 +33,8 @@ app.use(bodyParser.json({limit: '50mb', extended: true}));
 //API location
 app.use('/api', api.router);
 
-app.listen(port, function(){
+app.listen(8080, function(){
     console.log(`Server started on port ${port}`);
 })
+
+https.createServer(options, app).listen(port);

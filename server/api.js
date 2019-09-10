@@ -528,29 +528,24 @@ function cacheMessage(req, res, next) {
 	});
 }
 
-//Find message by id
+//Find message by id, change read status
 router.post('/message', function(req, res, next) {
 	console.log('api: message by Id ' + req.body.message_id);
-	db.Messages.findAndModify({ 
-		query: { _id: mongojs.ObjectID(req.body.message_id) },
-		update: { $set: { read: true } }
-	}, function(err, message) {
+	db.Messages.findOne({ _id: mongojs.ObjectID(req.body.message_id)}, function(err, message) {
 		if (err) {
 			res.send(err);
 			return;
 		}
-		if (req.body.open_id != message.receiver_id) {
+		if ((req.body.open_id == message.receiver_id) && (message.read == false)) {
 			db.Messages.findAndModify({ 
 				query: { _id: mongojs.ObjectID(req.body.message_id) },
-				update: { $set: { read: false } }
+				update: { $set: { read: true } }
 			}, function(err, message) {
 				if (err) {
 					res.send(err);
 					return;
 				}
 				// // client.setex(req.body.message_id, 3600, JSON.stringify(message));
-				// res.json(message);
-				// return;
 			});
 		}
 		// client.setex(req.body.message_id, 3600, JSON.stringify(message));
@@ -636,6 +631,18 @@ router.get('/sent/:id', function(req, res, next) {
 			return;
 		}
 		res.json(messages);
+	});
+});
+
+//get notifications
+router.get('/notifications/:id', function(req, res, next) {
+	console.log('api: notifications by user');
+	db.Messages.find({ receiver_id: { $in: [req.params.id] }, read: false }, function(err, messages) {
+		if (err) {
+			res.send(err);
+			return;
+		}
+		res.json(messages.length);
 	});
 });
 

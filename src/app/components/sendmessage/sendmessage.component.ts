@@ -39,25 +39,17 @@ export class SendMessageComponent implements OnInit {
 
 
 	ngOnInit() {
+		console.log(this.currentMessage);
 		if (this.currentUser._id != this.currentMessage.sender_id)
 			this.otherUser = this.currentMessage.sender_id;
 		else
 			this.otherUser = this.currentMessage.receiver_id;
-		// this.requestedMessage = this.route.snapshot.params.id;
-		// this.dataService.getMessage(this.requestedMessage, this.currentUser._id).pipe(first()).subscribe(message => {
-		// 	this.message = message;
-			// if (this.message.sender_id != this.currentUser._id) {
-			// 	this.dataService.getById(this.message.sender_id).pipe(first()).subscribe(user => {
-			// 		this.otherUser = user;
-			// 		this.loading = true;
-			// 	});
-			// } else {
-			// 	this.dataService.getById(this.message.receiver_id).pipe(first()).subscribe(user => {
-			// 		this.otherUser = user;
-					this.loading = true;
-			// 	});
-			// }
-		// });
+		this.dataService.getMessage(this.currentMessage._id, this.currentUser._id).pipe(first()).subscribe(message => {
+			this.dataService.getNotifications(this.currentUser._id).subscribe(notifications => {
+				this.authenticationService.notifications = notifications;
+				this.loading = true;
+			});
+		});
 	}
 
 	onSend() {

@@ -34,6 +34,9 @@ export class MessagingComponent implements OnInit {
 
 	ngOnInit() {
 		localStorage.removeItem('currentMessage');
+		this.dataService.getNotifications(this.currentUser._id).subscribe(notifications => {
+			this.authenticationService.notifications = notifications;
+		});
 		this.dataService.getUserInbox(this.currentUser._id).pipe(first()).subscribe(inbox_messages => {	
 			var mess: string[] = [];
 			for (var i = 0; i < inbox_messages.length ; i++) {
@@ -47,7 +50,7 @@ export class MessagingComponent implements OnInit {
 				}
 				this.inbox = inbox_messages;
 				this.loading = true;
-			}, 1500);
+			}, 2000);
 		});
 		this.dataService.getUserSent(this.currentUser._id).pipe(first()).subscribe(sent_messages => {
 			var mess1: string[] = [];
@@ -62,16 +65,28 @@ export class MessagingComponent implements OnInit {
 				}
 				this.sent = sent_messages;
 				this.loading = true;
-			}, 1500);
+			}, 2000);
 		});
 	}
 
 	onMessageClick(id: string) {
+		localStorage.removeItem('currentMessage');
 		var m = this.inbox.find(o => o._id === id);
 		if (!m)
 			m = this.sent.find(o => o._id === id);
 		localStorage.setItem('currentMessage', JSON.stringify(m));
-		// console.log(m);
 		this.router.navigate(['/message', id]);
+	}
+
+	get getInbox() {
+		return this.inbox.sort((a, b) => {
+			return <any>new Date(b.time) - <any>new Date(a.time);
+		});
+	}
+
+	get getSent() {
+		return this.sent.sort((a, b) => {
+			return <any>new Date(b.time) - <any>new Date(a.time);
+		});
 	}
 }

@@ -58,7 +58,7 @@ export class AuthenticationService {
     }
 
     login(username: string, password: string) {
-        return this.http.post<any>(`http://localhost:3000/api/users/authenticate`, { username: username, password: password })
+        return this.http.post<any>(`https://localhost:3000/api/users/authenticate`, { username: username, password: password })
             .pipe(map(user => {
                 // login successful if there's a jwt token in the response
                 if (user && user.token) {
@@ -69,13 +69,9 @@ export class AuthenticationService {
                 this.isAdmin = user.admin;
                 this.approved = user.approved;
                 this.username = user.username;
-                // this.dataService.getUserMessages(user._id).subscribe(chats => {
-                //     this.notifications = 0;
-                //     for (var i = chats.length - 1; i >= 0; i--) {
-                //         if (chats[i].notify == user._id)
-                //             this.notifications++;
-                //     }
-                // });
+                this.dataService.getNotifications(user._id).subscribe(notifications => {
+                    this.notifications = notifications;
+                });
                 return user;
             }));
     }

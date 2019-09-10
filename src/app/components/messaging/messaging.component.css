@@ -1,3 +1,12 @@
 .notification {
 	font-weight:  bold !important;
 }
+
+.nav-pills .nav-link.active {
+	background-color: #267174 !important;
+	color: white !important;
+}
+
+.nav-pills .nav-link {
+	color: #267174 !important;
+}

@@ -22,7 +22,7 @@ Installation & Testing
 git clone git://github.com/pelekoudasq/bidit.git
 cd bidit
 npm install -g
-ng serve --ssl
+ng serve --ssl true --ssl-cert server.crt --ssl-key server.key
 ```
 Then navigate to `https://localhost:4200/`
 
