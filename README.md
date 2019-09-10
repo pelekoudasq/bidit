@@ -2,7 +2,7 @@
 ###### Online Auction System, Project for Course `Web Application Technologies`
 _This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.3.8._
 
-_[dev-run available](http://83.212.108.244:4200/ "~okeanos server")_
+_[dev-run available](https://83.212.108.244:4200/ "~okeanos server")_
 
 Contributors
 ------------
