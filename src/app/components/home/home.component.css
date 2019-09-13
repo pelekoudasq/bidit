@@ -1,0 +1,13 @@
+.my-pagination /deep/ .ngx-pagination .current {
+    background: transparent;
+    color: #444444;
+    text-decoration: underline;
+}
+
+.my-pagination /deep/ .ngx-pagination {
+    color: #444444;
+}
+
+.my-pagination /deep/ .ngx-pagination ul{
+    padding: 0;
+}

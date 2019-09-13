@@ -7,6 +7,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { JwtInterceptor } from './jwt-interceptor';
 import { DatePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import {NgxPaginationModule} from 'ngx-pagination';
 
 import { AlertComponent } from './guards/alert.component';
 import { ModalComponent } from './guards/modal.component';
@@ -57,7 +58,8 @@ import { SendMessageComponent } from './components/sendmessage/sendmessage.compo
     MatSelectModule,
     BrowserAnimationsModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    NgxPaginationModule
   ],
   providers: [
     DatePipe,

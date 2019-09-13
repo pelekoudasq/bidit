@@ -21,6 +21,7 @@ export class HomeComponent implements OnInit {
 	loggedin: boolean;
 	auctions: Auction[] = [];
 	loading: boolean = false;
+	config: any;
 
 	constructor(
 		private dataService: DataService,
@@ -29,15 +30,26 @@ export class HomeComponent implements OnInit {
 		private sanitizer: DomSanitizer)
 	{
 		this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
+		this.config = {
+			itemsPerPage: 3,
+			currentPage: 1,
+			totalItems: 0
+		};
+	}
+	   
+	pageChanged(event){
+		this.config.currentPage = event;
 	}
 
-	transform(i: number) {
-		return this.sanitizer.bypassSecurityTrustResourceUrl(this.auctions[i].photos[0].url);
+	transform(i: string) {
+		let obj = this.auctions.find(o => o._id === i);
+		return this.sanitizer.bypassSecurityTrustResourceUrl(obj.photos[0].url);
 	}
 
 	ngOnInit() {
 		this.dataService.getActiveAuctions().pipe(first()).subscribe(auctions => {
 			this.auctions = auctions;
+			this.config.totalItems = auctions.length;
 			this.loading = true;
 		});
 	}

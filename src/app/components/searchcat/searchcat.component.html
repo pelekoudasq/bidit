@@ -44,10 +44,10 @@
                 </ol>
                 
                 <div class="row">
-                    <div *ngFor="let auction of auctions; index as i" class="card col-sm-4 my-1 mx-0.5 content-section">
+                    <div *ngFor="let auction of auctions | paginate: config" class="card col-sm-4 my-1 mx-0.5 content-section">
                         <!-- <img src="https://www.freeiconspng.com/uploads/no-image-icon-13.png" class="card-img-top img-fluid pt-2 mx-auto w-75" alt="..."> -->
                         <div class="d-flex align-content-center border hand" style="height: 100%;"  (click)="onNameClick(auction._id)">
-                            <img [src]="transform(i)" class="card-img-top my-auto">
+                            <img [src]="transform(auction._id)" class="card-img-top my-auto">
                         </div>
                         <div class="card-title text-truncate py-2">
                             <a class="btn btn-link text-left px-0" [title]="auction.name" (click)="onNameClick(auction._id)">{{auction.name}}</a>
@@ -62,6 +62,8 @@
                     </div>
                     <div *ngIf="auctions == 0" class="font-weight-light font-italic">No results for this category.</div>                    
                 </div>
+    			<pagination-controls *ngIf="loading" class="text-center" [autoHide]=true [responsive]=true (pageChange)="pageChanged($event)"></pagination-controls>			
+                
             </ng-container>
         </div>
     </div>

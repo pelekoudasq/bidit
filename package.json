@@ -40,6 +40,7 @@
     "mongoose": "^5.6.7",
     "multer": "^1.4.2",
     "multer-gridfs-storage": "^3.3.0",
+    "ngx-pagination": "^4.1.0",
     "ol": "^5.3.3",
     "redis": "^2.8.0",
     "rxjs": "~6.3.3",

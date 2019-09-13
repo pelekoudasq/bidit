@@ -23,18 +23,30 @@ export class SearchCatComponent implements OnInit {
 	loggedin: boolean;
 	auctions: Auction[] = [];
 	loading: boolean = false;
+	config: any;
   
   	constructor(
 		private dataService: DataService,
 		private router: Router,
 		private authenticationService: AuthenticationService,
 		private sanitizer: DomSanitizer) {
+
 		this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
-	
+		this.config = {
+			itemsPerPage: 15,
+			currentPage: 1,
+			totalItems: 0
+		};
 	}
 
-	transform(i: number) {
-		return this.sanitizer.bypassSecurityTrustResourceUrl(this.auctions[i].photos[0].url);
+	   
+	pageChanged(event){
+		this.config.currentPage = event;
+	}
+
+	transform(i: string) {
+		let obj = this.auctions.find(o => o._id === i);
+		return this.sanitizer.bypassSecurityTrustResourceUrl(obj.photos[0].url);
 	}
 
 	ngOnInit() {
@@ -48,6 +60,7 @@ export class SearchCatComponent implements OnInit {
 						if (auctions[i].started) 
 							this.auctions.push(auctions[i]);
 					}
+					this.config.totalItems = auctions.length;			
 					this.loading = true;
 				});
 			});
