@@ -19,6 +19,7 @@ export class AdminComponent implements OnInit {
 
 	users: User[] = [];
 	auctions: Auction[] = [];
+	xmlAuction: any;
 	auctionJsonUri = [];
 	auctionXmlUri = [];
 	approvedUsers: User[] = [];
@@ -34,7 +35,6 @@ export class AdminComponent implements OnInit {
         private router: Router,
 		private dataService: DataService,
 		private alertService: AlertService) {
-
 	}
 
 	ngOnInit() {
@@ -51,16 +51,42 @@ export class AdminComponent implements OnInit {
 		this.dataService.getAuctions().pipe(first()).subscribe(auctions =>{
 			this.auctions = auctions;
 			for (var i = 0; i < this.auctions.length; i++) {
-				var theJSON = JSON.stringify(this.auctions[i]);
-				this.auctionJsonUri.push(this.sanitizer.bypassSecurityTrustUrl("data:application/json;charset=UTF-8," + encodeURIComponent(theJSON)));
-				var convert = require('xml-js');
-				var options = {compact: true, ignoreComment: true, spaces: 4};
-				var theXML = convert.json2xml(theJSON, options);
-				this.auctionXmlUri.push(this.sanitizer.bypassSecurityTrustUrl("data:application/xml;charset=UTF-8," + encodeURIComponent(theXML)));
+				// var auct = this.auctions[i];				
+				// // XML
+				// var XMLWriter = require('xml-writer');
+				// var xw = new XMLWriter(true);
+				// xw.startElement('Item');
+				// xw.writeAttribute('ItemID', auct._id);
+				// xw.writeElement('Name', auct.name);
+				// auct.categories.forEach(cat => {
+				// 	xw.writeElement('Category', cat)
+				// });
+				// xw.writeElement('Currently', "$"+auct.currently);
+				// if(auct.buy_price)
+				// 	xw.writeElement('Buy_Price', "$"+auct.buy_price);
+				// xw.writeElement('First_Bid', "$"+auct.first_bid);
+				// xw.writeElement('Number_of_Bids', auct.number_of_bids);
+				// // xw.startElement('Bids');
+				// // xw.endElement();
+				// xw.writeElement('Location', auct.location.name).writeAttribute('Latitude', auct.location.latitude).writeAttribute('Longtitude', auct.location.longitude);
+				// xw.writeElement('Country', auct.country);
+				// if(auct.started){
+				// 	xw.writeElement('Started', auct.startingDate);			
+				// 	xw.writeElement('Ends', auct.endingDate);
+				// }
+				// // xw.writeElement('Seller');
+				// xw.writeElement('Description', auct.description);				
+				// this.auctionXmlUri.push(this.sanitizer.bypassSecurityTrustUrl("data:application/xml;charset=UTF-8," + encodeURIComponent(xw)));
+				// JSON
+				// var convert = require('xml-js');
+				// var options = {compact: true, ignoreComment: true, spaces: 4};
+				// var theJSON = convert.xml2json(xw, options);
+				// this.auctionJsonUri.push(this.sanitizer.bypassSecurityTrustUrl("data:application/json;charset=UTF-8," + encodeURIComponent(theJSON)));
+				
 			}
 			this.loading2 = true;
 		});
-	}	
+	}
 
 	approve(user: User) {
 		this.dataService.approveUser(user._id)
@@ -94,5 +120,41 @@ export class AdminComponent implements OnInit {
                 error => {
                     this.alertService.error("Disapproval denied");
                 });
+	}
+
+	downloadXML(i: number) {
+		var link = document.createElement("a");
+		link.download = 'auction.xml';
+		var auct = this.auctions[i];
+		// console.log(auct.name);			
+		// XML
+		var XMLWriter = require('xml-writer');
+		var xw = new XMLWriter(true);
+		xw.startElement('Item');
+		xw.writeAttribute('ItemID', auct._id);
+		xw.writeElement('Name', auct.name);
+		auct.categories.forEach(cat => {
+			xw.writeElement('Category', cat)
+		});
+		xw.writeElement('Currently', "$"+auct.currently);
+		if(auct.buy_price)
+			xw.writeElement('Buy_Price', "$"+auct.buy_price);
+		xw.writeElement('First_Bid', "$"+auct.first_bid);
+		xw.writeElement('Number_of_Bids', auct.number_of_bids);
+		// xw.startElement('Bids');
+		// xw.endElement();
+		xw.writeElement('Location', auct.location.name).writeAttribute('Latitude', auct.location.latitude).writeAttribute('Longtitude', auct.location.longitude);
+		xw.writeElement('Country', auct.country);
+		if(auct.started){
+			xw.writeElement('Started', auct.startingDate);				
+			xw.writeElement('Ends', auct.endingDate);
+		}
+		// xw.writeElement('Seller');
+		xw.writeElement('Description', auct.description);
+		let XMLfile:any;
+		XMLfile = this.sanitizer.bypassSecurityTrustUrl("data:application/xml;charset=UTF-8," + encodeURIComponent(xw));
+		link.href = XMLfile;
+		console.log(link.href);
+		link.click();
 	}
 }
