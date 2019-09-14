@@ -45,13 +45,13 @@ export class SearchComponent implements OnInit {
     ngOnInit() {
 		this.auctions = [];
 		this.loading = false;
-		this.route.queryParams.subscribe( (params) => {
+		this.route.queryParams.subscribe(params => {
 			this.searchText = params.text;
 			this.region = params.region;
 			this.minprice = params.minprice;
 			this.maxprice = params.maxprice;
 
-			if(this.searchText != null){
+			if (this.searchText != null) {
 				this.dataService.getTextAuctions(this.searchText).pipe(first()).subscribe(auctions => {
 					this.auctions = auctions;
 					this.config.totalItems = auctions.length;
@@ -59,7 +59,7 @@ export class SearchComponent implements OnInit {
 					this.loading = true;
 				});
 			}
-			else if(this.region != null){
+			else if (this.region != null) {
 				console.log("region search");
 				this.filter = this.region;
 				// cnt'd
@@ -84,7 +84,6 @@ export class SearchComponent implements OnInit {
 
 	onCatClick(cat: string) {
 		if (cat) {
-			console.log(cat);
 			this.authenticationService.category = cat;
 			localStorage.setItem('category', cat);
 			this.ngOnInit();
@@ -92,9 +91,6 @@ export class SearchComponent implements OnInit {
     }
     
     onSearch() {
-		console.log(this.searchText+"0");
-		// console.log(this.route.queryParams.);
-
 		this.router.navigate(['/search'], {queryParams: { text: this.searchText }});
 		this.loading = false;
 	}

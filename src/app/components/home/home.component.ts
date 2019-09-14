@@ -20,7 +20,9 @@ export class HomeComponent implements OnInit {
 	currentUser: User;
 	loggedin: boolean;
 	auctions: Auction[] = [];
+	recommendedAuctions: Auction[] = [];
 	loading: boolean = false;
+	recommendLoading: boolean = false;
 	config: any;
 	searchText: string = "";
 
@@ -37,7 +39,21 @@ export class HomeComponent implements OnInit {
 			totalItems: 0
 		};
 	}
-	   
+
+	ngOnInit() {
+		this.dataService.getActiveAuctions().pipe(first()).subscribe(auctions => {
+			this.auctions = auctions;
+			this.config.totalItems = auctions.length;
+			this.loading = true;
+		});
+		if (!this.currentUser) {
+			this.dataService.getTopActiveAuctions().pipe(first()).subscribe(auctions => {
+				this.recommendedAuctions = auctions;
+				this.recommendLoading = true;
+			});
+		}
+	}
+
 	pageChanged(event){
 		this.config.currentPage = event;
 	}
@@ -47,12 +63,9 @@ export class HomeComponent implements OnInit {
 		return this.sanitizer.bypassSecurityTrustResourceUrl(obj.photos[0].url);
 	}
 
-	ngOnInit() {
-		this.dataService.getActiveAuctions().pipe(first()).subscribe(auctions => {
-			this.auctions = auctions;
-			this.config.totalItems = auctions.length;
-			this.loading = true;
-		});
+	transformRec(i: string) {
+		let obj = this.recommendedAuctions.find(o => o._id === i);
+		return this.sanitizer.bypassSecurityTrustResourceUrl(obj.photos[0].url);
 	}
 
 	onNameClick(id: string) {

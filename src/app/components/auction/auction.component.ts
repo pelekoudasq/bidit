@@ -65,7 +65,7 @@ export class AuctionComponent implements OnInit {
 			this.auction = auction;
 			this.longitude = auction.location.latitude;
 			this.latitude = auction.location.longitude;
-			if(this.latitude != null && this.longitude != null)
+			if (this.latitude != null && this.longitude != null)
 				this.mapok = true;
 			this.mapsrc = "https://83.212.102.165:4200/?lat="+this.latitude+"&long="+this.longitude;		
 			this.url = this.sanitizer.bypassSecurityTrustResourceUrl(this.mapsrc);
@@ -82,7 +82,7 @@ export class AuctionComponent implements OnInit {
 				this.maxBid.amount = -1;
 				for (var i = 0; i < this.auction.bids.length; i++) {
 					this.dataService.getBid(this.auction.bids[i]).pipe(first()).subscribe(bid => {
-						this.dataService.getById(bid.bidder_id).pipe(first()).subscribe(user =>{
+						this.dataService.getById(bid.bidder_id).pipe(first()).subscribe(user => {
 							bid.username = user.username;
 						});
 						this.bids.push(bid);
@@ -93,6 +93,11 @@ export class AuctionComponent implements OnInit {
 				if (!this.auction.started) {
 					if (!this.currentUser || this.auction.seller_id != this.currentUser._id)
 						this.router.navigate(['/']);
+				}
+				if (this.currentUser) {
+					this.dataService.auctionVisit(this.auction._id, this.currentUser._id).pipe(first()).subscribe(visit => {
+						
+					})
 				}
 				// setTimeout(() => {
 					this.loading = true;	

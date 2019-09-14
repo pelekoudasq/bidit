@@ -44,6 +44,10 @@ export class DataService {
         return this.http.get<Auction>(`https://${this.address}:3000/api/auction/` + id);
     }
 
+    auctionVisit(auctionid: string, id: string) {
+        return this.http.post<any>(`https://${this.address}:3000/api/auctionvisit/`, { auctionid: auctionid, userid: id });
+    }
+
     getBid(id: string) {
         return this.http.get<Bid>(`https://${this.address}:3000/api/bid/` + id);
     }
@@ -138,5 +142,9 @@ export class DataService {
 
     getNotifications(id: string) {
         return this.http.get<any>(`https://${this.address}:3000/api/notifications/` + id);
+    }
+
+    getTopActiveAuctions() {
+        return this.http.get<Auction[]>(`https://${this.address}:3000/api/topauctions`);
     }
 }

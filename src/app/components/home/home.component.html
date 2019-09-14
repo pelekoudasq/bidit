@@ -1,25 +1,20 @@
 <div class="row">
 	<div class="col-sm-2">
 		<div class="content-section bg-transparent border-0">
-			<h4>Categories</h4>
+			<h4 class="font-weight-normal">Categories</h4>
+			<div class="dropdown-divider"></div>
 			<div id="accordion">
-				<div *ngFor="let cat of authenticationService.main; index as i">
-					<div  [attr.id]="'heading'+i">
-					<h5 class="mb-0">
-						<button class="btn btn-link pl-0" data-toggle="collapse" [attr.data-target]="'#collapse'+i" aria-expanded="true" [attr.aria-controls]="'collapse'+i" data-trigger="hover">
-						<h6 class="mb-0">{{cat.name}}</h6>
-						</button>
-					</h5>
-					</div>
-					<div [attr.id]="'collapse'+i" class="collapse" [attr.aria-labelledby]="'heading'+i" data-parent="#accordion">
-						<div class="border-bottom">
+				<div class="navbar-nav mr-auto" *ngFor="let cat of authenticationService.main; index as i">
+					<li class="nav-item dropdown m-0" id="drop1">
+						<a class="hand nav-link p-0 btn-link font-weight-normal" data-toggle="dropdown" (click)="onCatClick(cat.name)" role="button" aria-haspopup="true" aria-expanded="false">{{cat.name}}</a>
+						<div class="dropdown-menu p-0" id="drop2" style="background: transparent !important; border: none!important;">
 							<ul class="list-unstyled">
-                                <ng-container *ngFor="let sub of authenticationService.categories">
-									<li *ngIf="sub.path == cat.name"><a class="hand btn-link pl-3" (click)="onCatClick(sub.name)">{{sub.name}}</a></li>
-                                </ng-container>
+								<ng-container *ngFor="let sub of authenticationService.categories">
+									<li *ngIf="sub.path == cat.name"><a class="hand btn-link pl-3 font-weight-light" (click)="onCatClick(sub.name)">{{sub.name}}</a></li>
+								</ng-container>
 							</ul>
 						</div>
-					</div>
+					</li>
 				</div>
 			</div>
 			<br>
@@ -31,7 +26,7 @@
 			<button class="btn btn-link input-group-btn" (click)="onSearch()" value="Search" style="background-color: white !important; border: 1px solid #ced4da !important; border-top-left-radius: 0!important; border-bottom-left-radius: .0!important; border-left-color: transparent!important;"><i class="fa fa-search" aria-hidden="true"></i></button>
 		</div>
 		<div class="container" >
-			<h5>All Auctions</h5>
+			<h5 class="font-weight-normal">All Auctions</h5>
 			<div class="text-center"  *ngIf="!loading">
 				<i class="fa fa-spinner fa-pulse fa-spin fa-fw"></i>  
 			</div>
@@ -41,7 +36,7 @@
 						<img [src]="transform(auction._id)" class="card-img-top my-auto" style="width: 100%; height: auto; vertical-align: middle;">
 					</div>
 					<div class="card-title text-truncate py-2">
-						<a class="btn btn-link text-left px-0" [title]="auction.name" (click)="onNameClick(auction._id)">{{auction.name}}</a>												
+						<a class="btn btn-link text-left px-0" [title]="auction.name" (click)="onNameClick(auction._id)">{{auction.name}}</a>
 					</div>
 					<div class="card-body px-0 pt-0">
 						<p class="card-text text-truncate font-weight-light">{{auction.description}}</p>
@@ -58,27 +53,27 @@
 		<div class="content-section">
 			<div class="text-center">
 				<div *ngIf="authenticationService.loggedin; else login" >
-					<p>Our Suggestions:</p>
+					<p class="mb-2">Auctions for you</p>
+					<div class="dropdown-divider"></div>
 				</div>
 				<ng-template #login>
-					<h3>Join BidIt Now!</h3>
-					<h6>do not wait up</h6>
-					<h5>this could be your last day alive!</h5>
-					<br>
-					<a class="btn btn-primary mb-0" href="/login">Login</a>
-					<br>
-					or
-					<br>
-					<a class="btn btn-primary mb-0" href="/register">Sign up</a>
+					<p class="mb-2"><i class="fa fa-line-chart" aria-hidden="true"></i> Top Auctions</p>
+					<div class="text-center"  *ngIf="!recommendLoading">
+						<div class="dropdown-divider"></div>
+						<div class="spinner-grow" role="status">
+							<span class="sr-only">Loading...</span>
+						</div>
+					</div>
+					<div *ngIf="recommendLoading">
+						<div *ngFor="let rec of recommendedAuctions; index as i">
+							<div class="dropdown-divider"></div>
+							<img [src]="transformRec(rec._id)" class="card-img-top my-auto" style="width: 30%; height: auto; vertical-align: middle;">
+							<a class="text-truncate btn btn-link text-left px-0" style="width: 50%;" [title]="rec.name" (click)="onNameClick(rec._id)"><small>{{ rec.name }}</small></a>
+						</div>
+					</div>
 				</ng-template>
 			</div>
 			<br>
 		</div>
 	</div>
 </div>
-
-<!-- <script>
-$('#accordion button').mouseover(function(){
-    $( this ).click();
-});
-</script> -->

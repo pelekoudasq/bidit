@@ -57,6 +57,7 @@ export class SendMessageComponent implements OnInit {
 			this.dataService.getChatWithUser(this.currentMessage.sender_id, this.currentUser._id).pipe(first()).subscribe(chat => {
 				this.chat = chat;
 				this.dataService.sendMessage(this.new_message, this.chat._id, this.currentUser._id, this.currentMessage.sender_id).pipe(first()).subscribe(chat => {
+					this.alertService.success("Message successfully sent to " + this.currentMessage.displayName, true);
 					this.router.navigate(['/messaging']);
 				});
 			});

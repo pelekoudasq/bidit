@@ -104,6 +104,18 @@ router.get('/auctionscat/:cat', function(req, res, next) {
 	});
 });
 
+//Get x most famous active
+router.get('/topauctions', function(req, res, next) {
+	console.log('api: top auctions');
+	db.Auctions.find({ started: true }).sort({ visits: -1 }).limit(3, function(err, auctions) {
+		if (err) {
+			res.send(err);
+			return;
+		}
+		res.json(auctions);
+	})
+});
+
 //Get auctions by search text
 router.get('/auctionstext/:text', function(req, res, next) {
 	console.log("api: auctions by search text");
@@ -154,6 +166,31 @@ router.get('/auction/:id', cacheAuction, function(req, res, next) {
 		}
 		client.setex(req.params.id, 2, JSON.stringify(auction));
 		res.json(auction);
+	});
+});
+
+//auction visited
+router.post('/auctionvisit', function(req, res, next) {
+	console.log('api: auction visited');
+	db.Visits.findAndModify({
+		query: { user: req.body.userid },
+		update: { $push: { auctions: req.body.auctionid } },
+		upsert: true
+	}, function(err, visit) {
+		if (err) {
+			res.send(err);
+			return;
+		}
+		db.Auctions.findAndModify({
+			query: { _id: mongojs.ObjectID(req.body.auctionid) },
+			update: { $inc: { visits: 1 } }
+		}, function(err, auction){
+			if (err) {
+				res.send(err);
+				return;
+			}
+		});
+		res.json(visit);
 	});
 });
 
@@ -372,7 +409,8 @@ router.post('/newauction', function(req, res, next) {
 		description: auctionParams.description,
 		photos: auctionParams.photos,
 		started: false,
-		bought: false
+		bought: false,
+		visits: 0
 	});
 	res.send(auction);
 	return;
