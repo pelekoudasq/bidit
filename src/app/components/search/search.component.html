@@ -1,0 +1,93 @@
+<div class="row">
+		<div class="col-sm-2">
+			<div class="content-section bg-transparent border-0">
+				<h4>Categories</h4>
+				<div id="accordion">
+					<div *ngFor="let cat of authenticationService.main; index as i">
+						<div  [attr.id]="'heading'+i">
+						<h5 class="mb-0">
+							<button class="btn btn-link pl-0" data-toggle="collapse" [attr.data-target]="'#collapse'+i" aria-expanded="true" [attr.aria-controls]="'collapse'+i">
+							<h6 class="mb-0">{{cat.name}}</h6>
+							</button>
+						</h5>
+						</div>
+						<div [attr.id]="'collapse'+i" class="collapse" [attr.aria-labelledby]="'heading'+i" data-parent="#accordion">
+							<div class="border-bottom">
+								<ul class="list-unstyled">
+									<ng-container *ngFor="let sub of authenticationService.categories">
+										<li *ngIf="sub.path == cat.name"><a class="hand btn-link pl-3" (click)="onCatClick(sub.name)">{{sub.name}}</a></li>
+									</ng-container>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+				<br>
+			</div>
+		</div>
+		<div class="col-sm-8">
+			<div class="input-group form-inline justify-content-center my-4">
+				<input class="form-control" type="text" [(ngModel)]="searchText" placeholder="Search for anything" aria-label="Search" value="">
+				<button class="btn btn-link input-group-btn" (click)="onSearch()" value="Search" style="background-color: white !important; border: 1px solid #ced4da !important; border-top-left-radius: 0!important; border-bottom-left-radius: .0!important; border-left-color: transparent!important;"><i class="fa fa-search" aria-hidden="true"></i></button>
+			</div>
+			<div class="container" >
+				<div class="text-center"  *ngIf="!loading">
+				  	<i class="fa fa-spinner fa-pulse fa-spin fa-fw"></i>
+				</div>
+				<h5>Results for: {{searchText}}</h5>				
+				<ng-container *ngIf="loading">
+					<!-- <ol class="breadcrumb mb-2 p-0 bg-transparent arrow">
+						<li class="breadcrumb-item"><a class="btn-link" href="/">All</a></li>
+						<ng-container *ngFor="let cat of category.path">
+							<li class="breadcrumb-item"><a class="hand btn-link" (click)="onCatClick(cat)">{{cat}}</a></li>                        
+						</ng-container>
+						<li class="breadcrumb-item active" aria-current="page">{{category.name}}</li>
+					</ol> -->
+					
+					<div class="row">
+						<div *ngFor="let auction of auctions | paginate: config" class="card col-sm-4 my-1 mx-0.5 content-section">
+							<!-- <img src="https://www.freeiconspng.com/uploads/no-image-icon-13.png" class="card-img-top img-fluid pt-2 mx-auto w-75" alt="..."> -->
+							<div class="d-flex align-content-center border hand" style="height: 100%;"  (click)="onNameClick(auction._id)">
+								<img [src]="transform(auction._id)" class="card-img-top my-auto">
+							</div>
+							<div class="card-title text-truncate py-2">
+								<a class="btn btn-link text-left px-0" [title]="auction.name" (click)="onNameClick(auction._id)">{{auction.name}}</a>
+							</div>
+							<div class="card-body px-0 pt-0">
+								<p class="card-text small text-truncate">{{auction.description}}</p>
+								<!-- <a class="btn btn-primary small mx-auto" (click)="onNameClick(auction._id)" style="color: white;">Take a look</a> -->
+							</div>
+							<div class="card-footer">
+								<p>Current price: {{auction.currently}} $</p>
+							</div>
+						</div>
+						<div *ngIf="auctions == 0" class="font-weight-light font-italic">No results for this search.</div>                    
+					</div>
+			  	<pagination-controls *ngIf="loading" class="text-center" [autoHide]=true [responsive]=true (pageChange)="pageChanged($event)"></pagination-controls>			
+					
+				</ng-container>
+			</div>
+		</div>
+		<div class="col-sm-2">
+			<div class="content-section">
+				<div class="text-center">
+					<div *ngIf="authenticationService.loggedin; else login" >
+						<p>Our Suggestions:</p>
+					</div>
+					<ng-template #login>
+						<h3>Join BidIt Now!</h3>
+						<h6>do not wait up</h6>
+						<h5>this could be your last day alive!</h5>
+						<br>
+						<a class="btn btn-primary mb-0" href="/login">Login</a>
+						<br>
+						or
+						<br>
+						<a class="btn btn-primary mb-0" href="/register">Sign up</a>
+					</ng-template>
+				</div>
+				<br>
+			</div>
+		</div>
+	  </div>
+	  

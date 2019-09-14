@@ -26,10 +26,10 @@
 		</div>
 	</div>
 	<div class="col-sm-8">
-		<form [formGroup]="" class="input-group form-inline justify-content-center my-4">
-			<input class="form-control" type="text" placeholder="Search for anything" aria-label="Search" value="">
-				<button class="btn btn-link input-group-btn" type="submit" value="Search" style="background-color: white !important; border: 1px solid #ced4da !important; border-top-left-radius: 0!important; border-bottom-left-radius: .0!important; border-left-color: transparent!important;"><i class="fa fa-search" aria-hidden="true"></i></button>
-		</form>
+		<div class="input-group form-inline justify-content-center my-4">
+			<input class="form-control" type="text" [(ngModel)]="searchText" placeholder="Search for anything" aria-label="Search" value="">
+			<button class="btn btn-link input-group-btn" (click)="onSearch()" value="Search" style="background-color: white !important; border: 1px solid #ced4da !important; border-top-left-radius: 0!important; border-bottom-left-radius: .0!important; border-left-color: transparent!important;"><i class="fa fa-search" aria-hidden="true"></i></button>
+		</div>
 		<div class="container" >
 			<h5>All Auctions</h5>
 			<div class="text-center"  *ngIf="!loading">

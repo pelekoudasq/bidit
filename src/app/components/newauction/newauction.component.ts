@@ -105,15 +105,10 @@ export class NewAuctionComponent implements OnInit {
 
     onSubmit() {
         this.submitted = true;
-        // console.log(this.auctionForm);
         // stop here if form is invalid
         if (this.auctionForm.invalid) {
-            // console.log(this.auctionForm);
             return;
         }
-        // console.log("horray");
-        // console.log(this.auctionForm.value);
-        //return;
         this.loading = true;
         this.dataService.addAuction(this.auctionForm.value, this.currentUser._id)
             .pipe(first())

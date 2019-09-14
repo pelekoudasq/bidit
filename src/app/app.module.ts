@@ -31,6 +31,7 @@ import { SearchCatComponent } from './components/searchcat/searchcat.component';
 import { MessagingComponent } from './components/messaging/messaging.component';
 import { ChatComponent } from './components/chat/chat.component';
 import { SendMessageComponent } from './components/sendmessage/sendmessage.component';
+import { SearchComponent } from './components/search/search.component';
 
 @NgModule({
   declarations: [
@@ -49,7 +50,8 @@ import { SendMessageComponent } from './components/sendmessage/sendmessage.compo
     SearchCatComponent,
     MessagingComponent,
     ChatComponent,
-    SendMessageComponent
+    SendMessageComponent,
+    SearchComponent
   ],
   imports: [
     BrowserModule,

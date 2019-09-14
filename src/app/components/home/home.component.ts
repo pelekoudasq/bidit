@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { first } from 'rxjs/operators';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
 import { AlertService } from '../../services/alert.service';
 import { AuthenticationService } from '../../services/authentication.service';
 import { DataService } from '../../services/data.service';
@@ -22,6 +22,7 @@ export class HomeComponent implements OnInit {
 	auctions: Auction[] = [];
 	loading: boolean = false;
 	config: any;
+	searchText: string = "";
 
 	constructor(
 		private dataService: DataService,
@@ -66,5 +67,15 @@ export class HomeComponent implements OnInit {
 			localStorage.setItem('category', cat);
 			this.router.navigate(['/searchcat']);
 		}	
+	}
+
+	onSearch() {
+		console.log(this.searchText);
+		
+		// Navigate to the login page with extras
+		// this.router.navigate(['/search', {text: this.searchText, region: "", minprice: null, maxprice: null}]);
+		this.router.navigate(['/search'], {
+			queryParams: {text: this.searchText, region: null, minprice: null, maxprice: null}
+		});
 	}
 }

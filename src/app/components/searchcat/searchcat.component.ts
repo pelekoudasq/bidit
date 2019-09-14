@@ -20,7 +20,6 @@ export class SearchCatComponent implements OnInit {
 	users: User[] = [];
 	category: Category;
 	currentUser: User;
-	loggedin: boolean;
 	auctions: Auction[] = [];
 	loading: boolean = false;
 	config: any;
@@ -39,7 +38,6 @@ export class SearchCatComponent implements OnInit {
 		};
 	}
 
-	   
 	pageChanged(event){
 		this.config.currentPage = event;
 	}

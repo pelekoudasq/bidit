@@ -62,7 +62,6 @@ export class AuctionComponent implements OnInit {
 		this.authenticationService.inAuction = true;
 
 		this.dataService.getAuction(this.requestedAuction).pipe(first()).subscribe(auction => {
-			// console.log(auction);
 			this.auction = auction;
 			this.longitude = auction.location.latitude;
 			this.latitude = auction.location.longitude;
