@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
 import { first } from 'rxjs/operators';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 import { AuthenticationService } from '../../services/authentication.service';
 import { DataService } from '../../services/data.service';
@@ -16,7 +17,8 @@ import { Auction } from '../../models/auction';
 })
 export class SearchComponent implements OnInit {
 
-    filter: string;
+	filter: string;
+	filterForm: FormGroup;
 	currentUser: User;
     auctions: Auction[] = [];
 	loading: boolean = false;
@@ -28,6 +30,7 @@ export class SearchComponent implements OnInit {
 	params: any;
     
     constructor(
+		private formBuilder: FormBuilder,
         private route: ActivatedRoute,
 		private router: Router,
 		private dataService: DataService,
@@ -36,7 +39,7 @@ export class SearchComponent implements OnInit {
     ) { 
 		this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
 		this.config = {
-			itemsPerPage: 15,
+			itemsPerPage: 6,
 			currentPage: 1,
 			totalItems: 0
 		};
@@ -50,6 +53,11 @@ export class SearchComponent implements OnInit {
 			this.region = params.region;
 			this.minprice = params.minprice;
 			this.maxprice = params.maxprice;
+			this.filterForm = this.formBuilder.group({
+				region: [params.region],
+				minprice: [params.minprice],
+				maxprice: [params.maxprice]			
+			});
 
 			if (this.searchText != null) {
 				this.dataService.getTextAuctions(this.searchText).pipe(first()).subscribe(auctions => {
@@ -91,8 +99,38 @@ export class SearchComponent implements OnInit {
     }
     
     onSearch() {
-		this.router.navigate(['/search'], {queryParams: { text: this.searchText }});
+		this.router.navigate(['/search'], {
+			queryParams: { 
+				text: this.searchText,
+				region: this.f.region.value, 
+				minprice: this.f.minprice.value, 
+				maxprice: this.f.maxprice.value
+			}, 
+			queryParamsHandling: "merge"
+		});
 		this.loading = false;
 	}
+
+	// convenience getter for easy access to form fields
+	get f() { return this.filterForm.controls; }
+	
+	onSubmit() {
+		// stop here if form is invalid
+        if (this.filterForm.invalid) {
+            return;
+		}
+		if(this.f.region.value == null && this.f.minprice.value == null && this.f.maxprice.value == null)
+			return;
+		console.log(this.filterForm);
+		this.router.navigate(['/search'], {
+			queryParams: {
+				text: null,
+				region: this.f.region.value, 
+				minprice: this.f.minprice.value, 
+				maxprice: this.f.maxprice.value
+			},
+			queryParamsHandling: "merge"
+		});
+    }
 
 }

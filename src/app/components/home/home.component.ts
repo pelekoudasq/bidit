@@ -5,6 +5,7 @@ import { AlertService } from '../../services/alert.service';
 import { AuthenticationService } from '../../services/authentication.service';
 import { DataService } from '../../services/data.service';
 import { DomSanitizer } from '@angular/platform-browser';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 import { User } from '../../models/user';
 import { Auction } from '../../models/auction';
@@ -17,6 +18,7 @@ import { Auction } from '../../models/auction';
 export class HomeComponent implements OnInit {
 
 	users: User[] = [];
+	filterForm: FormGroup;
 	currentUser: User;
 	loggedin: boolean;
 	auctions: Auction[] = [];
@@ -27,6 +29,7 @@ export class HomeComponent implements OnInit {
 	searchText: string = "";
 
 	constructor(
+		private formBuilder: FormBuilder,
 		private dataService: DataService,
 		private router: Router,
 		private authenticationService: AuthenticationService,
@@ -34,13 +37,18 @@ export class HomeComponent implements OnInit {
 	{
 		this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
 		this.config = {
-			itemsPerPage: 3,
+			itemsPerPage: 6,
 			currentPage: 1,
 			totalItems: 0
 		};
 	}
 
 	ngOnInit() {
+		this.filterForm = this.formBuilder.group({
+            region: [null],
+			minprice: [null],
+            maxprice: [null]			
+        });
 		this.dataService.getActiveAuctions().pipe(first()).subscribe(auctions => {
 			this.auctions = auctions;
 			this.config.totalItems = auctions.length;
@@ -85,10 +93,30 @@ export class HomeComponent implements OnInit {
 	onSearch() {
 		console.log(this.searchText);
 		
-		// Navigate to the login page with extras
-		// this.router.navigate(['/search', {text: this.searchText, region: "", minprice: null, maxprice: null}]);
+		// Navigate to the search page with extras
 		this.router.navigate(['/search'], {
 			queryParams: {text: this.searchText, region: null, minprice: null, maxprice: null}
 		});
 	}
+
+	// convenience getter for easy access to form fields
+    get f() { return this.filterForm.controls; }
+	
+	onSubmit() {
+		// stop here if form is invalid
+        if (this.filterForm.invalid) {
+            return;
+		}
+		if(this.f.region.value == null && this.f.minprice.value == null && this.f.maxprice.value == null)
+			return;
+		console.log(this.filterForm);
+		this.router.navigate(['/search'], {
+			queryParams: {
+				text: null,
+				region: this.f.region.value, 
+				minprice: this.f.minprice.value, 
+				maxprice: this.f.maxprice.value
+			}
+		});
+    }
 }
