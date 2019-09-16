@@ -26,7 +26,7 @@ export class HomeComponent implements OnInit {
 	loading: boolean = false;
 	recommendLoading: boolean = false;
 	config: any;
-	searchText: string = "";
+	searchText: string = null;
 
 	constructor(
 		private formBuilder: FormBuilder,
@@ -84,9 +84,12 @@ export class HomeComponent implements OnInit {
 	onCatClick(cat: string) {
 		if (cat) {
 			console.log(cat);
-			this.authenticationService.category = cat;
-			localStorage.setItem('category', cat);
-			this.router.navigate(['/searchcat']);
+			// this.authenticationService.category = cat;
+			// localStorage.setItem('category', cat);
+			// this.router.navigate(['/searchcat']);
+			this.router.navigate(['/search'], {
+				queryParams: {category: cat, text: this.searchText, region: null, minprice: null, maxprice: null}
+			});
 		}	
 	}
 
@@ -95,7 +98,7 @@ export class HomeComponent implements OnInit {
 		
 		// Navigate to the search page with extras
 		this.router.navigate(['/search'], {
-			queryParams: {text: this.searchText, region: null, minprice: null, maxprice: null}
+			queryParams: {category: null, text: this.searchText, region: null, minprice: null, maxprice: null}
 		});
 	}
 
@@ -112,11 +115,20 @@ export class HomeComponent implements OnInit {
 		console.log(this.filterForm);
 		this.router.navigate(['/search'], {
 			queryParams: {
+				category: null,
 				text: null,
 				region: this.f.region.value, 
 				minprice: this.f.minprice.value, 
 				maxprice: this.f.maxprice.value
 			}
 		});
-    }
+	}
+	
+	onClear() {
+		this.filterForm = this.formBuilder.group({
+            region: [null],
+			minprice: [null],
+            maxprice: [null]			
+        });
+	}
 }

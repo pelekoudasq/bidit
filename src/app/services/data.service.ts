@@ -40,6 +40,10 @@ export class DataService {
         return this.http.get<Auction[]>(`https://${this.address}:3000/api/auctionstext/`+ text);        
     }
 
+    getFilterAuctions( params: any) {
+        return this.http.post<Auction[]>(`https://${this.address}:3000/api/auctionsfilter/`, { params: params} );                
+    }
+
     getAuction(id: string) {
         return this.http.get<Auction>(`https://${this.address}:3000/api/auction/` + id);
     }

@@ -22,9 +22,10 @@ export class SearchComponent implements OnInit {
 	currentUser: User;
     auctions: Auction[] = [];
 	loading: boolean = false;
-    config: any;
-	searchText: string = "";
-	region: string = "";
+	config: any;
+	category: string = null;
+	searchText: string = null;
+	region: string = null;
 	minprice: number;
 	maxprice: number;
 	params: any;
@@ -49,6 +50,7 @@ export class SearchComponent implements OnInit {
 		this.auctions = [];
 		this.loading = false;
 		this.route.queryParams.subscribe(params => {
+			this.category = params.category;
 			this.searchText = params.text;
 			this.region = params.region;
 			this.minprice = params.minprice;
@@ -56,22 +58,15 @@ export class SearchComponent implements OnInit {
 			this.filterForm = this.formBuilder.group({
 				region: [params.region],
 				minprice: [params.minprice],
-				maxprice: [params.maxprice]			
+				maxprice: [params.maxprice]		
 			});
-
-			if (this.searchText != null) {
-				this.dataService.getTextAuctions(this.searchText).pipe(first()).subscribe(auctions => {
-					this.auctions = auctions;
-					this.config.totalItems = auctions.length;
-					this.filter = this.searchText;		
-					this.loading = true;
-				});
-			}
-			else if (this.region != null) {
-				console.log("region search");
-				this.filter = this.region;
-				// cnt'd
-			}
+			console.log(params);
+			this.dataService.getFilterAuctions(params).pipe(first()).subscribe(auctions => {
+				this.auctions = auctions;
+				this.config.totalItems = auctions.length;
+				// this.filter = this.searchText;		
+				this.loading = true;
+			});
 			
 		});		
     }
@@ -92,23 +87,26 @@ export class SearchComponent implements OnInit {
 
 	onCatClick(cat: string) {
 		if (cat) {
-			this.authenticationService.category = cat;
-			localStorage.setItem('category', cat);
-			this.ngOnInit();
+			this.loading = false;
+			this.router.navigate(['/search'], {
+				queryParams: {
+					category: cat
+				},
+				queryParamsHandling: "merge"
+			});
 		}	
     }
     
     onSearch() {
+		this.loading = false;
+		if (this.searchText == "")
+			this.searchText = null;
 		this.router.navigate(['/search'], {
 			queryParams: { 
-				text: this.searchText,
-				region: this.f.region.value, 
-				minprice: this.f.minprice.value, 
-				maxprice: this.f.maxprice.value
+				text: this.searchText
 			}, 
 			queryParamsHandling: "merge"
 		});
-		this.loading = false;
 	}
 
 	// convenience getter for easy access to form fields
@@ -122,15 +120,26 @@ export class SearchComponent implements OnInit {
 		if(this.f.region.value == null && this.f.minprice.value == null && this.f.maxprice.value == null)
 			return;
 		console.log(this.filterForm);
+		this.loading = false;
 		this.router.navigate(['/search'], {
 			queryParams: {
-				text: null,
 				region: this.f.region.value, 
 				minprice: this.f.minprice.value, 
 				maxprice: this.f.maxprice.value
 			},
 			queryParamsHandling: "merge"
 		});
-    }
-
+	}
+	
+	onClear() {
+		this.filterForm = this.formBuilder.group({
+            region: [null],
+			minprice: [null],
+            maxprice: [null]			
+		});
+		this.router.navigate(['/search'], {
+			queryParams: { category: this.category, text: this.searchText}
+		});
+		// this.ngOnInit();
+	}
 }

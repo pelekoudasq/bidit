@@ -38,7 +38,10 @@
 							<label for="maxprice">Maximum Price:</label>
 							<input type="number" class="form-control" formControlName="maxprice" placeholder="1000 $">
 						</div>
-						<button type="submit" class="btn btn-primary">Search</button>
+						<div>
+							<button type="submit" class="btn btn-primary">Search</button>
+							<a (click)="onClear()" class="btn btn-link w-25">Clear</a>
+						</div>
 					</form>
 				</div>
 			</nav>

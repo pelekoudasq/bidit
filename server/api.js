@@ -129,6 +129,37 @@ router.get('/auctionstext/:text', function(req, res, next) {
 	});
 });
 
+//Get auctions by filters
+router.post('/auctionsfilter', function(req, res, next) {
+	console.log("api: auctions by filters");
+	let query = {};
+	query['$and'] = [];
+	if(req.body.params.text != null)
+		query['$and'].push({ $text: { $search: req.body.params.text }});
+	if(req.body.params.region != null)
+		query['$and'].push({ location: { name: req.body.params.region }});
+	if(req.body.params.minprice != null && req.body.params.maxprice != null)
+		query['$and'].push({ currently: { $gt: Number(req.body.params.minprice), $lt: Number(req.body.params.maxprice) }});
+	else if(req.body.params.minprice != null)
+		query['$and'].push({ currently: { $gt: Number(req.body.params.minprice) }});
+	else if(req.body.params.maxprice != null)
+		query['$and'].push({ currently: { $lt: Number(req.body.params.maxprice) }});
+	if (req.body.params.category != null)
+		query['$and'].push({ categories: { $in: [req.body.params.category] }});
+	query['$and'].push({ started: true});
+	console.log(query);
+	db.Auctions.find(query,
+	function(err, auctions) {
+		if (err) {
+			console.log(err);
+			res.send(err);
+			return;
+		}
+		console.log(auctions.length);
+		res.json(auctions);
+	});
+});
+
 //Find auctions by seller_id
 router.get('/auctions/:id', function(req, res, next) {
 	console.log('api: auction of user');
