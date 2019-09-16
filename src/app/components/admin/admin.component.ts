@@ -107,15 +107,19 @@ export class AdminComponent implements OnInit {
 	}
 
 	getJSON(i: number) {
-		let xw = this.downloadXML(i);
+		this.file = this.downloadXML(i);
 		var convert = require('xml-js');
 		var options = {compact: true, ignoreComment: true, spaces: 4};
-		var theJSON = convert.xml2json(xw, options);
 		setTimeout(() => {
-			const blob = new Blob([theJSON], { type: 'text/json' });
-			console.log(blob);
-			saveAs(blob, "auction.json");
-		}, 3000);
+			if (this.file)
+				var theJSON = convert.xml2json(this.file, options);
+			setTimeout(() => {
+				const blob = new Blob([theJSON], { type: 'text/json' });
+				console.log(blob);
+				saveAs(blob, "auction.json");
+			}, 3000);
+			
+		}, 6000);
 	}
 
 	downloadXML(i: number) {
