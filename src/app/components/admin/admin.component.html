@@ -110,8 +110,8 @@
 							<i class="fa fa-angle-down"></i>
 							</button>
 							{{auction.name}}
-							<a class="btn btn-outline-dark float-right mx-1" (click)="downloadXML(i)"><i class="fa fa-download" aria-hidden="true"></i> XML</a>
-							<a class="btn btn-outline-dark float-right" [href]="auctionXmlUri[i]" download="auction.xml"><i class="fa fa-download" aria-hidden="true"></i> JSON</a>
+							<button class="btn btn-outline-dark float-right mx-1" (click)="getXML(i)"><i class="fa fa-download" aria-hidden="true"></i> XML</button>
+							<a class="btn btn-outline-dark float-right" [href]="file" (click)="getJSON(i)" download="auction.json"><i class="fa fa-download" aria-hidden="true"></i> JSON</a>
 							<div class="collapse" id="collapseExample{{i}}">
 								<div class="card card-body mt-2 border-bottom-0 border-right-0 border-left-0 border-top rounded-0">
 									<div class="row">
