@@ -27,7 +27,6 @@ import { AuctionComponent } from './components/auction/auction.component';
 import { NewAuctionComponent } from './components/newauction/newauction.component';
 import { EditProfileComponent } from './components/editprofile/editprofile.component';
 import { EditAuctionComponent } from './components/editauction/editauction.component';
-import { SearchCatComponent } from './components/searchcat/searchcat.component';
 import { MessagingComponent } from './components/messaging/messaging.component';
 import { ChatComponent } from './components/chat/chat.component';
 import { SendMessageComponent } from './components/sendmessage/sendmessage.component';
@@ -47,7 +46,6 @@ import { SearchComponent } from './components/search/search.component';
     NewAuctionComponent,
     EditProfileComponent,
     EditAuctionComponent,
-    SearchCatComponent,
     MessagingComponent,
     ChatComponent,
     SendMessageComponent,

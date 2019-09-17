@@ -14,6 +14,7 @@ function jwt() {
             '/api/activeauctions',
             '/api/topauctions',
             '/api/categories',
+            { url: /^\/api\/auctionsfilter\/.*/},
             { url: /^\/api\/auctionstext\/.*/},
             { url: /^\/api\/auction\/.*/},
             { url: /^\/api\/category\/.*/},

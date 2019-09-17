@@ -137,7 +137,7 @@ router.post('/auctionsfilter', function(req, res, next) {
 	if(req.body.params.text != null)
 		query['$and'].push({ $text: { $search: req.body.params.text }});
 	if(req.body.params.region != null)
-		query['$and'].push({ location: { name: req.body.params.region }});
+		query['$and'].push({ $or: [ {location: { name: req.body.params.region } }, { country: req.body.params.region }] });
 	if(req.body.params.minprice != null && req.body.params.maxprice != null)
 		query['$and'].push({ currently: { $gt: Number(req.body.params.minprice), $lt: Number(req.body.params.maxprice) }});
 	else if(req.body.params.minprice != null)
@@ -147,15 +147,12 @@ router.post('/auctionsfilter', function(req, res, next) {
 	if (req.body.params.category != null)
 		query['$and'].push({ categories: { $in: [req.body.params.category] }});
 	query['$and'].push({ started: true});
-	console.log(query);
 	db.Auctions.find(query,
 	function(err, auctions) {
 		if (err) {
-			console.log(err);
 			res.send(err);
 			return;
 		}
-		console.log(auctions.length);
 		res.json(auctions);
 	});
 });

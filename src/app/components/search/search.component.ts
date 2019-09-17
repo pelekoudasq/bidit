@@ -9,6 +9,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 
 import { User } from '../../models/user';
 import { Auction } from '../../models/auction';
+import { Category } from '../../models/category';
 
 @Component({
     selector: 'app-search',
@@ -23,6 +24,7 @@ export class SearchComponent implements OnInit {
     auctions: Auction[] = [];
 	loading: boolean = false;
 	config: any;
+	cat: Category;
 	category: string = null;
 	searchText: string = null;
 	region: string = null;
@@ -60,12 +62,21 @@ export class SearchComponent implements OnInit {
 				minprice: [params.minprice],
 				maxprice: [params.maxprice]		
 			});
-			console.log(params);
+
 			this.dataService.getFilterAuctions(params).pipe(first()).subscribe(auctions => {
 				this.auctions = auctions;
 				this.config.totalItems = auctions.length;
-				// this.filter = this.searchText;		
-				this.loading = true;
+				if (this.category) {
+					this.dataService.getCategory(this.category).pipe(first()).subscribe(cat => {
+						this.cat = cat;
+						this.loading = true;
+					});
+				}
+				else {
+					this.loading = true;
+				}
+				this.filter = this.searchText;		
+				
 			});
 			
 		});		
@@ -95,7 +106,17 @@ export class SearchComponent implements OnInit {
 				queryParamsHandling: "merge"
 			});
 		}	
-    }
+	}
+	
+	onClearCat() {
+		this.loading = false;
+		this.router.navigate(['/search'], {
+			queryParams: { 
+				category: null
+			}, 
+			queryParamsHandling: "merge"
+		});
+	}
     
     onSearch() {
 		this.loading = false;
@@ -119,7 +140,6 @@ export class SearchComponent implements OnInit {
 		}
 		if(this.f.region.value == null && this.f.minprice.value == null && this.f.maxprice.value == null)
 			return;
-		console.log(this.filterForm);
 		this.loading = false;
 		this.router.navigate(['/search'], {
 			queryParams: {
@@ -132,6 +152,7 @@ export class SearchComponent implements OnInit {
 	}
 	
 	onClear() {
+		this.loading = false;
 		this.filterForm = this.formBuilder.group({
             region: [null],
 			minprice: [null],
@@ -140,6 +161,5 @@ export class SearchComponent implements OnInit {
 		this.router.navigate(['/search'], {
 			queryParams: { category: this.category, text: this.searchText}
 		});
-		// this.ngOnInit();
 	}
 }

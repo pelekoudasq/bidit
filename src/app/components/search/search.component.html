@@ -1,13 +1,13 @@
 <div class="row">
-	<div class="col-sm-2">
-		<div class="content-section bg-transparent border-0 mb-0 pb-0">
+	<div class="col-sm-2 py-1 pr-0">
+		<div class="content-section border-0 mb-0 p-3">
 			<h4 class="font-weight-normal">Categories</h4>
 			<div class="dropdown-divider"></div>
 			<div id="accordion">
 				<div class="navbar-nav mr-auto" *ngFor="let cat of authenticationService.main; index as i">
 					<li class="nav-item dropdown m-0" id="drop1">
 						<a class="hand nav-link p-0 btn-link font-weight-normal" data-toggle="dropdown" (click)="onCatClick(cat.name)" role="button" aria-haspopup="true" aria-expanded="false">{{cat.name}}</a>
-						<div class="dropdown-menu p-0" id="drop2" style="background: transparent !important; border: none!important;">
+						<div class="dropdown-menu bg-transparent border-0 p-0" id="drop2">
 							<ul class="list-unstyled">
 								<ng-container *ngFor="let sub of authenticationService.categories">
 									<li *ngIf="sub.path == cat.name"><a class="hand btn-link pl-3 font-weight-light" (click)="onCatClick(sub.name)">{{sub.name}}</a></li>
@@ -18,53 +18,54 @@
 				</div>
 			</div>
 			<br>
-		</div>
-		<div class="content-section bg-transparent border-0 m-0 px-0">
-			<nav class="navbar px-1">
-				<button class="navbar-toggler px-1 align-content-center" type="button" data-toggle="collapse" data-target="#filterToggle" aria-controls="filterToggle" aria-expanded="false" aria-label="Toggle navigation">
-				<i class="fa fa-filter navbar-toggler-icon" style="color: #267174!important;"></i><span class="navbar-brand font-weight-normal">Filters</span>
-				</button>			
-				<div class="collapse navbar-collapse content-section m-0" id="filterToggle">
-					<form [formGroup]="filterForm" (ngSubmit)="onSubmit()">
-						<div class="form-group">
-							<label for="region">Region:</label>
-							<input type="text" class="form-control" formControlName="region" placeholder="Search by region">
-						</div>
-						<div class="form-group">
-							<label for="minprice">Minimum Price:</label>
-							<input type="number" class="form-control" formControlName="minprice" placeholder="0 $">
-						</div>
-						<div class="form-group">
-							<label for="maxprice">Maximum Price:</label>
-							<input type="number" class="form-control" formControlName="maxprice" placeholder="1000 $">
-						</div>
-						<div>
-							<button type="submit" class="btn btn-primary">Search</button>
-							<a (click)="onClear()" class="btn btn-link w-25">Clear</a>
-						</div>
-					</form>
+			<h4 class="font-weight-normal">Filters</h4>
+			<div class="dropdown-divider"></div>
+			<form [formGroup]="filterForm" (ngSubmit)="onSubmit()">
+				<div class="form-group">
+					<label for="region" style="color:#267174">Region:</label>
+					<input type="text" class="form-control" formControlName="region" placeholder="Search by region">
 				</div>
-			</nav>
+				<label style="color:#267174">Price Range:</label><br>
+				<div class="form-row form-group">
+					<div class="col">
+						<input type="number" class="form-control" formControlName="minprice" placeholder="0">
+					</div>
+					<span class="my-auto"> - </span>
+					<div class="col">
+						<input type="number" class="form-control" formControlName="maxprice" placeholder="100">
+					</div>
+					<span class="my-auto"> $</span>
+				</div>
+				<div>
+					<button type="submit" class="btn btn-primary">Search</button>
+					<a (click)="onClear()" class="btn btn-link w-25">Clear</a>
+				</div>
+			</form>
 		</div>
 	</div>
 	<div class="col-sm-8">
 		<div class="input-group form-inline justify-content-center my-4">
-			<input class="form-control" type="text" [(ngModel)]="searchText" placeholder="Search for anything" aria-label="Search" value="">
+			<input class="form-control" type="search" [(ngModel)]="searchText" placeholder="Search for anything" aria-label="Search" value="">
 			<button class="btn btn-link input-group-btn" (click)="onSearch()" value="Search" style="background-color: white !important; border: 1px solid #ced4da !important; border-top-left-radius: 0!important; border-bottom-left-radius: .0!important; border-left-color: transparent!important;"><i class="fa fa-search" aria-hidden="true"></i></button>
 		</div>
-		<div class="container" >
-			<h5 class="font-weight-normal">Results for: {{searchText}}</h5>				
+		<div class="container">
 			<div class="text-center"  *ngIf="!loading">
 			  	<i class="fa fa-spinner fa-pulse fa-spin fa-fw"></i>
 			</div>
 			<ng-container *ngIf="loading">
-				<!-- <ol class="breadcrumb mb-2 p-0 bg-transparent arrow">
-					<li class="breadcrumb-item"><a class="btn-link" href="/">All</a></li>
-					<ng-container *ngFor="let cat of category.path">
-						<li class="breadcrumb-item"><a class="hand btn-link" (click)="onCatClick(cat)">{{cat}}</a></li>                        
-					</ng-container>
-					<li class="breadcrumb-item active" aria-current="page">{{category.name}}</li>
-				</ol> -->
+				<ng-container *ngIf="filter">
+					<h5 class="font-weight-normal">Results for: {{filter}}</h5>				
+				</ng-container>
+				<ng-container *ngIf="category">
+					<ol class="breadcrumb mb-2 p-0 bg-transparent arrow">
+						<li class="breadcrumb-item"><a class="hand btn-link" (click)="onClearCat()">All</a></li>
+						<ng-container *ngFor="let cat of cat.path">
+							<li class="breadcrumb-item"><a class="hand btn-link" (click)="onCatClick(cat)">{{cat}}</a></li>                        
+						</ng-container>
+						<li class="breadcrumb-item active" aria-current="page">{{category}}</li>
+					</ol>
+				</ng-container>
+				
 				
 				<div class="row">
 					<div *ngFor="let auction of auctions | paginate: config" class="card col-sm-4 my-1 mx-0.5 content-section">
@@ -89,7 +90,7 @@
 			</ng-container>
 		</div>
 	</div>
-	<div class="col-sm-2">
+	<div class="col-sm-2 py-1 pl-0">
 		<div class="content-section">
 			<div class="text-center">
 				<div *ngIf="authenticationService.loggedin; else login" >
