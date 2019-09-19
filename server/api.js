@@ -690,6 +690,17 @@ router.get('/messages/:id', function(req, res, next) {
 	});
 });
 
+//Delete message
+router.delete('/messagedelete/:id', function(req, res, next) {
+	console.log('api: delete message');
+	db.Messages.remove({ _id: mongojs.ObjectID(req.params.id) }, function(err, message) {
+		if (message) {
+			res.send(message);
+			return;
+		}
+	});
+});
+
 //Find inbox by receiver's id
 router.get('/inbox/:id', function(req, res, next) {
 	console.log('api: inbox by user');

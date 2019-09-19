@@ -78,6 +78,17 @@ export class MessagingComponent implements OnInit {
 		this.router.navigate(['/message', id]);
 	}
 
+	onDelete(id: string) {
+		this.dataService.deleteMessage(id).pipe(first()).subscribe(
+			message => {
+				window.location.reload();
+			},
+			error => {
+				console.log(error.error.error);
+				this.alertService.error(error.error.error);
+			});
+	}
+
 	get getInbox() {
 		return this.inbox.sort((a, b) => {
 			return <any>new Date(b.time) - <any>new Date(a.time);

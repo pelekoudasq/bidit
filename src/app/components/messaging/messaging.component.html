@@ -14,14 +14,20 @@
 			<div class="tab-pane fade show active" id="v-pills-inbox" role="tabpanel" aria-labelledby="v-pills-inbox-tab">
 				<ul class="list-group">
 					<ng-container *ngFor="let inb_message of getInbox; index as i">
-						<li class="list-group-item">
-							<div class="row">
-								<div class="col-sm-10">
+						<li class="list-group-item" style="padding: 4px 12px;">
+							<div class="row m-0">
+								<div class="col-3 p-0">
 									<button class="btn btn-link" (click)="onMessageClick(inb_message._id)" [ngClass]="{notification: !inb_message.read}">{{ inb_message.displayName }}
 										<ng-container *ngIf="!inb_message.read">
 											<span class="badge badge-danger">New</span>
 										</ng-container>
 									</button>
+								</div>
+								<div class="col-6" style="padding: 8px 12px;">
+									<span class="text-truncated text-muted">{{inb_message.message}}</span>									
+								</div>
+								<div class="col-3 p-0">
+									<button class="btn btn-link float-right" (click)="onDelete(inb_message._id)"><i class="fa fa-trash"></i></button>
 								</div>
 							</div>
 						</li>
@@ -32,13 +38,19 @@
 			<div class="tab-pane fade" id="v-pills-sent" role="tabpanel" aria-labelledby="v-pills-sent-tab">
 				<ul class="list-group">
 					<ng-container *ngFor="let sent_message of getSent; index as i">
-						<li class="list-group-item">
-							<div class="row">
-								<div class="col-sm-10">
-									<button class="btn btn-link" (click)="onMessageClick(sent_message._id)">{{ sent_message.displayName }}</button>
+						<li class="list-group-item" style="padding: 4px 12px;">
+								<div class="row m-0">
+									<div class="col-3 p-0">
+										<button class="btn btn-link" (click)="onMessageClick(sent_message._id)">{{ sent_message.displayName }}</button>
+									</div>
+									<div class="col-6" style="padding: 8px 12px;">
+										<span class="text-truncated text-muted">{{sent_message.message}}</span>									
+									</div>
+									<div class="col-3 p-0">
+										<button class="btn btn-link float-right" (click)="onDelete(sent_message._id)"><i class="fa fa-trash"></i></button>
+									</div>
 								</div>
-							</div>
-						</li>
+							</li>
 					</ng-container>
 					<div *ngIf="sent.length == 0" class="font-weight-light font-italic">No sent messages</div>
 				</ul>

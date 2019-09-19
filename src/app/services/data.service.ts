@@ -108,6 +108,10 @@ export class DataService {
         return this.http.post<Chat>(`https://${this.address}:3000/api/sendmessage/`, { message: message, chat: chatid, sender: userid, receiver: receiver });
     }
 
+    deleteMessage(id: string) {
+        return this.http.delete(`https://${this.address}:3000/api/messagedelete/`+ id);
+    }
+
     getMessage(id: string, userid: string) {
         return this.http.post<Message>(`https://${this.address}:3000/api/message/`, { message_id: id, open_id: userid });
     }
