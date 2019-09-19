@@ -21,6 +21,8 @@ export class MessagingComponent implements OnInit {
 	sent: Message[] = [];
 	currentUser: User;
 	loading: boolean = false;
+	toInboxDelete: boolean[] = [];
+	toSentDelete: boolean[] = [];
 
 	constructor(
 		private route: ActivatedRoute,
@@ -47,6 +49,7 @@ export class MessagingComponent implements OnInit {
 			setTimeout(() => {
 				for (var i = 0; i < inbox_messages.length ; i++) {
 					inbox_messages[i].displayName = mess[inbox_messages.length - i - 1];
+					this.toInboxDelete[i] = false;
 				}
 				this.inbox = inbox_messages;
 				this.loading = true;
@@ -62,6 +65,7 @@ export class MessagingComponent implements OnInit {
 			setTimeout(() => {
 				for (var i = 0; i < sent_messages.length ; i++) {
 					sent_messages[i].displayName = mess1[sent_messages.length - i - 1];
+					this.toSentDelete[i] = false;
 				}
 				this.sent = sent_messages;
 				this.loading = true;
@@ -81,6 +85,7 @@ export class MessagingComponent implements OnInit {
 	onDelete(id: string) {
 		this.dataService.deleteMessage(id).pipe(first()).subscribe(
 			message => {
+				this.alertService.success("Message successfully deleted", true);
 				window.location.reload();
 			},
 			error => {
@@ -99,5 +104,13 @@ export class MessagingComponent implements OnInit {
 		return this.sent.sort((a, b) => {
 			return <any>new Date(b.time) - <any>new Date(a.time);
 		});
+	}
+
+	changeInboxDelete(i: number) {
+		this.toInboxDelete[i] = !this.toInboxDelete[i];
+	}
+
+	changeSentDelete(i: number) {
+		this.toSentDelete[i] = !this.toSentDelete[i];
 	}
 }

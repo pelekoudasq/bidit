@@ -23,11 +23,17 @@
 										</ng-container>
 									</button>
 								</div>
-								<div class="col-6" style="padding: 8px 12px;">
+								<div class="col-5" style="padding: 8px 12px;">
 									<span class="text-truncated text-muted">{{inb_message.message}}</span>									
 								</div>
-								<div class="col-3 p-0">
-									<button class="btn btn-link float-right" (click)="onDelete(inb_message._id)"><i class="fa fa-trash"></i></button>
+								<div class="col-4 p-0">
+									<ng-container *ngIf="!toInboxDelete[i]">
+										<button class="btn btn-link float-right" (click)="changeInboxDelete(i)"><i class="fa fa-trash"></i></button>
+									</ng-container>
+									<ng-container *ngIf="toInboxDelete[i]">
+										<button class="btn btn-link float-right" (click)="changeInboxDelete(i)"><i class="fa fa-times" aria-hidden="true"></i></button>
+										<button class="btn disbutton float-right" (click)="onDelete(inb_message._id)">Delete for everyone</button>
+									</ng-container>
 								</div>
 							</div>
 						</li>
@@ -37,17 +43,23 @@
 			</div>
 			<div class="tab-pane fade" id="v-pills-sent" role="tabpanel" aria-labelledby="v-pills-sent-tab">
 				<ul class="list-group">
-					<ng-container *ngFor="let sent_message of getSent; index as i">
+					<ng-container *ngFor="let sent_message of getSent; index as j">
 						<li class="list-group-item" style="padding: 4px 12px;">
 								<div class="row m-0">
 									<div class="col-3 p-0">
 										<button class="btn btn-link" (click)="onMessageClick(sent_message._id)">{{ sent_message.displayName }}</button>
 									</div>
-									<div class="col-6" style="padding: 8px 12px;">
+									<div class="col-5" style="padding: 8px 12px;">
 										<span class="text-truncated text-muted">{{sent_message.message}}</span>									
 									</div>
-									<div class="col-3 p-0">
-										<button class="btn btn-link float-right" (click)="onDelete(sent_message._id)"><i class="fa fa-trash"></i></button>
+									<div class="col-4 p-0">
+										<ng-container *ngIf="!toSentDelete[j]">
+											<button class="btn btn-link float-right" (click)="changeSentDelete(j)"><i class="fa fa-trash"></i></button>
+										</ng-container>
+										<ng-container *ngIf="toSentDelete[j]">
+											<button class="btn btn-link float-right" (click)="changeSentDelete(j)"><i class="fa fa-times" aria-hidden="true"></i></button>
+											<button class="btn disbutton float-right" (click)="onDelete(sent_message._id)">Delete for everyone</button>
+										</ng-container>
 									</div>
 								</div>
 							</li>

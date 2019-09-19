@@ -278,7 +278,7 @@ router.post('/userupdate', function(req, res, next) {
 	console.log('api: update user');
 	const updUser = req.body.user;
 	updUser.password = bcrypt.hashSync(updUser.password, 10);
-	db.Users.update({ _id: mongojs.ObjectID(req.body.userid) }, { 
+	db.Users.update({ _id: mongojs.ObjectID(req.body.userid) }, {
 			$set: {
 				username: updUser.username,
 				email: updUser.email,
@@ -693,11 +693,30 @@ router.get('/messages/:id', function(req, res, next) {
 //Delete message
 router.delete('/messagedelete/:id', function(req, res, next) {
 	console.log('api: delete message');
-	db.Messages.remove({ _id: mongojs.ObjectID(req.params.id) }, function(err, message) {
-		if (message) {
-			res.send(message);
+	db.Messages.findOne({ _id: mongojs.ObjectID(req.params.id) }, function(err, message) {
+		if (err) {
+			res.send(err);
 			return;
 		}
+		console.log(message);
+		db.Chats.update({ _id: mongojs.ObjectID(message.chat) }, { $pull: { messages: { $in: [mongojs.ObjectID(req.params.id)] } } }, function(err, chat) {
+			if (err) {
+				res.send(err);
+				return;
+			}
+			console.log("_");
+			console.log(chat);
+			console.log("_");
+			if (chat) {
+				db.Messages.remove({ _id: mongojs.ObjectID(req.params.id) }, function(err, message) {
+					if (err) {
+						res.send(err);
+						return;
+					}
+					res.json(message);
+				});
+			}
+		});
 	});
 });
 
