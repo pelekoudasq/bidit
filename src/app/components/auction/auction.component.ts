@@ -65,7 +65,7 @@ export class AuctionComponent implements OnInit {
 			this.auction = auction;
 			this.longitude = auction.location.latitude;
 			this.latitude = auction.location.longitude;
-			if (this.latitude != null && this.longitude != null)
+			if (this.latitude && this.longitude)
 				this.mapok = true;
 			this.mapsrc = "https://83.212.102.165:4200/?lat="+this.latitude+"&long="+this.longitude;		
 			this.url = this.sanitizer.bypassSecurityTrustResourceUrl(this.mapsrc);
@@ -142,21 +142,27 @@ export class AuctionComponent implements OnInit {
 		if (this.bidForm.invalid) {
 			return;
 		}
-		this.dataService.addBid(this.auction._id, this.bidForm.value.bid_price, this.currentUser._id)
-			.pipe(first())
-			.subscribe(
-				data => {
-					this.alertService.success('Your bid was made successfully!', true);
-					this.loading = false;
-					this.bidClicked = false;
-					this.bids = [];
-					this.ngOnInit();
-				},
-				error => {
-					console.log(error.error.error);
-					this.alertService.error(error.error.error);
-					// this.loading = false;
-				});
+		if (this.auction.buy_price && this.bidForm.value.bid_price >= this.auction.buy_price) {
+			this.alertService.success('Your bid was higher than the buy out price. Your purchase was made successfully!', true);
+			this.buyNow();
+			return;
+		} else {
+			this.dataService.addBid(this.auction._id, this.bidForm.value.bid_price, this.currentUser._id)
+				.pipe(first())
+				.subscribe(
+					data => {
+						this.alertService.success('Your bid was made successfully!', true);
+						this.loading = false;
+						this.bidClicked = false;
+						this.bids = [];
+						this.ngOnInit();
+					},
+					error => {
+						console.log(error.error.error);
+						this.alertService.error(error.error.error);
+						// this.loading = false;
+					});
+		}
 	}
 
 	onContactClick() {

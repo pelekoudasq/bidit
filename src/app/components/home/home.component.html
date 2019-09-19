@@ -1,13 +1,13 @@
 <div class="row">
 	<div class="col-sm-2 py-1 pr-0">
-		<div class="content-section border-0 mb-0 p-4">
+		<div class="content-section border-0 mb-0 p-3">
 			<h4 class="font-weight-normal">Categories</h4>
 			<div class="dropdown-divider"></div>
 			<div id="accordion">
 				<div class="navbar-nav mr-auto" *ngFor="let cat of authenticationService.main; index as i">
 					<li class="nav-item dropdown m-0" id="drop1">
 						<a class="hand nav-link p-0 btn-link font-weight-normal" data-toggle="dropdown" (click)="onCatClick(cat.name)" role="button" aria-haspopup="true" aria-expanded="false">{{cat.name}}</a>
-						<div class="dropdown-menu p-0 bg-transparent border-0" id="drop2">
+						<div class="dropdown-menu bg-transparent border-0 p-0" id="drop2">
 							<ul class="list-unstyled">
 								<ng-container *ngFor="let sub of authenticationService.categories">
 									<li *ngIf="sub.path == cat.name"><a class="hand btn-link pl-3 font-weight-light" (click)="onCatClick(sub.name)">{{sub.name}}</a></li>

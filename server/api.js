@@ -82,24 +82,11 @@ router.get('/auctions', function(req, res, next) {
 //Get active auctions
 router.get('/activeauctions', function(req, res, next) {
 	console.log("api: active auctions");
-	db.Auctions.find({ started: true }, function(err, auctions) {
+	db.Auctions.find({ started: true, bought: false }, function(err, auctions) {
 		if (err) {
 			res.send(err);
 			return;
 		}
-		res.json(auctions);
-	});
-});
-
-//Get auctions by category
-router.get('/auctionscat/:cat', function(req, res, next) {
-	console.log("api: auctions by category");
-	db.Auctions.find({ "categories": { $in: [req.params.cat]} },function(err, auctions) {
-		if (err) {
-			res.send(err);
-			return;
-		}
-		// console.log(auctions)
 		res.json(auctions);
 	});
 });
@@ -114,19 +101,6 @@ router.get('/topauctions', function(req, res, next) {
 		}
 		res.json(auctions);
 	})
-});
-
-//Get auctions by search text
-router.get('/auctionstext/:text', function(req, res, next) {
-	console.log("api: auctions by search text");
-	db.Auctions.find({ $text: { $search: req.params.text}, started: true },function(err, auctions) {
-		if (err) {
-			res.send(err);
-			return;
-		}
-		// console.log(auctions)
-		res.json(auctions);
-	});
 });
 
 //Get auctions by filters
@@ -146,7 +120,7 @@ router.post('/auctionsfilter', function(req, res, next) {
 		query['$and'].push({ currently: { $lt: Number(req.body.params.maxprice) }});
 	if (req.body.params.category != null)
 		query['$and'].push({ categories: { $in: [req.body.params.category] }});
-	query['$and'].push({ started: true});
+	query['$and'].push({ started: true, bought: false });
 	db.Auctions.find(query,
 	function(err, auctions) {
 		if (err) {
