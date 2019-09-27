@@ -31,6 +31,8 @@ export class SearchComponent implements OnInit {
 	minprice: number;
 	maxprice: number;
 	params: any;
+	recommendedAuctions: Auction[] = [];
+	recommendLoading: boolean = false;
     
     constructor(
 		private formBuilder: FormBuilder,
@@ -42,7 +44,7 @@ export class SearchComponent implements OnInit {
     ) { 
 		this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
 		this.config = {
-			itemsPerPage: 6,
+			itemsPerPage: 15,
 			currentPage: 1,
 			totalItems: 0
 		};
@@ -60,9 +62,8 @@ export class SearchComponent implements OnInit {
 			this.filterForm = this.formBuilder.group({
 				region: [params.region],
 				minprice: [params.minprice],
-				maxprice: [params.maxprice]		
+				maxprice: [params.maxprice]
 			});
-
 			this.dataService.getFilterAuctions(params).pipe(first()).subscribe(auctions => {
 				this.auctions = auctions;
 				this.config.totalItems = auctions.length;
@@ -75,11 +76,20 @@ export class SearchComponent implements OnInit {
 				else {
 					this.loading = true;
 				}
-				this.filter = this.searchText;		
-				
+				this.filter = this.searchText;
 			});
-			
-		});		
+		});
+		if (this.currentUser) {
+			this.dataService.getTopActiveAuctions().pipe(first()).subscribe(auctions => {
+				this.recommendedAuctions = auctions;
+				this.recommendLoading = true;
+			});
+		} else {
+			this.dataService.getTopVisitedAuctions().pipe(first()).subscribe(auctions => {
+				this.recommendedAuctions = auctions;
+				this.recommendLoading = true;
+			});
+		}	
     }
 
     pageChanged(event){
@@ -156,7 +166,7 @@ export class SearchComponent implements OnInit {
 		this.filterForm = this.formBuilder.group({
             region: [null],
 			minprice: [null],
-            maxprice: [null]			
+            maxprice: [null]
 		});
 		this.router.navigate(['/search'], {
 			queryParams: { category: this.category, text: this.searchText}

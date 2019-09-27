@@ -23,7 +23,7 @@ export class AuctionComponent implements OnInit {
 	@Input()
     url: SafeResourceUrl;
 
-	requestedAuction: string;
+	requestedAuction: string = null;
 	bidForm: FormGroup;	
 	auction: Auction;
 	bids: Bid[] = [];
@@ -33,11 +33,13 @@ export class AuctionComponent implements OnInit {
 	editA: boolean = false;
 	bidClicked: boolean = false;
 	completed: boolean = false;
-	longitude: number = null;
-	latitude: number = null;
+	longitude: string = null;
+	latitude: string = null;
 	mapsrc: string;
 	mapok: boolean = false;
 	maxBid: Bid;
+	recommendLoading: boolean = false;
+	recommendedAuctions: Auction[] = [];
 
 	constructor(
 		private formBuilder: FormBuilder,
@@ -57,57 +59,80 @@ export class AuctionComponent implements OnInit {
 
 	
 
-	ngOnInit() {		
-		this.requestedAuction = this.route.snapshot.params.id;		
+	ngOnInit() {
+		if (!this.requestedAuction)	
+			this.requestedAuction = this.route.snapshot.params.id;	
 		this.authenticationService.inAuction = true;
 
 		this.dataService.getAuction(this.requestedAuction).pipe(first()).subscribe(auction => {
 			this.auction = auction;
-			this.longitude = auction.location.latitude;
-			this.latitude = auction.location.longitude;
+			this.latitude = auction.location.latitude;
+			if (auction.location.longitude)
+				this.longitude = auction.location.longitude;
+			else
+				this.longitude = auction.location.longtitude; //oh well
 			if (this.latitude && this.longitude)
 				this.mapok = true;
 			this.mapsrc = "https://83.212.102.165:4200/?lat="+this.latitude+"&long="+this.longitude;		
 			this.url = this.sanitizer.bypassSecurityTrustResourceUrl(this.mapsrc);
-			
+
 			var today = new Date();
 			var ending = new Date(this.auction.endingDate);
 			if (today > ending || this.auction.bought) {
 				this.completed = true;
 				this.alertService.error("This auction has been closed");
 			}
-			this.dataService.getById(auction.seller_id).pipe(first()).subscribe(user => {
-				this.seller = user;
-				this.maxBid = new Bid;
-				this.maxBid.amount = -1;
-				for (var i = 0; i < this.auction.bids.length; i++) {
-					this.dataService.getBid(this.auction.bids[i]).pipe(first()).subscribe(bid => {
-						this.dataService.getById(bid.bidder_id).pipe(first()).subscribe(user => {
-							bid.username = user.username;
-						});
-						this.bids.push(bid);
-						if (this.maxBid.amount < bid.amount)
-							this.maxBid = bid;
-					});
-				}
-				if (!this.auction.started) {
-					if (!this.currentUser || this.auction.seller_id != this.currentUser._id)
-						this.router.navigate(['/']);
-				}
-				if (this.currentUser) {
-					this.dataService.auctionVisit(this.auction._id, this.currentUser._id).pipe(first()).subscribe(visit => {
-						
-					})
-				}
-				// setTimeout(() => {
-					this.loading = true;	
-				// }, 1000);
-				this.bidForm = this.formBuilder.group({
-					bid_price: [this.auction.currently+1, [Validators.required, this.bidPriceCheck(this.auction.currently)]]
+			if (auction.seller_id) {
+				this.dataService.getById(auction.seller_id).pipe(first()).subscribe(user => {
+					this.seller = user;
 				});
+			} else {
+				this.seller = this.currentUser;
+				this.seller.username = this.auction.seller_display;
+			}
+			this.maxBid = new Bid;
+			this.maxBid.amount = -1;
+			for (var i = 0; i < this.auction.bids.length; i++) {
+				this.dataService.getBid(this.auction.bids[i]).pipe(first()).subscribe(bid => {
+					this.dataService.getById(bid.bidder_id).pipe(first()).subscribe(user => {
+						bid.username = user.username;
+					});
+					this.bids.push(bid);
+					if (this.maxBid.amount < bid.amount)
+						this.maxBid = bid;
+				});
+			}
+			if (!this.auction.started) {
+				if (!this.currentUser || (this.auction.seller_id != this.currentUser._id))
+					this.router.navigate(['/']);
+			}
+			if (this.currentUser && this.auction.seller_id != this.currentUser._id) {
+				this.dataService.auctionVisit(this.auction._id, this.currentUser._id).pipe(first()).subscribe(visit => {
+					
+				})
+			}
+			this.loading = true;	
+			this.bidForm = this.formBuilder.group({
+				bid_price: [this.auction.currently+1, [Validators.required, this.bidPriceCheck(this.auction.currently)]]
 			});
 		});
+		if (this.currentUser) {
+			this.dataService.getTopActiveAuctions().pipe(first()).subscribe(auctions => {
+				this.recommendedAuctions = auctions;
+				this.recommendLoading = true;
+			});
+		} else {
+			this.dataService.getTopVisitedAuctions().pipe(first()).subscribe(auctions => {
+				this.recommendedAuctions = auctions;
+				this.recommendLoading = true;
+			});
+		}
 		
+	}
+	
+	transformRec(i: string) {
+		let obj = this.recommendedAuctions.find(o => o._id === i);
+		return this.sanitizer.bypassSecurityTrustResourceUrl(obj.photos[0].url);
 	}
 
 	// convenience getter for easy access to form fields
@@ -191,5 +216,15 @@ export class AuctionComponent implements OnInit {
 					this.alertService.error(error.error.error);
 					// this.loading = false;
 				});
+	}
+
+	onNameClick(id: string) {
+		if (id) {
+			this.loading = false;
+			this.requestedAuction = id;
+			this.router.navigate(['/auction', id]);
+			this.ngOnInit();
+			// window.location.reload();
+		}
 	}
 }

@@ -12,7 +12,7 @@ function jwt() {
             '/api/users/authenticate',
             '/api/users/register',
             '/api/activeauctions',
-            '/api/topauctions',
+            '/api/topvisitedauctions',
             '/api/categories',
             { url: /^\/api\/auctionsfilter\/.*/},
             { url: /^\/api\/auctionstext\/.*/},

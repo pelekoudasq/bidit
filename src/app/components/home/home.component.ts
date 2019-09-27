@@ -37,7 +37,7 @@ export class HomeComponent implements OnInit {
 	{
 		this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
 		this.config = {
-			itemsPerPage: 6,
+			itemsPerPage: 15,
 			currentPage: 1,
 			totalItems: 0
 		};
@@ -54,8 +54,13 @@ export class HomeComponent implements OnInit {
 			this.config.totalItems = auctions.length;
 			this.loading = true;
 		});
-		if (!this.currentUser) {
+		if (this.currentUser) {
 			this.dataService.getTopActiveAuctions().pipe(first()).subscribe(auctions => {
+				this.recommendedAuctions = auctions;
+				this.recommendLoading = true;
+			});
+		} else {
+			this.dataService.getTopVisitedAuctions().pipe(first()).subscribe(auctions => {
 				this.recommendedAuctions = auctions;
 				this.recommendLoading = true;
 			});

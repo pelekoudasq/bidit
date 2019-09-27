@@ -91,10 +91,22 @@ router.get('/activeauctions', function(req, res, next) {
 	});
 });
 
-//Get x most famous active
+//Get x most bided active
 router.get('/topauctions', function(req, res, next) {
 	console.log('api: top auctions');
-	db.Auctions.find({ started: true }).sort({ visits: -1 }).limit(3, function(err, auctions) {
+	db.Auctions.find({ started: true }).sort({ number_of_bids: -1 }).limit(3, function(err, auctions) {
+		if (err) {
+			res.send(err);
+			return;
+		}
+		res.json(auctions);
+	})
+});
+
+//Get x most famous active
+router.get('/topvisitedauctions', function(req, res, next) {
+	console.log('api: top auctions');
+	db.Auctions.find({ started: true }).sort({ visited: -1 }).limit(3, function(err, auctions) {
 		if (err) {
 			res.send(err);
 			return;
@@ -228,7 +240,7 @@ router.get('/bid/:id', cacheBid, function(req, res, next) {
 //Find bids by bidder_id
 router.get('/bids/:id', function(req, res, next) {
 	console.log('api: bid of bidder');
-	db.Bids.find({ "bidder_id": req.params.id }, function(err, bids) {
+	db.Bids.find({ 'bidder_id': { $in: [mongojs.ObjectID(req.params.id), req.params.id] } }, function(err, bids) {
 		if (err) {
 			res.send(err);
 			return;

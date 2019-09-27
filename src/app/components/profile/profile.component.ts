@@ -51,7 +51,7 @@ export class ProfileComponent implements OnInit {
 				this.editA.push(false);
 			this.dataService.getUserBids(this.currentUser._id).pipe(first()).subscribe(bids => {
 				this.bids = bids;
-				for(let i = 0; i < this.bids.length; i++) {
+				for (let i = 0; i < this.bids.length; i++) {
 					this.dataService.getAuction(this.bids[i].auction_id).pipe(first()).subscribe(auction => {
 						this.bids[i].name = auction.name;
 						this.bids[i].current = auction.currently;

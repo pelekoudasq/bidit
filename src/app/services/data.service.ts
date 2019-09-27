@@ -155,4 +155,8 @@ export class DataService {
     getTopActiveAuctions() {
         return this.http.get<Auction[]>(`https://${this.address}:3000/api/topauctions`);
     }
+
+    getTopVisitedAuctions() {
+        return this.http.get<Auction[]>(`https://${this.address}:3000/api/topvisitedauctions`);
+    }
 }

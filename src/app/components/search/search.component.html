@@ -70,9 +70,16 @@
 				<div class="row">
 					<div *ngFor="let auction of auctions | paginate: config" class="card col-sm-4 my-1 mx-0.5 content-section">
 						<!-- <img src="https://www.freeiconspng.com/uploads/no-image-icon-13.png" class="card-img-top img-fluid pt-2 mx-auto w-75" alt="..."> -->
-						<div class="d-flex align-content-center border hand" style="height: 100%;"  (click)="onNameClick(auction._id)">
-							<img [src]="transform(auction._id)" class="card-img-top my-auto">
-						</div>
+						<ng-container *ngIf="auction.photos.length">
+							<div class="d-flex align-content-center border hand" style="height: 250px; line-height: 200px; overflow: hidden;" (click)="onNameClick(auction._id)">	
+								<img [src]="transform(auction._id)" class="card-img-top my-auto" style="width: 100%; height: auto; vertical-align: middle;">
+							</div>
+						</ng-container>
+						<ng-container *ngIf="!auction.photos.length">
+							<div class="d-flex align-content-center border hand" style="height: 250px; line-height: 200px; overflow: hidden;"  (click)="onNameClick(auction._id)">
+								<img src="https://sanitationsolutions.net/wp-content/uploads/2015/05/empty-image.png" class="card-img-top my-auto" style="width: 100%; height: auto; vertical-align: middle;">
+							</div>
+						</ng-container>
 						<div class="card-title text-truncate py-2">
 							<a class="btn btn-link text-left px-0" [title]="auction.name" (click)="onNameClick(auction._id)">{{auction.name}}</a>
 						</div>
@@ -95,7 +102,24 @@
 			<div class="text-center">
 				<div *ngIf="authenticationService.loggedin; else login" >
 					<p class="mb-2">Auctions for you</p>
-					<div class="dropdown-divider"></div>
+					<div class="text-center"  *ngIf="!recommendLoading">
+						<div class="dropdown-divider"></div>
+						<div class="spinner-grow" role="status">
+							<span class="sr-only">Loading...</span>
+						</div>
+					</div>
+					<div *ngIf="recommendLoading">
+						<div *ngFor="let rec of recommendedAuctions; index as i">
+							<div class="dropdown-divider"></div>
+							<ng-container *ngIf="rec.photos.length">
+								<img [src]="transformRec(rec._id)" class="card-img-top my-auto" style="width: 30%; height: auto; vertical-align: middle;">
+							</ng-container>
+							<ng-container *ngIf="!rec.photos.length">
+								<img src="https://sanitationsolutions.net/wp-content/uploads/2015/05/empty-image.png" class="card-img-top my-auto" style="width: 30%; height: auto; vertical-align: middle;">
+							</ng-container>
+							<a class="text-truncate btn btn-link text-left px-0" style="width: 50%;" [title]="rec.name" (click)="onNameClick(rec._id)"><small>{{ rec.name }}</small></a>
+						</div>
+					</div>
 				</div>
 				<ng-template #login>
 					<p class="mb-2"><i class="fa fa-line-chart" aria-hidden="true"></i> Top Auctions</p>
@@ -108,7 +132,12 @@
 					<div *ngIf="recommendLoading">
 						<div *ngFor="let rec of recommendedAuctions; index as i">
 							<div class="dropdown-divider"></div>
-							<img [src]="transformRec(rec._id)" class="card-img-top my-auto" style="width: 30%; height: auto; vertical-align: middle;">
+							<ng-container *ngIf="rec.photos.length">
+								<img [src]="transformRec(rec._id)" class="card-img-top my-auto" style="width: 30%; height: auto; vertical-align: middle;">
+							</ng-container>
+							<ng-container *ngIf="!rec.photos.length">
+								<img src="https://sanitationsolutions.net/wp-content/uploads/2015/05/empty-image.png" class="card-img-top my-auto" style="width: 30%; height: auto; vertical-align: middle;">
+							</ng-container>
 							<a class="text-truncate btn btn-link text-left px-0" style="width: 50%;" [title]="rec.name" (click)="onNameClick(rec._id)"><small>{{ rec.name }}</small></a>
 						</div>
 					</div>

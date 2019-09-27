@@ -22,8 +22,9 @@ export class Auction {
     bids: string[];
     location: {
         name: string;
-        longitude: number;
-        latitude: number;
+        longitude: string;
+        longtitude: string; //oh well
+        latitude: string;
     };
     country: string;
     started: boolean;
@@ -35,4 +36,5 @@ export class Auction {
     // startingDateString: string;
     // endingDateString: string;
     bought: boolean;
+    seller_display: string;
 }

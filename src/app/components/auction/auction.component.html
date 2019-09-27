@@ -7,46 +7,53 @@
 		<div class="row">
 			<div class="col-sm-4">
 				<div class="content-section pb-4">
-					<div id="carousel" class="carousel slide" data-ride="carousel">
-						<ol class="carousel-indicators"  *ngIf="auction.photos.length > 1">
-							<ng-container *ngFor="let photo of auction.photos; index as i">
-								<ng-container *ngIf="i == 0">
-									<li data-target="#carousel" data-slide-to="0" class="active"></li>
+					<ng-container *ngIf="auction.photos.length">
+						<div id="carousel" class="carousel slide" data-ride="carousel">
+							<ol class="carousel-indicators"  *ngIf="auction.photos.length > 1">
+								<ng-container *ngFor="let photo of auction.photos; index as i">
+									<ng-container *ngIf="i == 0">
+										<li data-target="#carousel" data-slide-to="0" class="active"></li>
+									</ng-container>
+									<ng-container *ngIf="i != 0">
+										<li data-target="#carousel" data-slide-to="i"></li>
+									</ng-container>
 								</ng-container>
-								<ng-container *ngIf="i != 0">
-									<li data-target="#carousel" data-slide-to="i"></li>
-								</ng-container>
-							</ng-container>
-						</ol>
-						<div class="carousel-inner">
-							<ng-container *ngFor="let photo of auction.photos; index as i">
-								<ng-container *ngIf="i == 0">
-									<div class="carousel-item active" data-thumb="0">
-										<div class="align-content-center" style="height: 350px; line-height: 200px;"  (click)="onNameClick(auction._id)">
-											<img [src]="transform(i)" style="max-height: 500px!important; min-height:300px!important; max-width: 300px!important; vertical-align: middle!important;">
+							</ol>
+							<div class="carousel-inner">
+								<ng-container *ngFor="let photo of auction.photos; index as i">
+									<ng-container *ngIf="i == 0">
+										<div class="carousel-item active" data-thumb="0">
+											<div class="align-content-center" style="height: 350px; line-height: 200px;">
+												<img [src]="transform(i)" style="max-height: 500px!important; min-height:300px!important; max-width: 300px!important; vertical-align: middle!important;">
+											</div>
 										</div>
-									</div>
-								</ng-container>
-								<ng-container *ngIf="i != 0">
-									<div class="carousel-item" data-thumb="0">
-										<div class="align-content-center" style="height: 350px; line-height: 200px;"  (click)="onNameClick(auction._id)">
-											<img [src]="transform(i)" style="max-height: 500px!important; min-height:300px!important; max-width: 300px!important; vertical-align: middle!important;">
+									</ng-container>
+									<ng-container *ngIf="i != 0">
+										<div class="carousel-item" data-thumb="0">
+											<div class="align-content-center" style="height: 350px; line-height: 200px;">
+												<img [src]="transform(i)" style="max-height: 500px!important; min-height:300px!important; max-width: 300px!important; vertical-align: middle!important;">
+											</div>
 										</div>
-									</div>
+									</ng-container>
 								</ng-container>
+							</div>
+							<ng-container *ngIf="auction.photos.length > 1">
+								<a class="carousel-control-prev" href="#carousel" role="button" data-slide="prev">
+									<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+									<span class="sr-only">Previous</span>
+								</a>
+								<a class="carousel-control-next" href="#carousel" role="button" data-slide="next">
+									<span class="carousel-control-next-icon" aria-hidden="true"></span>
+									<span class="sr-only">Next</span>
+								</a>
 							</ng-container>
 						</div>
-						<ng-container *ngIf="auction.photos.length > 1">
-							<a class="carousel-control-prev" href="#carousel" role="button" data-slide="prev">
-								<span class="carousel-control-prev-icon" aria-hidden="true"></span>
-								<span class="sr-only">Previous</span>
-							</a>
-							<a class="carousel-control-next" href="#carousel" role="button" data-slide="next">
-								<span class="carousel-control-next-icon" aria-hidden="true"></span>
-								<span class="sr-only">Next</span>
-							</a>
-						</ng-container>
-					</div>
+					</ng-container>
+					<ng-container *ngIf="!auction.photos.length">
+						<div class="align-content-center" style="height: 350px; line-height: 200px;">
+							<img src="https://sanitationsolutions.net/wp-content/uploads/2015/05/empty-image.png" style="max-height: 500px!important; min-height:300px!important; max-width: 300px!important; vertical-align: middle!important;">
+						</div>
+					</ng-container>
 				</div>
 			</div>
 			<div class="col-sm-5">
@@ -62,7 +69,7 @@
 					</small></h6>
 					<div class="border-top ">
 						<br>
-						<p class="">{{ auction.description }}</p>
+						<p>{{ auction.description }}</p>
 						<table class="table table-borderless table-sm">
 							<tbody>
 								<tr class="small">
@@ -116,8 +123,8 @@
 						<table class="table table-borderless table-sm">
 							<tbody>
 								<tr class="small">
-									<td class="font-weight-bold" style="color: #267174">{{seller.username}}</td>
-									<td>( {{seller.sellerRating}} <i class="fa fa-gavel" style="color: #267174"></i> )</td>
+									<td class="font-weight-bold" style="color: #267174">{{seller?.username}}</td>
+									<td>( {{seller?.sellerRating}} <i class="fa fa-gavel" style="color: #267174"></i> )</td>
 								</tr>
 							</tbody>
 						</table>
@@ -166,19 +173,48 @@
 				<div class="content-section">
 					<div class="text-center">
 						<div *ngIf="authenticationService.loggedin; else login" >
-							<p>Suggestions for you</p>
-							<i><small>under construction</small></i>
+							<p class="mb-2">Auctions for you</p>
+							<div class="text-center"  *ngIf="!recommendLoading">
+								<div class="dropdown-divider"></div>
+								<div class="spinner-grow" role="status">
+									<span class="sr-only">Loading...</span>
+								</div>
+							</div>
+							<div *ngIf="recommendLoading">
+								<div *ngFor="let rec of recommendedAuctions; index as i">
+									<div class="dropdown-divider"></div>
+									<ng-container *ngIf="rec.photos.length">
+										<img [src]="transformRec(rec._id)" class="card-img-top my-auto" style="width: 30%; height: auto; vertical-align: middle;">
+									</ng-container>
+									<ng-container *ngIf="!rec.photos.length">
+										<img src="https://sanitationsolutions.net/wp-content/uploads/2015/05/empty-image.png" class="card-img-top my-auto" style="width: 30%; height: auto; vertical-align: middle;">
+									</ng-container>
+									<a class="text-truncate btn btn-link text-left px-0" style="width: 50%;" [title]="rec.name" (click)="onNameClick(rec._id)"><small>{{ rec.name }}</small></a>
+								</div>
+							</div>
 						</div>
 						<ng-template #login>
-							<h3>Join BidIt Now!</h3>
-							<h6>do not wait up</h6>
-							<a class="btn btn-primary mb-0" href="/login">Login</a>
-							<br>or<br>
-							<a class="btn btn-primary mb-0" href="/register">Sign up</a><br>
-							<h6>to make an offer</h6>
+							<p class="mb-2"><i class="fa fa-line-chart" aria-hidden="true"></i> Top Auctions</p>
+							<div class="text-center"  *ngIf="!recommendLoading">
+								<div class="dropdown-divider"></div>
+								<div class="spinner-grow" role="status">
+									<span class="sr-only">Loading...</span>
+								</div>
+							</div>
+							<div *ngIf="recommendLoading">
+								<div *ngFor="let rec of recommendedAuctions; index as i">
+									<div class="dropdown-divider"></div>
+									<ng-container *ngIf="rec.photos.length">
+										<img [src]="transformRec(rec._id)" class="card-img-top my-auto" style="width: 30%; height: auto; vertical-align: middle;">
+									</ng-container>
+									<ng-container *ngIf="!rec.photos.length">
+										<img src="https://sanitationsolutions.net/wp-content/uploads/2015/05/empty-image.png" class="card-img-top my-auto" style="width: 30%; height: auto; vertical-align: middle;">
+									</ng-container>
+									<a class="text-truncate btn btn-link text-left px-0" style="width: 50%;" [title]="rec.name" (click)="onNameClick(rec._id)"><small>{{ rec.name }}</small></a>
+								</div>
+							</div>
 						</ng-template>
-					</div>
-					<br>
+					</div><br>
 				</div>
 			</div>
 		</div>
